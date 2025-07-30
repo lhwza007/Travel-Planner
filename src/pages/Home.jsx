@@ -8,6 +8,7 @@ export default function Home() {
       <div className="card p-4">
         <h1 className="card-title">Hello from Home Page</h1>
         <p className="card-text">Welcome to the Home page!</p>
+        
       </div>
     </div>
     
