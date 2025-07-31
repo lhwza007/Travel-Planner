@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Nav from './components/Nav';
+import BasicExample from './components/Nav';
 import Home from './pages/Home';
 import Plan from './pages/Plan';
 import Favorite from './pages/Favorite';
@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Nav />
+        <BasicExample />
         <div className="container mt-4">
           <Routes>
             <Route path="/" element={<Home />} />

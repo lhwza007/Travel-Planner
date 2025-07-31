@@ -1,70 +1,41 @@
-import { NavLink } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/logo.svg";
+import { Link } from "react-router-dom";
 
-function Nav() {
+function BasicExample() {
   return (
-    <nav
-      className="navbar navbar-expand-lg"
-      style={{ backgroundColor: "#495A3A", padding: "1.5rem 1.5rem" }}
+    <Navbar
+      expand="lg"
+      className="custom-navbar p-3"
+      style={{ backgroundColor: "#495A3A" }}
     >
-      <div className="container-md">
-        <a className="navbar-brand" href="/">
-        <img src={logo}  style={{ width: "100px", height: "auto" }} />
-        </a>
-
-        {/* ปุ่มย่อยุบ */}
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `nav-link ${isActive ? "active" : ""} text-white`
-                }
-                style={{ fontWeight: "bold" }}
-              >
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/plan"
-                className={({ isActive }) =>
-                  `nav-link ${isActive ? "active" : ""} text-white`
-                }
-                style={{ fontWeight: "bold" }}
-              >
-                Plan
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/favorite"
-                className={({ isActive }) =>
-                  `nav-link ${isActive ? "active" : ""} text-white`
-                }
-                style={{ fontWeight: "bold" }}
-              >
-                Favorite
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+      <Container>
+        <Navbar.Brand href="/">
+          <img
+            src={logo}
+            style={{ width: "100px", height: "auto", marginRight: "10px" }}
+            alt="Logo"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/plan">
+              Plan
+            </Nav.Link>
+            <Nav.Link as={Link} to="/favorite">
+              Favorite
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
-export default Nav;
+export default BasicExample;

@@ -6,3 +6,26 @@ padding: 0;
   max-width: 1200px;
   margin: 0 auto;
 }
+
+
+/* custom navbaar */
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link,
+.custom-navbar .dropdown-toggle,
+.custom-navbar .dropdown-item {
+  color: white !important;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .dropdown-item:hover {
+  color: #dddddd !important;
+}
+
+.custom-navbar .dropdown-menu {
+  background-color: #495A3A;
+  border: none;
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
