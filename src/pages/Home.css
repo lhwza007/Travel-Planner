@@ -1,0 +1,80 @@
+.container.searchBarContainer {
+    background-color: #aac593;
+
+    height: 75px;
+    border-radius: 10px;
+    padding: 0px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: white;
+
+    font-size: x-large;
+}
+
+.searchBarContainer input {
+    height: 40px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+}
+
+.searchBarContainer form {
+    display: flex;
+    align-items: center;
+    max-width: 1000px;
+}
+
+.container.planCard {
+    background-color: white;
+    min-height: 75px;
+
+    border-radius: 10px;
+
+    padding: 20px;
+}
+
+.planCardHeader {
+    margin-bottom: 15px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.userName {
+    padding: 0;
+    margin: 0px 20px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.planName {
+    font-size: large;
+    margin-bottom: 10px;
+}
+
+.planBudget {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 10px;
+}
+
+.actionBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actionBar img {
+    width: 20px;
+    margin: 0px 5px;
+}
+
+.actionBar .group {
+    display: flex;
+    align-items: center;
+}
