@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
 
+
 function BasicExample() {
   return (
     <Navbar
@@ -30,6 +31,9 @@ function BasicExample() {
             </Nav.Link>
             <Nav.Link as={Link} to="/favorite">
               Favorite
+            </Nav.Link>
+            <Nav.Link as={Link} to="/register">
+              Register
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
