@@ -2,13 +2,15 @@ import React from "react";
 import Nav from "../components/Nav";
 import "./Home.css";
 import { useState } from "react";
+import Form from "react-bootstrap/Form";
+
 import personpfp from "../assets/personTest.svg";
 import money from "../assets/money.svg";
 import comment from "../assets/comment.svg";
 import star from "../assets/star.svg";
 import share from "../assets/share.svg";
-import search from "../assets/search.svg"
-import filter from "../assets/filter.svg"
+import search from "../assets/search.svg";
+import filter from "../assets/filter.svg";
 
 export default function Home() {
   // อันนี้คือข้อมูลทดสอบตอนเรียกใช้การ์ดนะ
@@ -55,17 +57,21 @@ export default function Home() {
   return (
     <>
       <div className="container mt-4 searchBarContainer">
-        Search
-        <form action="">
-          <input type="text" />
-          <input
-            type="image"
-            src={search}
-            alt="Submit"
-            style={{ width: "40px" }}
-          />
-        </form>
-        <img src={filter} alt="filter" style={{width: "40px"}}/>
+        <div className="searchGroup">
+          SEARCH
+          <Form style={{ width: "100%", display: "flex" }}>
+            <Form.Group className="w-100" style={{ margin: "0px 10px" }}>
+              <Form.Control type="text" placeholder="Search Here..." style={{borderRadius: "10px" }} />
+            </Form.Group>
+            <input
+              type="image"
+              src={search}
+              alt="Submit"
+              style={{ width: "40px" }}
+            />
+          </Form>
+          <img src={filter} alt="filter" style={{ width: "40px" }} />
+        </div>
       </div>
 
       {data.map((item) => (
