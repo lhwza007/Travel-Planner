@@ -6,8 +6,10 @@ import { BsTelephone } from "react-icons/bs";
 import { MdOutlineMailOutline } from "react-icons/md";
 
 export default function ParkDetailCard({ data }) {
+
+
   return (
-    <Card className="m-5 shadow p-3 mb-5 bg-body rounded">
+    <Card className="container  mt-4 planCard shadow p-3 mb-3  ">
       <Card.Body>
         <div className="park-detail-card">
           <h1>{data.name}</h1>
@@ -44,7 +46,7 @@ export default function ParkDetailCard({ data }) {
             <MdOutlineMailOutline /> อีเมล: {data.email}
           </p>
           <div className="d-flex justify-content-end">
-            <button className="btn btn-primary ">เริ่มวางแผน</button>
+            <button className="btn" style={{backgroundColor:"#495A3A", color:"white"}}>เริ่มวางแผน</button>
           </div>
         </div>
 
