@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import ParkDetailCard from '../components/ParkDetailCard';
+import PlanList from '../components/Plan-list';
 
 export default function ParkDetail() {
   // ใช้ useLocation เพื่อเข้าถึงข้อมูลที่ถูกส่งมาใน state
@@ -11,12 +12,12 @@ export default function ParkDetail() {
   if (!parkData) {
     return <div>No park data found.</div>;
   }
-
+  console.log("Park ID", parkData.id); 
   return (
     <div>
       <ParkDetailCard  data={parkData}/>
-      <hr style={{border: "1px solid #495A3A"}}/>
-      
+      <hr style={{border: "1px solid #495A3A", margin:"40px 0px"}}/>
+      <PlanList parkData={parkData}/>
     </div>
 
 
