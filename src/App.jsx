@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Plan from './pages/Plan';
 import Favorite from './pages/Favorite';
 import Register from "./pages/Register";
+import ParkDetail from './pages/Park-Detail';
 import './App.css';
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
             <Route path="/favorite" element={<Favorite />} />
             <Route path="/plan" element={<Plan />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/park-detail" element={<ParkDetail />} />
+            {/* Add more routes as needed */}
             <Route path="*" element={<div className="card p-4"><h1 className="card-title">404 ไม่พบหน้า</h1></div>} />
           </Routes>
         </div>
