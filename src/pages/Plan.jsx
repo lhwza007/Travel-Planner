@@ -1,7 +1,12 @@
+import Recommend from "../components/Recommend.jsx"
+import ParkList from "../components/Park-lists.jsx"
+
 export default function Plan() {
     return(
         <>
-            <h1>this is Plan page</h1>
+            <Recommend />
+            <hr style={{marginBottom: "30px"}}/>
+            <ParkList />
         </>
     )
 }
