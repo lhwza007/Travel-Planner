@@ -4,8 +4,15 @@ import Row from "react-bootstrap/Row";
 import { LuMapPin } from "react-icons/lu";
 import { BsTelephone } from "react-icons/bs";
 import { MdOutlineMailOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function ParkDetailCard({ data }) {
+
+  const navigate = useNavigate();
+
+  function handleClick(data) {
+    navigate("/planning", { state: { parkData: data } });
+  }
 
 
   return (
@@ -46,7 +53,7 @@ export default function ParkDetailCard({ data }) {
             <MdOutlineMailOutline /> อีเมล: {data.email}
           </p>
           <div className="d-flex justify-content-end">
-            <button className="btn" style={{backgroundColor:"#495A3A", color:"white"}}>เริ่มวางแผน</button>
+            <button className="btn" style={{backgroundColor:"#495A3A", color:"white"}} onClick={()=> handleClick(data)}>เริ่มวางแผน</button>
           </div>
         </div>
 

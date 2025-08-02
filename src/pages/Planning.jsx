@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Container, Form, Button, Card } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import "./Planning.css";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { GoDotFill } from "react-icons/go";
+import { useLocation } from 'react-router-dom';
 
 export default function Planning() {
   // State สำหรับชื่อแผนการท่องเที่ยวและรายละเอียด
@@ -31,11 +32,20 @@ export default function Planning() {
     );
   };
 
+  // ใช้ useLocation เพื่อเข้าถึงข้อมูลที่ถูกส่งมาใน state
+  const location = useLocation();
+  const parkData = location.state.parkData;
+
+  // หากไม่มีข้อมูล ให้แสดงข้อความแจ้งเตือน หรือ redirect กลับ
+  if (!parkData) {
+    return <div>No park data found.</div>;
+  }
+
   return (
     <>
       <Container>
         <div className="planningContainer">
-          <h3 className="mb-3">ชื่ออุทยาน</h3>
+          <h3 className="mb-3">{parkData.name}</h3>
           <div className="form">
             <form action="">
               {/* ฟอร์มชื่อแผนการท่องเที่ยว */}
@@ -45,7 +55,7 @@ export default function Planning() {
                   type="text"
                   value={planName}
                   onChange={(e) => setPlanName(e.target.value)}
-                  placeholder="ชื่อแผนการท่องเที่ยว (เช่น เขาใหญ่ 2 วัน 1 คืน)"
+                  placeholder={'ชื่อแผนการท่องเที่ยว (เช่น ' + parkData.name + ' 2 วัน 1 คืน)'}
                   style={{ borderRadius:"10px"}}
                 />
               </Form.Group>
