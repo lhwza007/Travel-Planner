@@ -1,0 +1,21 @@
+.head {
+    margin-bottom: 10px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.recommendCard {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.cardDetails {
+    display: flex;
+    justify-content: space-between;
+}
