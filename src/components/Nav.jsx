@@ -39,12 +39,12 @@ function BasicExample() {
             </Nav.Link>
           </Nav>
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/inbox">
               <FaFacebookMessenger
                 style={{ color: "white", fontSize: "2rem" }}
               />
             </Nav.Link>
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/profile">
               <IoPerson style={{ color: "white", fontSize: "2rem" }} />
             </Nav.Link>
           </Nav>
