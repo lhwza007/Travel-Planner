@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import search from "../assets/search.svg";
 import filter from "../assets/filter.svg";
 
-export default function Rearch() {
+export default function Search() {
     return(
         <div className="container mt-4 searchBarContainer">
         <div className="searchGroup">
