@@ -8,6 +8,7 @@ import ParkDetail from './pages/Park-Detail';
 import Planning from './pages/Planning.jsx'
 import Profile from './pages/Profile.jsx'
 import Inbox from './pages/Inbox.jsx'
+import Messages from './pages/Messages.jsx';
 import './App.css';
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
             <Route path="/planning" element={<Planning />}/>
             <Route path="/profile" element={<Profile />}/>
             <Route path="/inbox" element={<Inbox />}/>
+            <Route path="/messages" element={<Messages />}/>
+
             <Route path="*" element={<div className="card p-4"><h1 className="card-title">404 ไม่พบหน้า</h1></div>} />
           </Routes>
         </div>
