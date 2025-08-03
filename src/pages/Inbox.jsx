@@ -1,7 +1,9 @@
+import InboxCard from "../components/InboxCard"
 export default function Inbox({ parkData }) {
     return (
     <>
-        <h1>Inbox</h1>
+        <InboxCard />
+
     </>
     )
 }
