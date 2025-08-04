@@ -1,35 +1,32 @@
 import { Card, Row, Col, Container, Form } from "react-bootstrap";
 import { FaFacebookMessenger } from "react-icons/fa";
-import { IoPersonCircle } from "react-icons/io5"; //ค่อยเปลีั่ยนเป็นรูปเจ้าของแอคเคาท์
-import { IoPersonCircleOutline } from "react-icons/io5";
+
 import { FaUserFriends } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import TestProfile from "../assets/testPfp.jpg";
 
 export default function InboxCard() {
+  // ตัวอย่างข้อมูลว่าเคยคุยกับใครบ้าง
   const messages = [
     {
-      messageId:123,
-      senderId: 1,
-      senderName: "Mark",
-      message: "hello",
-      receiverId: 2,
-    },
-    {
-        messageId:124,
-      senderId: 2,
-      senderName: "fah",
-      message: "hi",
+      contactId: 111,
+      senderID: 555,
       receiverId: 1,
+      receiverName: "Fah",
     },
     {
-        messageId:125,
-      senderId: 3,
-      senderName: "Peter",
-      message: "how are you?",
-      receiverId: 4,
+      contactId: 222,
+      senderID: 555,
+      receiverId: 2,
+      receiverName: "Mark",
     },
-    
+    {
+      contactId: 333,
+      senderID: 555,
+      receiverId: 3,
+      receiverName: "Note",
+    },
   ];
   const navigate = useNavigate();
   function handleCardClick(item) {
@@ -39,11 +36,8 @@ export default function InboxCard() {
 
   return (
     <>
-      <Container className="p-3">
-        <Card
-          className=""
-          style={{ backgroundColor: "#D7E7D1", border: "none" }}
-        >
+      <Container >
+        <Card style={{ backgroundColor: "#D7E7D1", borderRadius:"10px" ,border:"none" }}>
           <div
             className="d-flex align-items-center py-3 px-4"
             style={{
@@ -90,21 +84,31 @@ export default function InboxCard() {
           >
             {messages.map((message) => (
               <Card
-                key={message.messageId}
-                className="m-2 shadow-sm mb-3"
+                key={message.contactId}
+                className="m-3 shadow-sm mb-3"
                 style={{
                   backgroundColor: "#F7F9F6",
                   border: "none",
                   cursor: "pointer",
                 }}
               >
-                <div className="d-flex align-items-center p-2 " onClick={() => handleCardClick(message)}>
-                  <IoPersonCircleOutline
-                    size={50}
+                <div
+                  className="d-flex align-items-center p-2 "
+                  onClick={() => handleCardClick(message)}
+                >
+                  {/* ค่อยเปลีั่ยนเป็นรูปเจ้าของแอคเคาท์ */}
+                  <img
+                    src={TestProfile}
                     className="me-2"
-                    style={{ color: "#A0B98E" }}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                      border: "2px solid #688350",
+                    }}
                   />
-                  <span className="fw-bold">{message.senderName}</span>
+
+                  <span className="fw-bold">{message.receiverName}</span>
                 </div>
               </Card>
             ))}
