@@ -50,8 +50,8 @@ export default function Messages() {
   };
 
   return (
-    <Container >
-      <Card style={{ width: "100%", backgroundColor: "#D7E7D1" }}>
+    <Container style={{height:"80vh"}}>
+      <Card style={{ width: "100%", backgroundColor: "#D7E7D1", height:"100%" }}>
         {/* Header ส่วนหัวของแชท พร้อมปุ่มย้อนกลับ */}
         <Card.Header
           className="text-white fw-bold py-3 px-4 d-flex align-items-center"
@@ -80,7 +80,7 @@ export default function Messages() {
         {/* ส่วนแสดงข้อความ */}
         <div
           className="p-5"
-          style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
+          style={{ height: "100%", overflowY: "auto" }}
         >
           {detailMessage.map((msg) => (
             <div
