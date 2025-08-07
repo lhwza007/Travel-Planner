@@ -34,9 +34,10 @@ function BasicExample() {
             <Nav.Link as={Link} to="/favorite">
               Favorite
             </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Register
+            <Nav.Link as={Link} to="/login">
+              Login
             </Nav.Link>
+
           </Nav>
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/inbox">
