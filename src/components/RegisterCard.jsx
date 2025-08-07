@@ -4,14 +4,19 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+
+
 export default function RegisterCard({switchToLogin}) {
+  
+
   return (
-    <Card className="m-5 shadow p-3 mb-5 bg-body rounded">
+    <Card className=" shadow p-3 mb-5 bg-body rounded">
       <Card.Body>
         <Row>
         <Col md={8} sm={12}>
           <Form>
-            <h1>Register</h1>
+            
+            <h1 className="mb-3">Register</h1>
             <Row className="g-3">
               {/* md={4} คือแสดง 3 ช่องในหน้าจอขนาดกลางขึ้นไป */}
               {/* sm={12} คือแสดง 1 ช่องเต็มในหน้าจอขนาดเล็ก */}
@@ -40,13 +45,13 @@ export default function RegisterCard({switchToLogin}) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicFirstName">
-                  <Form.Label>FirstName</Form.Label>
-                  <Form.Control type="text" placeholder="FirstName" />
+                  <Form.Label>First name</Form.Label>
+                  <Form.Control type="text" placeholder="First Name" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicLastName">
-                  <Form.Label>LastName</Form.Label>
-                  <Form.Control type="text" placeholder="LastName" />
+                  <Form.Label>Last name</Form.Label>
+                  <Form.Control type="text" placeholder="Last Name" />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -117,15 +122,27 @@ export default function RegisterCard({switchToLogin}) {
                 }}
               ></Col> */}
             </Row>
-            <Button  type="submit" className="m-1 mt-4" style={{backgroundColor:"#495A3A", border:"none"}}>
-              Submit
+            <Button  type="submit" className=" my-2 " style={{backgroundColor:"#495A3A", border:"none"}}>
+              Confirm
             </Button>
-            <Button  type="submit" className="m-1 mt-4" style={{backgroundColor:"#495A3A", border:"none"}} onClick={switchToLogin}>
-              มีบชแล้ว ค่อยเปลี่ยนใช้แบบกดtext
-            </Button>
+            <p >
+                    Already have an account?
+                    <span
+                      onClick={switchToLogin}
+                      style={{
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      Login
+                    </span>
+                  </p>
+            
+            
           </Form>
         </Col>
-        <Col md={4} sm={12} className="d-flex align-items-center justify-content-center "
+        <Col md={4} sm={12} className="d-none d-md-block d-flex align-items-center justify-content-center  "
                 style={{
                   backgroundImage: `url('https://images.pexels.com/photos/70365/forest-sunbeams-trees-sunlight-70365.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
                   backgroundSize: "cover",
