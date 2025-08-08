@@ -1,6 +1,7 @@
 import Form from "react-bootstrap/Form";
 import search from "../assets/search.svg";
 import filter from "../assets/filter.svg";
+import './Search.css'
 
 export default function Search() {
     return(

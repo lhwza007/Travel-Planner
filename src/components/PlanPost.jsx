@@ -8,6 +8,7 @@ import star from "../assets/star.svg";
 import share from "../assets/share.svg";
 import search from "../assets/search.svg";
 import filter from "../assets/filter.svg";
+import './PlanPost.css'
 
 
 export default function PlanPost() {
