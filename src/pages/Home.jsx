@@ -1,4 +1,3 @@
-import "./Home.css";
 import PlanPost from "../components/PlanPost";
 import Search from "../components/Search"
 
