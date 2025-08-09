@@ -48,6 +48,18 @@ function LoginCard({ switchToRegister }) {
                 </Form.Group>
 
                 <Col>
+                  <Button
+                    type="submit"
+                    className=" mt-2"
+                    style={{
+                      backgroundColor: "#495A3A",
+                      border: "none",
+                      cursor: "pointer",
+                      marginBottom: "5px"
+                    }}
+                  >
+                    Sign up
+                  </Button>
                   <p>
                     Have an account?
                     <span
@@ -61,18 +73,6 @@ function LoginCard({ switchToRegister }) {
                       register
                     </span>
                   </p>
-
-                  <Button
-                    type="submit"
-                    className=" mt-2"
-                    style={{
-                      backgroundColor: "#495A3A",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Sign up
-                  </Button>
                 </Col>
               </Form>
             </Col>
