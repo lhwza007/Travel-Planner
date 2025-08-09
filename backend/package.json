@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "express": "^5.1.0",
     "inspirational-quotes": "^2.0.1",
     "mysql2": "^3.14.3"
