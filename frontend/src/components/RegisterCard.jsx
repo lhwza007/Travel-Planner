@@ -10,7 +10,8 @@ import {SweetalertSucc,SweetalertErr} from '../components/Sweetalert'
 
 export default function RegisterCard({ switchToLogin }) {
   const navigate = useNavigate();
-
+ 
+  
   const [inputs, setInput] = useState({
     email: "",
     username: "",
