@@ -4,10 +4,41 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { useState } from "react";
+import { AuthContext } from "../../context/authContext.jsx";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginCard({ switchToRegister }) {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [err, setErr] = useState(null);
+
+  const { login } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  console.log(inputs);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      await login(inputs);
+      // เปลี่ยนเส้นทางไป home
+      navigate("/");
+    } catch (err) {
+      setErr(err.response.data);
+    }
+  };
+
   return (
     <Container className="d-flex justify-content-center ">
       <Card
@@ -38,24 +69,34 @@ function LoginCard({ switchToRegister }) {
                 <h1>Login</h1>
 
                 <Form.Group className="mb-3 mt-3 " controlId="formBasicUser">
-                  <Form.Label>User</Form.Label>
-                  <Form.Control type="text" placeholder="Enter User" />
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    onChange={handleChange}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    onChange={handleChange}
+                  />
                 </Form.Group>
-
+                {err && err}
                 <Col>
                   <Button
-                    type="submit"
                     className=" mt-2"
+                    onClick={handleLogin}
                     style={{
                       backgroundColor: "#495A3A",
                       border: "none",
                       cursor: "pointer",
-                      marginBottom: "5px"
+                      marginBottom: "5px",
                     }}
                   >
                     Sign up

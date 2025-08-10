@@ -49,13 +49,16 @@ export const login = (req, res) => {
     // สร้าง token บันทึกข้อมูลผู้ใช้
     const token = jwt.sign({ user_id: data[0].user_id }, "secretkey");
 
+    // อันนี้คืออะไรไม่ทราบ
+    const { password, ...others } = data[0];
+
     // เก็บ accessToken ในรูปแบบ cookie จะสามารถนำไปถอดรหัสเพื่อดึง id ผู้ใช้มาได้
     res
       .cookie("accessToken", token, {
         httpOnly: true,
       })
       .status(200)
-      .json();
+      .json(others);
   });
 };
 
