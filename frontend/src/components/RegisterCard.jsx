@@ -32,7 +32,7 @@ export default function RegisterCard({switchToLogin}) {
     try{
       await axios.post("http://localhost:8800/api/auth/register",inputs)
     }catch(err){
-      setErr(err.respone.data)
+      setErr(err.response.data)
     }
   }
 
