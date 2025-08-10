@@ -4,14 +4,11 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState} from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {SweetalertSucc,SweetalertErr} from '../components/Sweetalert'
 
 export default function RegisterCard({ switchToLogin }) {
-  const navigate = useNavigate();
- 
-  
+
   const [inputs, setInput] = useState({
     email: "",
     username: "",
