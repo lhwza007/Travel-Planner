@@ -17,10 +17,11 @@ export const register = (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
     const q =
-      "INSERT INTO users(user_name, user_password) VALUES(?, ?)";
+      "INSERT INTO users(user_name, user_password,user_firstName,user_lastName,user_level,user_gender,user_income,user_age,user_email) VALUES(?, ?,?, ?,?, ?,?, ?,?)";
 
-    db.query(q, [req.body.username, hashedPassword], (err, data) => {
+    db.query(q, [req.body.username,  hashedPassword,  req.body.first_name,  req.body.last_name,  req.body.skill_level,  req.body.gender, req.body.income,  req.body.age, req.body.email], (err, data) => {
       if (err) return res.status(500).json(err);
+    
 
       // ส่ง status ว่า query สำเร็จ
       return res.status(200).json("Account has been created.");
