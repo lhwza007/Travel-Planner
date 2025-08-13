@@ -10,7 +10,7 @@ import { AuthContext } from "../../context/authContext.jsx";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-function LoginCard({ switchToRegister }) {
+function LoginCard() {
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
@@ -104,7 +104,7 @@ function LoginCard({ switchToRegister }) {
                   <p>
                     Have an account?
                     <span
-                      onClick={switchToRegister}
+                      onClick={()=>navigate("/register")}
                       style={{
                         textDecoration: "underline",
                         cursor: "pointer",

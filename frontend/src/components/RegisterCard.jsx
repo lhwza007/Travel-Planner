@@ -6,9 +6,9 @@ import Button from "react-bootstrap/Button";
 import { useState} from "react";
 import axios from "axios";
 import {SweetalertSucc,SweetalertErr} from '../components/Sweetalert'
-
-export default function RegisterCard({ switchToLogin }) {
-
+import {useNavigate} from 'react-router-dom'
+export default function RegisterCard() {
+  const navigate = useNavigate();
   const [inputs, setInput] = useState({
     email: "",
     username: "",
@@ -57,8 +57,7 @@ export default function RegisterCard({ switchToLogin }) {
       await axios.post("http://localhost:8800/api/auth/register", inputs);
       const msg = "successfully";
       SweetalertSucc(msg)
-      switchToLogin();
-
+      navigate("/login");
     } catch (err) {
       setErr(err.response.data);
       SweetalertErr(err.response.data)
@@ -230,7 +229,7 @@ export default function RegisterCard({ switchToLogin }) {
               <p>
                 Already have an account?
                 <span
-                  onClick={switchToLogin}
+                  onClick={()=>navigate("/login")}
                   style={{
                     textDecoration: "underline",
                     cursor: "pointer",
