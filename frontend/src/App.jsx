@@ -12,6 +12,7 @@ import Login from "./pages/Login.jsx";
 import "./App.css";
 import Quotes from "./Quotes.jsx";
 import { AuthContextProvider } from "../context/authContext.jsx";
+import Register from "./pages/Register.jsx";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="/inbox" element={<Inbox />} />
               <Route path="/messages" element={<Messages />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/test" element={<Quotes />} />
 
               <Route
