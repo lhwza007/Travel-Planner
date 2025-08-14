@@ -24,3 +24,8 @@
 input {
     border-radius: 10px;
 }
+
+.flatpickr-input {
+    width: 100%;
+    text-align: center;
+}
