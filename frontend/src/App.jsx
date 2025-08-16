@@ -13,6 +13,7 @@ import "./App.css";
 import Quotes from "./Quotes.jsx";
 import { AuthContextProvider } from "../context/authContext.jsx";
 import Register from "./pages/Register.jsx";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -22,19 +23,51 @@ function App() {
           <BasicExample />
           <div className="container mt-4">
             <Routes>
+              {/* Plubic */}
               <Route path="/" element={<Home />} />
-              <Route path="/favorite" element={<Favorite />} />
               <Route path="/plan" element={<Plan />} />
-
               <Route path="/park-detail" element={<ParkDetail />} />
-              <Route path="/planning" element={<Planning />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/inbox" element={<Inbox />} />
-              <Route path="/messages" element={<Messages />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/test" element={<Quotes />} />
+              
 
+              {/* Private */}
+              <Route path="/favorite" element={
+                <PrivateRoute>
+                  <Favorite />
+                </PrivateRoute>
+                } />
+              
+              <Route path="/planning" element={
+                <PrivateRoute>
+                  <Planning />
+                </PrivateRoute> 
+              }/>
+
+
+              <Route path="/profile" element={
+                <PrivateRoute>
+                <Profile />
+                </PrivateRoute>
+                } />
+
+
+              <Route path="/inbox" element={
+                <PrivateRoute>
+                <Inbox />
+                </PrivateRoute>
+                } />
+
+              <Route path="/messages" element={
+                <PrivateRoute>
+                <Messages />
+                </PrivateRoute>
+                } />
+
+              
+              {/* <Route path="/test" element={<Quotes />} /> */}
+
+              
               <Route
                 path="*"
                 element={

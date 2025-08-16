@@ -6,12 +6,13 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 // middlewares (มันคือไรวะ)
-app.use((req, res, next) => { // อนุญาต credentials
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
+// app.use((req, res, next) => { // อนุญาต credentials
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
 app.use(cors({
-  origin:"http://localhost:5173"
+  origin:"http://localhost:5173",
+  credentials: true // อนุญาตให้ส่ง cookies
 }));
 app.use(express.json());
 app.use(cookieParser());
