@@ -8,33 +8,33 @@ import "flatpickr/dist/themes/material_green.css";
 import { format } from "date-fns";
 
 export default function PlanningCard({ parkData }) {
-  // State สำหรับชื่อแผนการท่องเที่ยวและรายละเอียด
   const [planName, setPlanName] = useState("");
-  // State สำหรับกิจกรรมหลัก (array ของ objects ที่มี id และ name)
   const [mainActivities, setMainActivities] = useState([]);
-  const [planRange, setPlanRange] = useState({startDate: null, endDate: null});
+  const [planRange, setPlanRange] = useState({
+    startDate: null,
+    endDate: null,
+  });
 
-  const handleRangeChange = (instance) => {
-    const formatDate1 = format(instance[0], "yyyy-MM-dd")
-    const formatDate2 = format(instance[1], "yyyy-MM-dd")
-    setPlanRange({startDate: formatDate1, endDate: formatDate2});
+  const handleRangeChange = (selectedDates) => {
+    const formatDate1 = format(selectedDates[0], "yyyy-MM-dd");
+    const formatDate2 = format(selectedDates[1], "yyyy-MM-dd");
+    setPlanRange({ startDate: formatDate1, endDate: formatDate2 });
   };
 
-  console.log(planRange);
-
-  // เพิ่มกิจกรรมหลัก
   const addMainActivity = () => {
-    setMainActivities([...mainActivities, { id: Date.now(), name: "" }]);
+    setMainActivities([
+      ...mainActivities,
+      { id: Date.now(), name: "", startTime: null, endTime: null },
+    ]);
   };
 
-  // ลบกิจกรรมหลัก
   const deleteActivity = (mainActivityId) => {
     setMainActivities(
       mainActivities.filter((activity) => activity.id !== mainActivityId)
     );
   };
 
-  // อัปเดตชื่อกิจกรรมหลัก
+  // ฟังก์ชันสำหรับอัปเดตชื่อกิจกรรมหลัก
   const updateMainActivity = (id, value) => {
     setMainActivities(
       mainActivities.map((activity) =>
@@ -42,14 +42,42 @@ export default function PlanningCard({ parkData }) {
       )
     );
   };
+
+  // ฟังก์ชันสำหรับอัปเดตเวลาใน activity
+  const updateActivityTime = (id, field, value) => {
+    setMainActivities(
+      mainActivities.map((activity) =>
+        activity.id === id ? { ...activity, [field]: value } : activity
+      )
+    );
+  };
+
+  // ฟังชั่นสำหรับอัปเดทวันใน activity
+  const updateActivityDate = (id, value) => {
+    setMainActivities(
+      mainActivities.map((activity) =>
+        activity.id === id ? { ...activity, date: value } : activity
+      )
+    );
+  }
+
+  console.log(planRange);
+  console.log(mainActivities);
+
   return (
     <div className="planningContainer">
       <h3 className="mb-3">{parkData.name}</h3>
       <div className="form">
         <form action="">
           <Form.Label>ชื่อแผนการท่องเที่ยว</Form.Label>
-          <div style={{ width: "100%", display: "flex", alignItems: "center" }}>
-            {/* ฟอร์มชื่อแผนการท่องเที่ยว */}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "10px",
+            }}
+          >
             <Form.Control
               type="text"
               value={planName}
@@ -57,15 +85,17 @@ export default function PlanningCard({ parkData }) {
               placeholder={
                 "ชื่อแผนการท่องเที่ยว (เช่น " + parkData.name + " 2 วัน 1 คืน)"
               }
-              style={{ borderRadius: "10px", width: "80%" }}
+              style={{
+                borderRadius: "10px",
+                width: "80%",
+                marginRight: "15px",
+              }}
             />
             <Flatpickr
               options={{
                 minDate: "today",
                 dateFormat: "Y-m-d",
                 mode: "range",
-                time_24hr: true,
-                enableSeconds: true,
               }}
               style={{ width: "20%" }}
               onClose={handleRangeChange}
@@ -74,40 +104,111 @@ export default function PlanningCard({ parkData }) {
 
           <div className="activity">
             {mainActivities.map((mainActivity) => (
-              <div
-                key={mainActivity.id}
-                className="d-flex align-items-center mb-2"
-              >
-                <GoDotFill
-                  style={{ width: "30px", height: "30px", marginLeft: "10px" }}
-                />
-                <Form.Control
-                  type="text"
-                  value={mainActivity.name}
-                  onChange={(e) =>
-                    updateMainActivity(mainActivity.id, e.target.value)
-                  }
-                  placeholder="ชื่อกิจกรรม (เช่น ดูน้ำตก...)"
-                  className="me-2"
-                  style={{ whiteSpace: "nowrap", borderRadius: "10px" }}
-                />
-                <Flatpickr
-                  options={{
-                    mode: "range",
-                    enableTime: true,
-                    dateFormat: "Y-m-d H:i",
-                    minDate: planRange.startDate,
-                    maxDate: planRange.endDate,
-                  }}
-                />
-                <FiMinusCircle
-                  onClick={() => deleteActivity(mainActivity.id)}
-                  style={{ width: "30px", height: "30px", cursor: "pointer" }}
-                />
+              <div key={mainActivity.id} className="d-flex my-3">
+                <div className="">
+                  <GoDotFill
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      marginLeft: "10px",
+                    }}
+                  />
+                </div>
+                <div style={{ width: "100%" }}>
+                  <div style={{ marginBottom: "5px" }}>
+                    <Form.Control
+                      type="text"
+                      value={mainActivity.name}
+                      onChange={(e) =>
+                        updateMainActivity(mainActivity.id, e.target.value)
+                      }
+                      placeholder="ชื่อกิจกรรม (เช่น ดูน้ำตก...)"
+                      className="me-2"
+                      style={{
+                        whiteSpace: "nowrap",
+                        borderRadius: "10px",
+                        width: "100%",
+                      }}
+                    />
+                  </div>
+                  <div style={{}}>
+                    <Flatpickr
+                      style={{ marginRight: "10px" }}
+                      options={{
+                        minDate: planRange.startDate,
+                        maxDate: planRange.endDate,
+                        dateFormat: "Y-m-d",
+                      }}
+                      onClose={(selectedDates) => {
+                        updateActivityDate(
+                          mainActivity.id,
+                          format(selectedDates[0], "yyyy-MM-dd")
+                        );
+                      }}
+                    />
+                    <Flatpickr
+                      style={{ width: "60px", margin: "0px 5px" }}
+                      options={{
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i",
+                        time_24hr: true,
+                        minTime: mainActivities[mainActivities.length-2]?.endTime || null,
+                      }}
+                      onClose={(selectedDates) => {
+                        console.log(selectedDates);
+                        updateActivityTime(
+                          mainActivity.id,
+                          "startTime",
+                          format(selectedDates[0], "HH:mm")
+                        );
+                      }}
+                    />
+                    -
+                    <Flatpickr
+                      style={{ width: "60px", margin: "0px 5px" }}
+                      options={{
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i",
+                        time_24hr: true,
+                        minTime: mainActivities[mainActivities.length-1]?.startTime || null,
+                      }}
+                      onClose={(selectedDates) =>
+                        updateActivityTime(
+                          mainActivity.id,
+                          "endTime",
+                          format(selectedDates[0], "HH:mm")
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <FiMinusCircle
+                      onClick={() => deleteActivity(mainActivity.id)}
+                      style={{
+                        width: "25px",
+                        height: "25px",
+                        cursor: "pointer",
+                        color: "#f55b5b",
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-          {/* ปุ่มเพิ่มกิจกรรมหลัก */}
+
           <div className="addDel">
             <div
               style={{

@@ -7,7 +7,7 @@
 }
 
 .activity {
-    padding: 0px 50px;
+    padding: 0px 2%;
 }
 
 .addDel {
@@ -26,6 +26,15 @@ input {
 }
 
 .flatpickr-input {
-    width: 100%;
+    border-radius: 10px;
+    height: 38px;
+    width: 100px;
     text-align: center;
+    border: 1px solid #dee2e6;
+}
+
+.flatpickr-input:focus {
+    border-color: #86b7fe !important;
+    outline: none;
+    box-shadow: 0 0 0 4px #86b6fe7c;
 }

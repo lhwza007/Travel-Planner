@@ -1,6 +1,6 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
-import e, { response } from "express";
+import e, { response } from "express"; 
 import jwt from "jsonwebtoken";
 
 export const register = (req, res) => {
