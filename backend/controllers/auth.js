@@ -1,5 +1,6 @@
 import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
+import e, { response } from "express";
 import jwt from "jsonwebtoken";
 
 export const register = (req, res) => {
@@ -19,19 +20,31 @@ export const register = (req, res) => {
     const q =
       "INSERT INTO users(user_name, user_password,user_firstName,user_lastName,user_level,user_gender,user_income,user_age,user_email) VALUES(?, ?,?, ?,?, ?,?, ?,?)";
 
-    db.query(q, [req.body.username,  hashedPassword,  req.body.first_name,  req.body.last_name,  req.body.skill_level,  req.body.gender, req.body.income,  req.body.age, req.body.email], (err, data) => {
-      if (err) return res.status(500).json(err);
-    
+    db.query(
+      q,
+      [
+        req.body.username,
+        hashedPassword,
+        req.body.first_name,
+        req.body.last_name,
+        req.body.skill_level,
+        req.body.gender,
+        req.body.income,
+        req.body.age,
+        req.body.email,
+      ],
+      (err, data) => {
+        if (err) return res.status(500).json(err);
 
-      // ส่ง status ว่า query สำเร็จ
-      return res.status(200).json("Account has been created.");
-    });
+        // ส่ง status ว่า query สำเร็จ
+        return res.status(200).json("Account has been created.");
+      }
+    );
   });
 };
 
 export const login = (req, res) => {
   const q = "SELECT * FROM users WHERE user_name = ?";
-
   db.query(q, [req.body.username], (err, data) => {
     if (err) return res.status(500).json(err);
 
@@ -57,6 +70,9 @@ export const login = (req, res) => {
     res
       .cookie("accessToken", token, {
         httpOnly: true,
+        secure: false, // ถ้าใช้ http ให้เป็น false, ถ้า https ให้เป็น true
+        sameSite: "lax", // หรือ "none" ถ้า cross-origin
+        path: "/", // (ถ้าไม่ได้ระบุ จะใช้ /)
       })
       .status(200)
       .json(others);
@@ -67,9 +83,31 @@ export const logout = (req, res) => {
   // เคลียร์ cookie
   res
     .clearCookie("accessToken", {
-      secure: true,
-      sameStie: "none",
+      secure: false,
+      sameSite: "lax",
+      path: "/",
     })
     .status(200)
     .json("User has been logged out.");
+  
+};
+
+export const checkAuth = (req, res) => {
+  console.log("hello from checkAuth");
+  console.log("cookies:", req.cookies);
+  const token = req.cookies.accessToken;
+  console.log("accessToken from cookie:", token);
+
+  if (!token) return res.status(200).json({ isAuthenticated: false });
+
+  jwt.verify(token, "secretkey", (err, user) => {
+    if (err) {
+      console.log("JWT verify error:", err);
+      return res.status(200).json({ isAuthenticated: false });
+    }
+    console.log("JWT user:", user);
+    return res
+      .status(200)
+      .json({ isAuthenticated: true, user_id: user.user_id });
+  });
 };
