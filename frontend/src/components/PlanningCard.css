@@ -18,7 +18,7 @@
 .submitBtn {
     width: 100%;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 input {
@@ -37,4 +37,10 @@ input {
     border-color: #86b7fe !important;
     outline: none;
     box-shadow: 0 0 0 4px #86b6fe7c;
+}
+
+.isPrivateCheckbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }

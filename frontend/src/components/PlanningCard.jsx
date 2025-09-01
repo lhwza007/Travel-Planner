@@ -2,18 +2,27 @@ import "./PlanningCard.css";
 import { Form, Button } from "react-bootstrap";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { GoDotFill } from "react-icons/go";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
+import axios from "axios";
 
 export default function PlanningCard({ parkData }) {
+  const parkId = parkData.id;
   const [planName, setPlanName] = useState("");
-  const [mainActivities, setMainActivities] = useState([]);
   const [planRange, setPlanRange] = useState({
     startDate: null,
     endDate: null,
   });
+  const [mainActivities, setMainActivities] = useState([]);
+  const [isPrivate, setIsPrivate] = useState(1);
+
+  // ดึงข้อมูลจาก Local Storage
+  const storedData = localStorage.getItem("user");
+  const data = JSON.parse(storedData);
+  const userId = data.user_id;
+
 
   const handleRangeChange = (selectedDates) => {
     const formatDate1 = format(selectedDates[0], "yyyy-MM-dd");
@@ -59,10 +68,36 @@ export default function PlanningCard({ parkData }) {
         activity.id === id ? { ...activity, date: value } : activity
       )
     );
-  }
+  };
 
-  console.log(planRange);
-  console.log(mainActivities);
+  const handleIsPrivateChange = (e) => {
+    setIsPrivate(e.target.checked ? 1 : 0);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submitted");
+
+      try {
+        await axios.post("http://localhost:8800/api/addPlan", {
+          planName,
+          planRange,
+          mainActivities,
+          isPrivate,
+          parkId,
+          userId
+        });
+      } catch (err) {
+        console.log(err);
+      }
+
+  };
+  console.log("planName: ", planName);
+  console.log("isPrivate: ", isPrivate);
+  console.log("planRange: ", planRange);
+  console.log("activities: ", mainActivities);
+  console.log("parkId: ", parkId);
+  console.log("userId: ", userId);
 
   return (
     <div className="planningContainer">
@@ -85,6 +120,7 @@ export default function PlanningCard({ parkData }) {
               placeholder={
                 "ชื่อแผนการท่องเที่ยว (เช่น " + parkData.name + " 2 วัน 1 คืน)"
               }
+              required
               style={{
                 borderRadius: "10px",
                 width: "80%",
@@ -99,9 +135,9 @@ export default function PlanningCard({ parkData }) {
               }}
               style={{ width: "20%" }}
               onClose={handleRangeChange}
+              required
             />
           </div>
-
           <div className="activity">
             {mainActivities.map((mainActivity) => (
               <div key={mainActivity.id} className="d-flex my-3">
@@ -153,7 +189,9 @@ export default function PlanningCard({ parkData }) {
                         noCalendar: true,
                         dateFormat: "H:i",
                         time_24hr: true,
-                        minTime: mainActivities[mainActivities.length-2]?.endTime || null,
+                        minTime:
+                          mainActivities[mainActivities.length - 2]?.endTime ||
+                          null,
                       }}
                       onClose={(selectedDates) => {
                         console.log(selectedDates);
@@ -172,7 +210,9 @@ export default function PlanningCard({ parkData }) {
                         noCalendar: true,
                         dateFormat: "H:i",
                         time_24hr: true,
-                        minTime: mainActivities[mainActivities.length-1]?.startTime || null,
+                        minTime:
+                          mainActivities[mainActivities.length - 1]
+                            ?.startTime || null,
                       }}
                       onClose={(selectedDates) =>
                         updateActivityTime(
@@ -208,7 +248,6 @@ export default function PlanningCard({ parkData }) {
               </div>
             ))}
           </div>
-
           <div className="addDel">
             <div
               style={{
@@ -236,8 +275,23 @@ export default function PlanningCard({ parkData }) {
               เพิ่มกิจกรรม
             </div>
           </div>
+          <Form.Check
+            inline
+            type="checkbox"
+            name="isPrivate"
+            onChange={handleIsPrivateChange}
+            defaultChecked
+            style={{
+              marginRight: "5px",
+              cursor: "pointer",
+              marginBottom: "10px",
+            }}
+          />{" "}
+          Make it private
           <div className="submitBtn">
-            <Button variant="success">วางแผน</Button>
+            <Button variant="success" onClick={handleSubmit}>
+              วางแผน
+            </Button>
           </div>
         </form>
       </div>
