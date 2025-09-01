@@ -7,4 +7,5 @@ router.post("/login", login);
 router.post("/register", register);
 router.post("/logout", logout);
 router.get("/checkAuth", checkAuth);
+
 export default router;
