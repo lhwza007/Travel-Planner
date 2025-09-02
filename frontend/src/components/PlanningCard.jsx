@@ -7,8 +7,11 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import { format, set } from "date-fns";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { SweetalertSucc, SweetalertErr } from "./Sweetalert";
 
 export default function PlanningCard({ parkData }) {
+  const navigate = useNavigate();
   const parkId = parkData.id;
   const [planName, setPlanName] = useState("");
   const [planRange, setPlanRange] = useState({
@@ -22,7 +25,6 @@ export default function PlanningCard({ parkData }) {
   const storedData = localStorage.getItem("user");
   const data = JSON.parse(storedData);
   const userId = data.user_id;
-
 
   const handleRangeChange = (selectedDates) => {
     const formatDate1 = format(selectedDates[0], "yyyy-MM-dd");
@@ -78,32 +80,38 @@ export default function PlanningCard({ parkData }) {
     e.preventDefault();
     console.log("submitted");
 
-      try {
-        await axios.post("http://localhost:8800/api/addPlan", {
-          planName,
-          planRange,
-          mainActivities,
-          isPrivate,
-          parkId,
-          userId
-        });
-      } catch (err) {
-        console.log(err);
-      }
-
+    try {
+      await axios.post("http://localhost:8800/api/addPlan", {
+        planName,
+        planRange,
+        mainActivities,
+        isPrivate,
+        parkId,
+        userId,
+      });
+      SweetalertSucc("สร้างแผนการท่องเที่ยวสำเร็จ");
+      navigate("/");
+    } catch (err) {
+      SweetalertErr(err.response.data.error);
+      // reset form
+      setPlanName("");
+      setPlanRange({ startDate: null, endDate: null });
+      setMainActivities([]);
+      setIsPrivate(1);
+    }
   };
-  console.log("planName: ", planName);
-  console.log("isPrivate: ", isPrivate);
-  console.log("planRange: ", planRange);
-  console.log("activities: ", mainActivities);
-  console.log("parkId: ", parkId);
-  console.log("userId: ", userId);
+  // console.log("planName: ", planName);
+  // console.log("isPrivate: ", isPrivate);
+  // console.log("planRange: ", planRange);
+  // console.log("activities: ", mainActivities);
+  // console.log("parkId: ", parkId);
+  // console.log("userId: ", userId);
 
   return (
     <div className="planningContainer">
       <h3 className="mb-3">{parkData.name}</h3>
       <div className="form">
-        <form action="">
+        <Form onSubmit={handleSubmit}>
           <Form.Label>ชื่อแผนการท่องเที่ยว</Form.Label>
           <div
             style={{
@@ -135,10 +143,9 @@ export default function PlanningCard({ parkData }) {
               }}
               style={{ width: "20%" }}
               onClose={handleRangeChange}
-              required
             />
           </div>
-          <div className="activity">
+          <div className="activityContainer">
             {mainActivities.map((mainActivity) => (
               <div key={mainActivity.id} className="d-flex my-3">
                 <div className="">
@@ -158,8 +165,9 @@ export default function PlanningCard({ parkData }) {
                       onChange={(e) =>
                         updateMainActivity(mainActivity.id, e.target.value)
                       }
-                      placeholder="ชื่อกิจกรรม (เช่น ดูน้ำตก...)"
+                      placeholder="กิจกรรม (เช่น เดินเล่น...)"
                       className="me-2"
+                      required
                       style={{
                         whiteSpace: "nowrap",
                         borderRadius: "10px",
@@ -167,7 +175,7 @@ export default function PlanningCard({ parkData }) {
                       }}
                     />
                   </div>
-                  <div style={{}}>
+                  <div className=" d-flex flex-wrap align-items-center">
                     <Flatpickr
                       style={{ marginRight: "10px" }}
                       options={{
@@ -182,46 +190,48 @@ export default function PlanningCard({ parkData }) {
                         );
                       }}
                     />
-                    <Flatpickr
-                      style={{ width: "60px", margin: "0px 5px" }}
-                      options={{
-                        enableTime: true,
-                        noCalendar: true,
-                        dateFormat: "H:i",
-                        time_24hr: true,
-                        minTime:
-                          mainActivities[mainActivities.length - 2]?.endTime ||
-                          null,
-                      }}
-                      onClose={(selectedDates) => {
-                        console.log(selectedDates);
-                        updateActivityTime(
-                          mainActivity.id,
-                          "startTime",
-                          format(selectedDates[0], "HH:mm")
-                        );
-                      }}
-                    />
-                    -
-                    <Flatpickr
-                      style={{ width: "60px", margin: "0px 5px" }}
-                      options={{
-                        enableTime: true,
-                        noCalendar: true,
-                        dateFormat: "H:i",
-                        time_24hr: true,
-                        minTime:
-                          mainActivities[mainActivities.length - 1]
-                            ?.startTime || null,
-                      }}
-                      onClose={(selectedDates) =>
-                        updateActivityTime(
-                          mainActivity.id,
-                          "endTime",
-                          format(selectedDates[0], "HH:mm")
-                        )
-                      }
-                    />
+                    <div>
+                      <Flatpickr
+                        style={{ width: "60px", margin: "0px 5px" }}
+                        options={{
+                          enableTime: true,
+                          noCalendar: true,
+                          dateFormat: "H:i",
+                          time_24hr: true,
+                          minTime:
+                            mainActivities[mainActivities.length - 2]
+                              ?.endTime || null,
+                        }}
+                        onClose={(selectedDates) => {
+                          console.log(selectedDates);
+                          updateActivityTime(
+                            mainActivity.id,
+                            "startTime",
+                            format(selectedDates[0], "HH:mm")
+                          );
+                        }}
+                      />
+                      -
+                      <Flatpickr
+                        style={{ width: "60px", margin: "0px 5px" }}
+                        options={{
+                          enableTime: true,
+                          noCalendar: true,
+                          dateFormat: "H:i",
+                          time_24hr: true,
+                          minTime:
+                            mainActivities[mainActivities.length - 1]
+                              ?.startTime || null,
+                        }}
+                        onClose={(selectedDates) =>
+                          updateActivityTime(
+                            mainActivity.id,
+                            "endTime",
+                            format(selectedDates[0], "HH:mm")
+                          )
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -236,19 +246,14 @@ export default function PlanningCard({ parkData }) {
                   >
                     <FiMinusCircle
                       onClick={() => deleteActivity(mainActivity.id)}
-                      style={{
-                        width: "25px",
-                        height: "25px",
-                        cursor: "pointer",
-                        color: "#f55b5b",
-                      }}
+                      className="delButton"
                     />
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="addDel">
+          <div className="add">
             <div
               style={{
                 display: "flex",
@@ -256,14 +261,7 @@ export default function PlanningCard({ parkData }) {
                 cursor: "pointer",
               }}
             >
-              <FiPlusCircle
-                onClick={addMainActivity}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  margin: "0px auto",
-                }}
-              />
+              <FiPlusCircle onClick={addMainActivity} className="addButton" />
             </div>
             <div
               style={{
@@ -286,14 +284,14 @@ export default function PlanningCard({ parkData }) {
               cursor: "pointer",
               marginBottom: "10px",
             }}
-          />{" "}
+          />
           Make it private
           <div className="submitBtn">
-            <Button variant="success" onClick={handleSubmit}>
+            <Button variant="success" type="submit">
               วางแผน
             </Button>
           </div>
-        </form>
+        </Form>
       </div>
     </div>
   );

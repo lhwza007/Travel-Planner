@@ -1,46 +1,73 @@
 .planningContainer {
-    height: auto;
-    width: 100%;
-    background-color: white;
-    padding: 50px;
-    border-radius: 20px;
+  height: auto;
+  width: 100%;
+  background-color: white;
+  padding: 50px;
+  border-radius: 20px;
 }
 
-.activity {
-    padding: 0px 2%;
+.activityContainer {
+  padding: 0;
 }
 
-.addDel {
-    width: 100%;
-    margin: 10px auto;
+.add {
+  width: 100%;
+  margin: 10px auto;
+}
+
+.addButton {
+  width: 35px;
+  height: 35px;
+  margin: 0px auto;
+}
+
+.addButton:hover {
+  cursor: pointer;
+  color: #165f10;
+  transform: scale(1.1);
+  transition: all 0.1s ease-in-out;
+}
+
+.delButton {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: #f55b5b;
+}
+
+.delButton:hover {
+    cursor: pointer;
+    color: #ff0000;
+    transform: scale(1.1);
+    transition: all 0.1s ease-in-out;
 }
 
 .submitBtn {
-    width: 100%;
-    display: flex;
-    /* justify-content: center; */
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
 }
 
 input {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .flatpickr-input {
-    border-radius: 10px;
-    height: 38px;
-    width: 100px;
-    text-align: center;
-    border: 1px solid #dee2e6;
+  border-radius: 10px;
+  height: 38px;
+  width: 100px;
+  text-align: center;
+  border: 1px solid #dee2e6;
 }
 
 .flatpickr-input:focus {
-    border-color: #86b7fe !important;
-    outline: none;
-    box-shadow: 0 0 0 4px #86b6fe7c;
+  border-color: #86b7fe !important;
+  outline: none;
+  box-shadow: 0 0 0 4px #86b6fe7c;
 }
 
 .isPrivateCheckbox {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
