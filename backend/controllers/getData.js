@@ -7,17 +7,20 @@ export const Plans = (req, res) => {
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
     WHERE plans.plan_isPrivate = 0 
-    ORDER BY plans.plan_timeStamp ASC, activities.activity_id ASC;
-    `;
+    ORDER BY plans.plan_timeStamp DESC, activities.activity_id ASC;
+  `;
 
   db.query(sql, (err, result) => {
     if (err) return res.status(500).json({ error: err });
 
-    const plans = {};
+    const plans = [];
+    const planMap = {}; // ใช้ Object ในการตรวจสอบว่ามี plan_id นี้แล้วหรือยัง
+
     result.forEach((row) => {
-      // ถ้ายังไม่มีแผนนี้ใน plans ให้สร้างขึ้นมาใหม่
-      if (!plans[row.plan_id]) {
-        plans[row.plan_id] = {
+      // ตรวจสอบว่า plan_id นี้ยังไม่ถูกเพิ่มเข้าไปในแผนที่ (map) หรือไม่
+      if (!planMap[row.plan_id]) {
+        // ถ้ายังไม่มี ให้สร้าง object สำหรับ plan นี้และเก็บไว้ในแผนที่
+        const newPlan = {
           plan_id: row.plan_id,
           park_id: row.park_id,
           user_id: row.user_id,
@@ -29,10 +32,15 @@ export const Plans = (req, res) => {
           plan_timeStamp: row.plan_timeStamp,
           activities: [],
         };
+        planMap[row.plan_id] = newPlan;
+        
+        // **เพิ่ม object ใหม่นี้เข้าไปใน array ผลลัพธ์**
+        plans.push(newPlan);
       }
-      // ถ้ามีกิจกรรมที่อยู่ในแผนนี้ ให้เพิ่มเข้าไปใน activities
+
+      // ถ้ามี activity ให้เพิ่มเข้าไปใน array activities ของ plan นั้น
       if (row.activity_id) {
-        plans[row.plan_id].activities.push({
+        planMap[row.plan_id].activities.push({
           activity_id: row.activity_id,
           activity_name: row.activity_name,
           activity_start: row.activity_start,
@@ -40,6 +48,21 @@ export const Plans = (req, res) => {
         });
       }
     });
-    res.json(Object.values(plans));
+
+    res.json(plans);
   });
 };
+
+export const test = (req, res) => {
+  const q = `SELECT plans.*, activities.*, users.user_id, users.user_name 
+    FROM plans 
+    LEFT JOIN activities ON plans.plan_id = activities.plan_id 
+    LEFT JOIN users ON plans.user_id = users.user_id 
+    WHERE plans.plan_isPrivate = 0 
+    ORDER BY plans.plan_timeStamp DESC, activities.activity_id ASC;`;
+
+  db.query(q, (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data);
+  });
+}
