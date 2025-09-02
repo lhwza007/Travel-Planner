@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 
 import personpfp from "../assets/personTest.svg";
@@ -8,67 +8,32 @@ import star from "../assets/star.svg";
 import share from "../assets/share.svg";
 import search from "../assets/search.svg";
 import filter from "../assets/filter.svg";
-import './PlanPost.css'
-
+import "./PlanPost.css";
+import axios from "axios";
 
 export default function PlanPost() {
   // อันนี้คือข้อมูลทดสอบตอนเรียกใช้การ์ดนะ
-  const [data, setData] = useState([
-     {
-      id: 1,
-      name: "Aphidech Phonwen",
-      planName: "ไปเขาใหญ่ 5 วัน 4 คืน",
-      planDetails: ["ไป a", "ไป b", "ไป c", "ไป d"],
-      budget: 99,
-      parkID: 1,
-    },
-    {
-      id: 2,
-      name: "John Doe",
-      planName: "ไปดอยอินทนนท์ 3 วัน 2 คืน",
-      planDetails: ["ไป a", "ไป b", "ไป c", "ไป d"],
-      budget: 99,
-      parkID: 2,
-    },
-    {
-      id: 3,
-      name: "Jane Smith",
-      planName: "ไปอุทยานแห่งชาติภูกระดึง 2 วัน 1 คืน",
-      planDetails: ["ไป a", "ไป b", "ไป c", "ไป d"],
-      budget: 99,
-      parkID: 3,
-    },
-    {
-      id: 4,
-      name: "Alice Johnson",
-      planName: "ไปเกาะสิมิลัน 3 วัน 2 คืน",
-      planDetails: ["ไป a", "ไป b", "ไป c", "ไป d"],
-      budget: 99,
-      parkID: 4,
-    },
-    {
-      id: 5,
-      name: "Bob Brown",
-      planName: "ไปอุทยานแห่งชาติเขาใหญ่ 2 วัน 1 คืน",
-      planDetails: ["ไป a", "ไป b", "ไป c", "ไป d"],
-      budget: 99,
-      parkID: 1,
-    },
-  ]);
- 
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8800/api/getData/plans")
+      .then((res) => setPlans(res.data))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <>
-      {data.map((item) => (
-        <div key={item.id} className="container mt-4 planCard">
+      {plans.map((item) => (
+        <div key={item.plan_id} className="container mt-4 planCard">
           <div className="planCardHeader">
             <div className="profile">
               <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
-              <p className="userName">{item.name}</p>
+              <p className="user_name">{item.user_name}</p>
             </div>
           </div>
 
-          <div className="planName">{item.planName}</div>
+          <div className="plan_name">{item.plan_name}</div>
 
           <div className="planBudget">
             <img
@@ -76,13 +41,20 @@ export default function PlanPost() {
               alt="budget"
               style={{ width: "30px", marginRight: "10px" }}
             />
-            {item.budget}
+            test
           </div>
 
-          <div className="planDetails">
+          <div className="activities">
             <ul>
-              {item.planDetails.map((detail, index) => (
-                <li key={index}>{detail}</li>
+              {item.activities.map((activity) => (
+                <li key={activity.activity_id}>
+                  <div className="activityDetails">
+                    <div>{activity.activity_name}</div>
+                    <div>
+                      {activity.activity_start} - {activity.activity_end}
+                    </div>
+                  </div>
+                </li>
               ))}
             </ul>
           </div>
