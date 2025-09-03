@@ -5,5 +5,4 @@ export const db = mysql.createConnection({
     user:"root",
     password:"root",
     database:"northtrek",
-    timezone: '+07:00'
 })

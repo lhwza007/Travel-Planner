@@ -93,19 +93,19 @@ export const logout = (req, res) => {
 };
 
 export const checkAuth = (req, res) => {
-  console.log("hello from checkAuth");
-  console.log("cookies:", req.cookies);
+  // console.log("hello from checkAuth");
+  // console.log("cookies:", req.cookies);
   const token = req.cookies.accessToken;
-  console.log("accessToken from cookie:", token);
+  // console.log("accessToken from cookie:", token);
 
   if (!token) return res.status(200).json({ isAuthenticated: false });
 
   jwt.verify(token, "secretkey", (err, user) => {
     if (err) {
-      console.log("JWT verify error:", err);
+      // console.log("JWT verify error:", err);
       return res.status(200).json({ isAuthenticated: false });
     }
-    console.log("JWT user:", user);
+    // console.log("JWT user:", user);
     return res
       .status(200)
       .json({ isAuthenticated: true, user_id: user.user_id });
