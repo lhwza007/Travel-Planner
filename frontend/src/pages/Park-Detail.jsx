@@ -12,7 +12,7 @@ export default function ParkDetail() {
   if (!parkData) {
     return <div>No park data found.</div>;
   }
-  console.log("Park ID", parkData.id); 
+  // console.log("Park ID", parkData.id); 
   return (
     <div>
       <ParkDetailCard  data={parkData}/>
