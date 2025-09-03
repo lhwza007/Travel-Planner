@@ -2,7 +2,7 @@
   {
     "url": "https://portal.dnp.go.th/Content/nationalpark?contentId=907",
     "park_name": "อุทยานแห่งชาติขุนขาน (Khun Khan)",
-    "park_phone": "ไม่พบโทรศัพท์",
+    "park_phone": "ไม่พบโทรศัพท์ (ท้ายสุด)",
     "park_email": "Khunkhan_np@hotmail.com",
     "park_activity": "ทางเดินศึกษาธรรมชาติ, เที่ยวถ้ำ/ศึกษาสภาพธรณี, ชมพรรณไม้, ดูนก/ดูผีเสื้อ, ดูดาว, ตั้งแคมป์พักแรม",
     "park_location": "หมู่ 1 ต.แม่สาบ อ.สะเมิง จ.เชียงใหม่ 50250 โทร"
@@ -42,27 +42,31 @@
   {
     "url": "https://portal.dnp.go.th/Content/nationalpark?contentId=7346",
     "park_name": "อุทยานแห่งชาติน้ำตกบัวตอง - น้ำพุเจ็ดสี (เตรียมการ)",
-    "park_phone": "ไม่พบโทรศัพท์",
-    "park_email": "ไม่พบอีเมล",
+    "park_phone": "ไม่พบโทรศัพท์ (ไม่มี .greentext)",
+    "park_email": "ไม่พบอีเมล (ไม่มี .greentext)",
     "park_activity": "ไม่พบข้อมูลกิจกรรม (ไม่มี .greentext)",
     "park_location": "ไม่พบที่อยู่"
   },
   {
     "url": "https://portal.dnp.go.th/Content/nationalpark?contentId=916",
-    "error": "Navigation timeout of 30000 ms exceeded"
+    "park_name": "อุทยานแห่งชาติผาแดง (Pha Daeng)",
+    "park_phone": "0 5304 6370",
+    "park_email": "ไม่พบอีเมล (ท้ายสุด)",
+    "park_activity": "ทางเดินศึกษาธรรมชาติ, เที่ยวน้ำตก, ชมพรรณไม้, ดูนก/ดูผีเสื้อ, ตั้งแคมป์พักแรม",
+    "park_location": "หมู่ 3 บ้านนาหวาย ตำบลเมืองนะ อำเภอเชียงดาว จังหวัดเชียงใหม่ 50170"
   },
   {
     "url": "https://portal.dnp.go.th/Content/nationalpark?contentId=917",
     "park_name": "อุทยานแห่งชาติแม่ตะไคร้ (Mae Takhrai)",
     "park_phone": "0 5200 0832 , 09 5694 5052",
-    "park_email": "ไม่พบอีเมล",
-    "park_activity": "ไม่พบข้อมูลกิจกรรม",
+    "park_email": "ไม่พบอีเมล (ท้ายสุด)",
+    "park_activity": "ไม่พบข้อมูลกิจกรรม (ไม่มี ⇔)",
     "park_location": "อุทยานแห่งชาติแม่ตะไคร้ 36 หมู่ 3 บ้านแม่หวาน ต.ป่าเมี่ยง อ.ดอยสะเก็ด จ.เชียงใหม่ 50220"
   },
   {
     "url": "https://portal.dnp.go.th/Content/nationalpark?contentId=918",
     "park_name": "อุทยานแห่งชาติแม่โถ (เตรียมการ) (Mae Tho)",
-    "park_phone": "ไม่พบโทรศัพท์",
+    "park_phone": "ไม่พบโทรศัพท์ (ท้ายสุด)",
     "park_email": "maetho41@gmail.com Facebook",
     "park_activity": "ทางเดินศึกษาธรรมชาติ, ชมพรรณไม้, เที่ยวน้ำตก, ดูนก/ดูผีเสื้อ, ดูดาว, ล่องแก่ง, ตั้งแคมป์พักแรม",
     "park_location": "อุทยานแห่งชาติแม่โถ ตู้ ปณ.10 ปณจ.ฮอด อ.ฮอด จ.เชียงใหม่ 50240"
@@ -71,7 +75,7 @@
     "url": "https://portal.dnp.go.th/Content/nationalpark?contentId=920",
     "park_name": "อุทยานแห่งชาติแม่วาง (Mae Wang)",
     "park_phone": "053 106 759 อีเมล",
-    "park_email": "ไม่พบอีเมล",
+    "park_email": "ไม่พบอีเมล (ท้ายสุด)",
     "park_activity": "ทางเดินศึกษาธรรมชาติ, เที่ยวถ้ำ/ศึกษาสภาพธรณี, ดูนก/ดูผีเสื้อ, ดูดาว, ตั้งแคมป์พักแรม",
     "park_location": "อุทยานแห่งชาติแม่วาง ต.สันติสุข อำเภอดอยหล่อ จ.เชียงใหม่ เบอร์"
   },
