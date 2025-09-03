@@ -1,0 +1,19 @@
+{
+  "name": "data-scraping",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
+    "mysql2": "^3.14.4",
+    "puppeteer": "^24.16.2"
+  }
+}
