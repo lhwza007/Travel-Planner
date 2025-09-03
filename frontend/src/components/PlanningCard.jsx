@@ -12,7 +12,7 @@ import { SweetalertSucc, SweetalertErr } from "./Sweetalert";
 
 export default function PlanningCard({ parkData }) {
   const navigate = useNavigate();
-  const parkId = parkData.id;
+  const parkId = parkData.park_id;
   const [planName, setPlanName] = useState("");
   const [planRange, setPlanRange] = useState({
     startDate: null,

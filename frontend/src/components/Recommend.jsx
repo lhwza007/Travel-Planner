@@ -10,7 +10,7 @@ export default function Recommend() {
   const navigate = useNavigate();
   const [recommend, setRecommend] = useState([
     {
-      id: 1,
+      park_id: 1,
       name: "อุทยานแห่งชาติเขาใหญ่",
       count: 8,
       imgPath: "view.jpg",
@@ -19,7 +19,7 @@ export default function Recommend() {
       email: "khaoyai@gmail.com",
     },
     {
-      id: 2,
+      park_id: 2,
       name: "อุทยานแห่งชาติดอยอินทนนท์",
       count: 8,
       imgPath: "view.jpg",
@@ -28,7 +28,7 @@ export default function Recommend() {
       email: "doi_intanon@gmail.com",
     },
     {
-      id: 3,
+      park_id: 3,
       name: "อุทยานแห่งชาติภูกระดึง",
       count: 8,
       imgPath: "view.jpg",
@@ -37,7 +37,7 @@ export default function Recommend() {
       email: "phukradeung@gmail.com",
     },
     {
-      id: 4,
+      park_id: 4,
       name: "อุทยานแห่งชาติหมู่เกาะสิมิลัน",
       count: 8,
       imgPath: "view.jpg",
@@ -48,7 +48,7 @@ export default function Recommend() {
   ]);
 
   function handleCardClick(item) {
-    console.log("Card Clicked! Navigating with data:", item);
+    // console.log("Card Clicked! Navigating with data:", item);
     navigate("/park-detail", { state: { parkData: item } });
   }
 
@@ -59,7 +59,7 @@ export default function Recommend() {
         <Row>
           {recommend.map((item) => (
             // อยากให้คลิกที่การ์ดแล้วไปหน้า ParkDetail
-            <Col md={3} sm={6} key={item.id}>
+            <Col md={3} sm={6} key={item.park_id}>
               <div
                 className="recommendCard"
                 style={{
