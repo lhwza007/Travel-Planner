@@ -1,14 +1,22 @@
 import { Container } from "react-bootstrap"
 import ProfileCard from "../components/ProfileCard"
-import PlanPost from "../components/PlanPost"
+import ProfilePlanPost from "../components/ProfilePlanPost"
+import {useLocation} from 'react-router-dom'
 export default function Profile() {
+
+    const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
+    // console.log(userData.user_id);
+    
     return (
         <>
         <Container>
+
             {/* ส่ง props เป็น id ของเจ้าของโปรไฟล์ */}
-            <ProfileCard />
+            <ProfileCard propsData={userData} />
+
             {/* ส่ง props เป็น id ของเจ้าของโปรไฟล์ */}
-            <PlanPost/>
+            <ProfilePlanPost  props={userData} />
+            
         </Container>
         </>
     )
