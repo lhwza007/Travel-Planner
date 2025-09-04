@@ -108,6 +108,34 @@ export const PlansEachPark = (req, res) => {
   });
 };
 
+export const PlansAndCounts = (req, res) => {
+  const sql = `
+    SELECT 
+      p.park_id,
+      p.park_name,
+      COUNT(pl.plan_id) AS plan_count
+    FROM parks p
+    LEFT JOIN plans pl ON p.park_id = pl.park_id
+    GROUP BY p.park_id, p.park_name`;
+
+  db.query(sql, (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(result);
+  });
+};
+
+export const ParkData = (req, res) => {
+  // restus(200).json({ message: "ParkData endpoint is working!" });
+  const sql = `
+    SELECT * FROM parks WHERE park_id = ?;
+  `;
+
+  db.query(sql, [req.query.park_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(result[0]);
+  });
+};
+
 export const test = (req, res) => {
   const q = `SELECT plans.*, activities.*, users.user_id, users.user_name 
     FROM plans 
