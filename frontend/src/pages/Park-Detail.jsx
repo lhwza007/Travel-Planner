@@ -6,18 +6,18 @@ import PlanList from '../components/Plan-list';
 export default function ParkDetail() {
   // ใช้ useLocation เพื่อเข้าถึงข้อมูลที่ถูกส่งมาใน state
   const location = useLocation();
-  const parkData = location.state.parkData;
-
+  const park_id = location.state.park_id;
+  // console.log("รับ park_id ผ่าน state:", park_id);
   // หากไม่มีข้อมูล ให้แสดงข้อความแจ้งเตือน หรือ redirect กลับ
-  if (!parkData) {
+  if (!park_id) {
     return <div>No park data found.</div>;
   }
-  // console.log("Park ID", parkData.id); 
+  // console.log("Park ID", park_id.id); 
   return (
     <div>
-      <ParkDetailCard  data={parkData}/>
+      <ParkDetailCard  park_id={park_id}/>
       <hr style={{border: "1px solid #495A3A", margin:"40px 0px"}}/>
-      <PlanList parkData={parkData}/>
+      <PlanList park_id={park_id}/>
     </div>
 
 

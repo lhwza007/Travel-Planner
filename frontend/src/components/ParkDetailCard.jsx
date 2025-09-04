@@ -5,55 +5,87 @@ import { LuMapPin } from "react-icons/lu";
 import { BsTelephone } from "react-icons/bs";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function ParkDetailCard({ data }) {
+export default function ParkDetailCard({ park_id }) {
 
   const navigate = useNavigate();
+  const [parkData, setParkData] = useState({});
 
-  function handleClick(data) {
-    navigate("/planning", { state: { parkData: data } });
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8800/api/getData/parkData", { params: { park_id: park_id } }
+      );
+      setParkData(response.data);
+    } catch (error) {
+      console.error("Error fetching park data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function handleClick(parkData) {
+    navigate("/planning", { state: { parkData: parkData } });
   }
+
+  // console.log("park data:", parkData);
 
 
   return (
     <Card className="container  mt-4 planCard shadow p-3 mb-3  ">
       <Card.Body>
         <div className="park-detail-card">
-          <h1>{data.name}</h1>
+          <h1>{parkData.park_name}</h1>
           <Row className="mb-3 mt-3">
             <Col md={4} sm={12}>
               <img
-                src={"../public/" + data.imgPath}
+                src={"../public/" + parkData.imgPath}
                 className="img-fluid rounded"
                 style={{ marginBottom: "10px" }}
               />
             </Col>
             <Col md={4} sm={12}>
               <img
-                src={"../public/" + data.imgPath}
+                src={"../public/" + parkData.imgPath}
                 className="img-fluid rounded"
                 style={{ marginBottom: "10px" }}
               />
             </Col>
             <Col md={4} sm={12}>
               <img
-                src={"../public/" + data.imgPath}
+                src={"../public/" + parkData.imgPath}
                 className="img-fluid rounded"
                 style={{ marginBottom: "10px" }}
               />
             </Col>
           </Row>
           <p>
-            <LuMapPin /> ที่อยู่: {data.address}
+            <LuMapPin /> ที่อยู่: {parkData.park_location? parkData.park_location : "ไม่มีข้อมูล"}
           </p>
           <p>
-            <BsTelephone /> เบอร์โทร: {data.tel}
+            <BsTelephone /> เบอร์โทร: {parkData.park_phone? parkData.park_phone : "ไม่มีข้อมูล"}
           </p>
           <p>
-            <MdOutlineMailOutline /> อีเมล: {data.email}
+            <MdOutlineMailOutline /> อีเมล: {parkData.park_email? parkData.park_email : "ไม่มีข้อมูล"}
+          </p>
+          <p>
+            <MdOutlineMailOutline /> กิจกรรม: {parkData.park_activity? parkData.park_activity : "ไม่มีข้อมูล"}
+          </p>
+          <p>
+            <MdOutlineMailOutline /> ลักษณะชีวนิเวศน์: {parkData.park_biome? parkData.park_biome : "ไม่มีข้อมูล"}
+          </p>
+          <p>
+            <MdOutlineMailOutline /> สัตว์ป่า: {parkData.park_animal? parkData.park_animal : "ไม่มีข้อมูล"}
+          </p>
+          <p>
+            <MdOutlineMailOutline /> ค่าธรรมเนียม: {parkData.park_fee? parkData.park_fee : "ไม่มีข้อมูล"}
           </p>
           <div className="d-flex justify-content-end">
-            <button className="btn" style={{backgroundColor:"#495A3A", color:"white"}} onClick={()=> handleClick(data)}>เริ่มวางแผน</button>
+            <button className="btn" style={{backgroundColor:"#495A3A", color:"white"}} onClick={()=> handleClick(parkData)}>เริ่มวางแผน</button>
           </div>
         </div>
 

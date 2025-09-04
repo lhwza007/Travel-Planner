@@ -6,7 +6,7 @@ import star from "../assets/star.svg";
 import share from "../assets/share.svg";
 import axios from "axios";
 
-export default function PlanList({ parkData }) {
+export default function PlanList({ park_id }) {
   const [plans, setPlans] = useState([]);
 
   // ตรวจสอบค่า parkData ที่ได้รับมา
@@ -16,13 +16,13 @@ export default function PlanList({ parkData }) {
     // Fetch plans from the backend API
     axios
       .get("http://localhost:8800/api/getData/plansEachPark", {
-        params: { park_id: parkData.park_id },
+        params: { park_id: park_id },
       })
       .then((res) => setPlans(res.data))
       .catch((err) => console.error(err));
   }, []);
 
-  // console.log("Park ID ทดสอบ:", parkData.id);
+  // console.log("Plan data ทดสอบ:", plans);
 
   return (
     <>
