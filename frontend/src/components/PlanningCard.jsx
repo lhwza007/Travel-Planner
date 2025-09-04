@@ -103,13 +103,13 @@ export default function PlanningCard({ parkData }) {
   // console.log("planName: ", planName);
   // console.log("isPrivate: ", isPrivate);
   // console.log("planRange: ", planRange);
-  // console.log("activities: ", mainActivities);
+  console.log("activities: ", mainActivities);
   // console.log("parkId: ", parkId);
   // console.log("userId: ", userId);
 
   return (
     <div className="planningContainer">
-      <h3 className="mb-3">{parkData.name}</h3>
+      <h3 className="mb-3">{parkData.park_name}</h3>
       <div className="form">
         <Form onSubmit={handleSubmit}>
           <Form.Label>ชื่อแผนการท่องเที่ยว</Form.Label>
@@ -198,9 +198,6 @@ export default function PlanningCard({ parkData }) {
                           noCalendar: true,
                           dateFormat: "H:i",
                           time_24hr: true,
-                          minTime:
-                            mainActivities[mainActivities.length - 2]
-                              ?.endTime || null,
                         }}
                         onClose={(selectedDates) => {
                           console.log(selectedDates);
