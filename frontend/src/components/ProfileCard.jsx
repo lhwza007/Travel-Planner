@@ -7,7 +7,7 @@ import { use, useEffect } from "react";
 export default function ProfileCard(props) {
 
   const userData = props.propsData; // propsตัวหน้าคือparamiter, .propsตัวหลังคือค่าที่ส่งมา
-  const count = props.countPlans;
+  const count = props.propsCount;
   return (
     <>
       <div className="profileCardContainer">

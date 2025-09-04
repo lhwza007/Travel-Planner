@@ -205,8 +205,8 @@ export const PlansByUserId = (req, res) => {
         });
       }
     });
-    const total_plans = plans.length;
-    res.json(plans, total_plans);
+    
+    res.json(plans);
   });
 }
 
