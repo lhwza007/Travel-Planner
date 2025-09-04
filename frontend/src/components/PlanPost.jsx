@@ -25,7 +25,7 @@ export default function PlanPost() {
   return (
     <>
       {plans.map((item) => (
-        <div key={item.plan_id} className="container mt-4 planCard">
+        <div key={item.plan_id} className="container mb-4 planCard">
           <div className="planCardHeader">
             <div className="profile">
               <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
@@ -33,13 +33,14 @@ export default function PlanPost() {
             </div>
           </div>
 
+          <div style={{ fontWeight:"bold", marginBottom:"10px" }}>{item.park_name}</div>
           <div className="plan_name">{item.plan_name}</div>
 
           <div className="planBudget">
             <img
               src={money}
               alt="budget"
-              style={{ width: "30px", marginRight: "10px" }}
+              style={{ width: "20px", marginRight: "10px" }}
             />
             test
           </div>

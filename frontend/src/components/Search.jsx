@@ -5,7 +5,7 @@ import './Search.css'
 
 export default function Search() {
     return(
-        <div className="container mt-4 searchBarContainer">
+        <div className="container my-4 searchBarContainer">
         <div className="searchGroup">
           SEARCH
           <Form style={{ width: "100%", display: "flex" }}>
