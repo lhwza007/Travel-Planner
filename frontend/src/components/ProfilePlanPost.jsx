@@ -9,23 +9,9 @@ import "./PlanPost.css";
 import axios from "axios";
 
 
-export default function ProfilePlanPost({props}) {
+export default function ProfilePlanPost({ propsPlans }) {
 
-  const userData = props; //รับ props มา
-
-  const [plans, setPlans] = useState([]);
-  
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8800/api/getData/plansByUserId", {
-        params: { user_id: userData.user_id },
-      })
-      .then((res) => setPlans(res.data))
-      .catch((err) => console.error(err));
-
-    
-  }, []);
+  const plans = propsPlans;
 
   return (
     <>
