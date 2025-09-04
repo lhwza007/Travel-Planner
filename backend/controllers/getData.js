@@ -2,10 +2,11 @@ import { db } from "../connect.js";
 
 export const Plans = (req, res) => {
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, parks.park_name 
     FROM plans 
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
+    LEFT JOIN parks ON plans.park_id = parks.park_id
     WHERE plans.plan_isPrivate = 0 
     ORDER BY plans.plan_timeStamp DESC, activities.activity_id ASC;
   `;
