@@ -113,10 +113,18 @@ export const PlansAndCounts = (req, res) => {
     SELECT 
       p.park_id,
       p.park_name,
-      COUNT(pl.plan_id) AS plan_count
+      COUNT(pl.plan_id) AS plan_count,
+      (
+        SELECT pi.parkImg_src 
+        FROM parkimg pi 
+        WHERE pi.park_id = p.park_id 
+        LIMIT 1
+      ) AS parkImg_src
     FROM parks p
     LEFT JOIN plans pl ON p.park_id = pl.park_id
-    GROUP BY p.park_id, p.park_name`;
+    GROUP BY p.park_id, p.park_name
+    ORDER BY plan_count DESC
+    ;`;
 
   db.query(sql, (err, result) => {
     if (err) return res.status(500).json({ error: err });
@@ -127,7 +135,10 @@ export const PlansAndCounts = (req, res) => {
 export const ParkData = (req, res) => {
   // restus(200).json({ message: "ParkData endpoint is working!" });
   const sql = `
-    SELECT * FROM parks WHERE park_id = ?;
+    SELECT 
+      * 
+    FROM parks 
+    WHERE park_id = ?;
   `;
 
   db.query(sql, [req.query.park_id], (err, result) => {
@@ -135,6 +146,69 @@ export const ParkData = (req, res) => {
     res.json(result[0]);
   });
 };
+
+export const ParkImg = (req, res) => {
+  const sql = `
+    SELECT 
+      * 
+    FROM parkimg 
+    WHERE park_id = ?;
+  `;
+  db.query(sql, [req.query.park_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(result);
+  });
+};
+
+export const PlansByUserId = (req, res) => {
+  const user_id = req.query.user_id; // รับ user_id จาก query parameters
+  const sql = `
+    SELECT plans.*, activities.*, users.user_id, users.user_name 
+    FROM plans
+    LEFT JOIN activities ON plans.plan_id = activities.plan_id 
+    LEFT JOIN users ON plans.user_id = users.user_id 
+    WHERE plans.user_id = ? 
+    ORDER BY plans.plan_timeStamp DESC, activities.activity_id ASC`;
+  ;
+  db.query(sql, [user_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+
+    const plans = [];
+    const planMap = {}; // ใช้ Object ในการตรวจสอบว่ามี plan_id นี้แล้วหรือยัง
+    result.forEach((row) => {
+      // ตรวจสอบว่า plan_id นี้ยังไม่ถูกเพิ่มเข้าไปในแผนที่ (map) หรือไม่
+      if (!planMap[row.plan_id]) {
+        // ถ้ายังไม่มี ให้สร้าง object สำหรับ plan นี้และเก็บไว้ในแผนที่
+        const newPlan = {
+          plan_id: row.plan_id,
+          park_id: row.park_id,
+          user_id: row.user_id,
+          user_name: row.user_name, 
+          park_name: row.park_name,
+          plan_name: row.plan_name,
+          plan_start: row.plan_start,
+          plan_end: row.plan_end,
+          plan_timeStamp: row.plan_timeStamp,
+          activities: [],
+        };
+        planMap[row.plan_id] = newPlan;
+        // เพิ่ม object ใหม่นี้เข้าไปใน array ผลลัพธ์
+        plans.push(newPlan);
+      }
+      // ถ้ามี activity ให้เพิ่มเข้าไปใน array activities ของ plan นั้น
+      if (row.activity_id) {
+        planMap[row.plan_id].activities.push({
+          activity_id: row.activity_id,
+          activity_name: row.activity_name,
+          activity_start: row.activity_start,
+          activity_end: row.activity_end,
+        });
+      }
+    });
+
+    res.json(plans);
+  });
+}
 
 export const test = (req, res) => {
   const q = `SELECT plans.*, activities.*, users.user_id, users.user_name 
