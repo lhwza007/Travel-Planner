@@ -25,6 +25,8 @@ export default function ParkList() {
     fetchData();
   }, []);
 
+  console.log("park data:", parkData);
+
   function handleCardClick(park_id) {
     // console.log("Card Clicked! Navigating with data:", park);
     navigate("/park-detail", { state: { park_id: park_id } });
@@ -38,9 +40,9 @@ export default function ParkList() {
             // อยากให้คลิกที่การ์ดแล้วไปหน้า ParkDetail
             <Col md={3} sm={6} key={park.park_id}>
               <div
-                className="recommendCard"
+                className="parkListCard"
                 style={{
-                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url(/${park.imgPath})`,
+                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url(${park.parkImg_src})`,
                   cursor: "pointer",
                 }}
                 onClick={() => handleCardClick(park.park_id)}
