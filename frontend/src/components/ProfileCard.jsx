@@ -2,8 +2,12 @@ import "../components/ProfileCard.css";
 import pfp from "../assets/testPfp.jpg";
 import { Button } from "react-bootstrap";
 import { FaRegCalendarAlt, FaClipboardList } from "react-icons/fa";
+import { use, useEffect } from "react";
 
-export default function ProfileCard() {
+export default function ProfileCard(props) {
+
+  const userData = props.propsData; // propsตัวหน้าคือparamiter, .propsตัวหลังคือค่าที่ส่งมา
+  const count = props.countPlans;
   return (
     <>
       <div className="profileCardContainer">
@@ -16,7 +20,7 @@ export default function ProfileCard() {
         </div>
         <div className="bottom">
           <div className="info">
-            <h3>UserFirstName UserLastName</h3>
+            <h3>{userData.user_firstName} {userData.user_lastName}</h3>
             <div
               className="joined"
               style={{
@@ -33,7 +37,7 @@ export default function ProfileCard() {
                   marginRight: "5px",
                 }}
               />
-              เข้าร่วมเมื่อ มกราคม 2025
+              เข้าร่วมเมื่อ {userData.user_timeStamp.split("T")[0]}
             </div>
             <div
               className="planCount"
@@ -51,7 +55,7 @@ export default function ProfileCard() {
                   marginRight: "5px",
                 }}
               />
-              n Plans
+              {count} Plans
             </div>
           </div>
           <div>
