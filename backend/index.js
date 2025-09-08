@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import addPlanRoutes from "./routes/addPlan.js";
 import getDataRoutes from "./routes/getData.js";
+import favoriteRoutes from "./routes/favorite.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api", addPlanRoutes);
 app.use("/api/getData", getDataRoutes);
+app.use("/api/favorite", favoriteRoutes);
 
 app.listen(8800, () => {
   console.log("API is working on port 8800...");

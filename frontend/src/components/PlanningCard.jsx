@@ -175,7 +175,7 @@ export default function PlanningCard({ parkData }) {
                       }}
                     />
                   </div>
-                  <div className=" d-flex flex-wrap align-items-center">
+                  <div className="activityTime d-flex flex-wrap align-items-center">
                     <Flatpickr
                       style={{ marginRight: "10px" }}
                       options={{
