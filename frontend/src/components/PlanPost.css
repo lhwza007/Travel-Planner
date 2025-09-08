@@ -50,6 +50,17 @@
     align-items: center;
 }
 
+.actionBar .favoriteGroup{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.actionBar .favoriteGroup:hover{
+    transform: scale(1.05);
+    transition: all 0.1s ease-in-out;
+}
+
 .activityDetails {
     display: flex;
     justify-content: space-between;

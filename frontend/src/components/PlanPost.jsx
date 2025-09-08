@@ -9,32 +9,69 @@ import share from "../assets/share.svg";
 import search from "../assets/search.svg";
 import filter from "../assets/filter.svg";
 import "./PlanPost.css";
+import { FaStar } from "react-icons/fa";
 import axios from "axios";
 
-export default function PlanPost() {
-  // อันนี้คือข้อมูลทดสอบตอนเรียกใช้การ์ดนะ
-  const [plans, setPlans] = useState([]);
+export default function PlanPost({ planData }) {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // console.log(user.user_id); // "123"
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8800/api/getData/plans")
-      .then((res) => setPlans(res.data))
-      .catch((err) => console.error(err));
+    getFavoriteStatus();
   }, []);
+
+  const toggleFavorite = (e) => {
+    e.preventDefault();
+
+    // ถ้าข้อมูลที่ fetch มา isFavorite status = false ให้เพิ่ม favorite
+    if (!isFavorite) {
+      axios
+        .post("http://localhost:8800/api/favorite/addFavorite", {
+          user_id: user.user_id,
+          plan_id: planData.plan_id})
+        .then((res) => //console.log("Success", res.data.success),
+          setIsFavorite(!isFavorite)
+        )
+        .catch((err) => console.error(err));
+    } else { // ถ้า isFavorite status = true ให้ลบ favorite
+      axios
+        .post("http://localhost:8800/api/favorite/removeFavorite", {
+          user_id: user.user_id,
+          plan_id: planData.plan_id})
+        .then((res) => //console.log("Removed", res.data),
+          setIsFavorite(!isFavorite)
+        )
+        .catch((err) => console.error(err));
+    }
+  }
+
+  // ดึงสถานะ isFavorite ของแผนการเดินทางนั้นๆ
+  const getFavoriteStatus = () => {
+    axios
+      .get("http://localhost:8800/api/favorite/getFavoriteStatus", {
+        params: {
+          user_id: user.user_id,
+          plan_id: planData.plan_id
+        }
+      })
+      .then((res) => setIsFavorite(res.data))
+      .catch((err) => console.error(err));
+  }
 
   return (
     <>
-      {plans.map((item) => (
-        <div key={item.plan_id} className="container mb-4 planCard">
+        <div className="container mb-4 planCard">
           <div className="planCardHeader">
             <div className="profile">
               <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
-              <p className="user_name">{item.user_name}</p>
+              <p className="user_name">{planData.user_name}</p>
             </div>
           </div>
 
-          <div style={{ fontWeight:"bold", marginBottom:"10px" }}>{item.park_name}</div>
-          <div className="plan_name">{item.plan_name}</div>
+          <div style={{ fontWeight:"bold", marginBottom:"10px" }}>{planData.park_name}</div>
+          <div className="plan_name">{planData.plan_name}</div>
 
           <div className="planBudget">
             <img
@@ -47,7 +84,7 @@ export default function PlanPost() {
 
           <div className="activities">
             <ul>
-              {item.activities.map((activity) => (
+              {planData.activities.map((activity) => (
                 <li key={activity.activity_id}>
                   <div className="activityDetails">
                     <div>{activity.activity_name}</div>
@@ -62,8 +99,10 @@ export default function PlanPost() {
           <hr />
 
           <div className="actionBar">
-            <div className="group">
-              <img src={star} alt="favorite" />
+            <div className="favoriteGroup" onClick={toggleFavorite}>
+              <FaStar 
+                style={{color:isFavorite? "orange": "grey", width:"25px", marginBottom:"1px"}}
+              />
               Favorite
             </div>
             <div className="group">
@@ -72,7 +111,6 @@ export default function PlanPost() {
             </div>
           </div>
         </div>
-      ))}
     </>
   );
 }

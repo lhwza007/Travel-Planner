@@ -25,7 +25,7 @@ export default function ParkList() {
     fetchData();
   }, []);
 
-  console.log("park data:", parkData);
+  // console.log("park data:", parkData);
 
   function handleCardClick(park_id) {
     // console.log("Card Clicked! Navigating with data:", park);
