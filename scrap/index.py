@@ -27,7 +27,7 @@ class Park(BaseModel):
 
 urls = [
     "https://portal.dnp.go.th/Content/nationalpark?contentId=907",
-    "https://portal.dnp.go.th/Content/nationalpark?contentId=908",
+    "https://portal.dnp.go.th/Content/nationalpark=?contentId=908",
     "https://portal.dnp.go.th/Content/nationalpark?contentId=912",
     "https://portal.dnp.go.th/Content/nationalpark?contentId=914",
     "https://portal.dnp.go.th/Content/nationalpark?contentId=915",
@@ -39,7 +39,7 @@ urls = [
     "https://portal.dnp.go.th/Content/nationalpark?contentId=921",
     "https://portal.dnp.go.th/Content/nationalpark?contentId=922",
     "https://portal.dnp.go.th/Content/nationalpark?contentId=923",
-    "https://portal.dnp.go.th/Content/nationalpark?contentId=925"
+    "https://portal.dnp.go.th/Content/nationalpark?contentId925"
 ]
 
 
