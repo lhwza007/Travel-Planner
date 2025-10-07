@@ -2,9 +2,11 @@ import "../components/ProfileCard.css";
 import pfp from "../assets/testPfp.jpg";
 import { Button } from "react-bootstrap";
 import { FaRegCalendarAlt, FaClipboardList } from "react-icons/fa";
-import { use, useEffect } from "react";
+import { useState } from "react";
+import InfoChangingModal from "./InfoChangingModal.jsx";
 
 export default function ProfileCard(props) {
+  const [modalShow, setModalShow] = useState(false);
 
   const userData = props.propsData; // propsตัวหน้าคือparamiter, .propsตัวหลังคือค่าที่ส่งมา
   const count = props.propsCount;
@@ -59,10 +61,14 @@ export default function ProfileCard(props) {
             </div>
           </div>
           <div>
-            <Button variant="success">แก้ไขโปรไฟล์</Button>
+            <Button variant="success" onClick={()=> setModalShow(true)}>แก้ไขโปรไฟล์</Button>
           </div>
         </div>
       </div>
+      <InfoChangingModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </>
   );
 }
