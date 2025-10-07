@@ -23,3 +23,4 @@ app.use("/api/favorite", favoriteRoutes);
 app.listen(8800, () => {
   console.log("API is working on port 8800...");
 });
+
