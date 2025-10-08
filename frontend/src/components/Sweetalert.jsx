@@ -1,24 +1,26 @@
 import Swal from "sweetalert2";
 
-
 export function SweetalertSucc(msg) {
   const swal = Swal.fire({
     title: msg,
     icon: "success",
-    draggable: true,
+    confirmButtonText: "OK",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.reload(); // รีเฟรชหน้า
+    }
   });
   return swal;
 }
-
 
 export function SweetalertErr(msg) {
   const swal = Swal.fire({
     title: msg,
-    icon: "error",
-    draggable: true,
+    icon: "error",confirmButtonText: "OK",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.reload(); // รีเฟรชหน้า
+    }
   });
   return swal;
 }
-
-
-
