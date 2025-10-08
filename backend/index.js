@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.js";
 import addPlanRoutes from "./routes/addPlan.js";
 import getDataRoutes from "./routes/getData.js";
 import favoriteRoutes from "./routes/favorite.js";
+import updateDataRoutes from "./routes/updateData.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api", addPlanRoutes);
 app.use("/api/getData", getDataRoutes);
 app.use("/api/favorite", favoriteRoutes);
+app.use("/api/updateData", updateDataRoutes);
 
 app.listen(8800, () => {
   console.log("API is working on port 8800...");

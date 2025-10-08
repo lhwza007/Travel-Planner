@@ -211,6 +211,34 @@ export const PlansByUserId = (req, res) => {
   });
 }
 
+export const UserInfo = (req, res) => {
+  const user_id = req.query.user_id; // รับ user_id จาก query parameters
+  const sql = `
+    SELECT 
+      user_name, user_firstName, user_lastName, user_level, user_gender, user_income, user_age, user_email, user_phone, user_pfp 
+    FROM users 
+    WHERE user_id = ?;
+  `;
+  db.query(sql, [user_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(result[0]);
+  });
+};
+
+export const AllUserInfo = (req, res) => {
+  const user_id = req.query.user_id; // รับ user_id จาก query parameters
+  const sql = `
+    SELECT 
+      * 
+    FROM users 
+    WHERE user_id = ?;
+  `;
+  db.query(sql, [user_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(result[0]);
+  });
+};
+
 export const test = (req, res) => {
   const q = `SELECT plans.*, activities.*, users.user_id, users.user_name 
     FROM plans 
