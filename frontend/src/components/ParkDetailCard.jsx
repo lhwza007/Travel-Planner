@@ -7,6 +7,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ShowMap from "./Map.jsx";
 
 export default function ParkDetailCard({ park_id }) {
   const navigate = useNavigate();
@@ -99,6 +100,9 @@ export default function ParkDetailCard({ park_id }) {
             <MdOutlineMailOutline /> ค่าธรรมเนียม:{" "}
             {parkData.park_fee ? parkData.park_fee : "ไม่มีข้อมูล"}
           </p>
+
+          <ShowMap />
+
           <div className="d-flex justify-content-end">
             <button
               className="btn"

@@ -211,6 +211,56 @@ export const PlansByUserId = (req, res) => {
   });
 }
 
+export const PlansByParkId = (req, res) => {
+  const park_id = req.query.park_id; // รับ park_id จาก query parameters
+  const sql = `
+    SELECT plans.*, activities.*, users.user_id, users.user_name 
+    FROM plans
+    LEFT JOIN activities ON plans.plan_id = activities.plan_id 
+    LEFT JOIN users ON plans.user_id = users.user_id 
+    WHERE plans.park_id = ? && plans.plan_isPrivate = 0 
+    ORDER BY plans.plan_timeStamp DESC, activities.activity_id ASC`;
+  ;
+  db.query(sql, [park_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+
+    const plans = [];
+    const planMap = {}; // Object ในการตรวจสอบว่ามี plan_id นี้แล้วหรือยัง
+    result.forEach((row) => {
+      // ตรวจสอบว่า plan_id นี้ยังไม่ถูกเพิ่มเข้าไปในแผนที่ (map) หรือไม่
+      if (!planMap[row.plan_id]) {
+        // ถ้ายังไม่มี ให้สร้าง object สำหรับ plan นี้และเก็บไว้ในแผนที่
+        const newPlan = {
+          plan_id: row.plan_id,
+          park_id: row.park_id,
+          user_id: row.user_id,
+          user_name: row.user_name, 
+          park_name: row.park_name,
+          plan_name: row.plan_name,
+          plan_start: row.plan_start,
+          plan_end: row.plan_end,
+          plan_timeStamp: row.plan_timeStamp,
+          activities: [],
+        };
+        planMap[row.plan_id] = newPlan;
+        // เพิ่ม object ใหม่นี้เข้าไปใน array ผลลัพธ์
+        plans.push(newPlan);
+      }
+      // ถ้ามี activity ให้เพิ่มเข้าไปใน array activities ของ plan นั้น
+      if (row.activity_id) {
+        planMap[row.plan_id].activities.push({
+          activity_id: row.activity_id,
+          activity_name: row.activity_name,
+          activity_start: row.activity_start,
+          activity_end: row.activity_end,
+        });
+      }
+    });
+    
+    res.json(plans);
+  });
+}
+
 export const UserInfo = (req, res) => {
   const user_id = req.query.user_id; // รับ user_id จาก query parameters
   const sql = `

@@ -1,9 +1,9 @@
 import { Container } from "react-bootstrap"
 import ProfileCard from "../components/ProfileCard"
-import ProfilePlanPost from "../components/ProfilePlanPost"
-import {useLocation} from 'react-router-dom'
 import { useEffect, useState } from "react"
 import axios from "axios"
+import PlanPost from "../components/PlanPost";
+
 export default function Profile() {
     const [plans, setPlans] = useState([]);
     const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
@@ -16,10 +16,8 @@ export default function Profile() {
           })
           .then((res) => setPlans(res.data))
           .catch((err) => console.error(err));
-          
       }, []);
     
-
     return (
         <>
         <Container>
@@ -27,8 +25,12 @@ export default function Profile() {
             {/* ส่ง props เป็น id ของเจ้าของโปรไฟล์ */}
             <ProfileCard propsData={userData} propsCount={count} />
 
-            {/* ส่ง props เป็น id ของเจ้าของโปรไฟล์ */}
-            <ProfilePlanPost  propsPlans={plans}/>
+            {/* map plans ด้วยการ query ตาม user id */}
+            {
+              plans.map((plan) => (
+                <PlanPost key={plan.plan_id} planData={plan} />
+              ))
+            }
             
         </Container>
         </>

@@ -1,5 +1,4 @@
 import Search from '../components/Search';
-import FavoriteCard from '../components/FavoriteCard';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import PlanPost from '../components/PlanPost';

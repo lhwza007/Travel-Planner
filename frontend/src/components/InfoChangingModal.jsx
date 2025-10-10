@@ -60,6 +60,7 @@ export default function InfoChangingModal(props) {
     }
   };
 
+  // ฟังก์ชั่นดึงข้อมูลใหม่มาเก็บใน local storage
   const changeUserData = () => {
     const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
     const user_id = userData.user_id;
@@ -85,13 +86,17 @@ export default function InfoChangingModal(props) {
     axios
       .patch(`http://localhost:8800/api/updateData/updateUserProfile?user_id=${user_id}`, inputs)
       .then((res) => {
-        changeUserData();
-        SweetalertSucc(res.data.message);
-        console.log("Response data: ", res.data.message);
+        if (res.data.success) {
+          changeUserData();
+          SweetalertSucc(res.data.message);
+        } else {
+          SweetalertErr(res.data.message);
+          return;
+        }
       })
       .catch((err) => {
         console.error(err)
-        SweetalertErr(res.data.error);
+        SweetalertErr(err);
       });
   };
 
