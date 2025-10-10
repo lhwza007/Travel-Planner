@@ -5,73 +5,61 @@ import Col from "react-bootstrap/Col";
 import "./Recommend.css";
 import ParkDetail from "../pages/Park-Detail";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+
 
 export default function Recommend() {
   const navigate = useNavigate();
-  const [recommend, setRecommend] = useState([
-    {
-      park_id: 1,
-      name: "อุทยานแห่งชาติเขาใหญ่",
-      count: 8,
-      imgPath: "view.jpg",
-      address: "อุทยานแห่งชาติเขาใหญ่, Thailand",
-      tel: "044-297-133",
-      email: "khaoyai@gmail.com",
-    },
-    {
-      park_id: 2,
-      name: "อุทยานแห่งชาติดอยอินทนนท์",
-      count: 8,
-      imgPath: "view.jpg",
-      address: "อุทยานแห่งชาติดอยอินทนนท์, Thailand",
-      tel: "055-297-134",
-      email: "doi_intanon@gmail.com",
-    },
-    {
-      park_id: 3,
-      name: "อุทยานแห่งชาติภูกระดึง",
-      count: 8,
-      imgPath: "view.jpg",
-      address: "อุทยานแห่งชาติภูกระดึง, Thailand",
-      tel: "089-892-921",
-      email: "phukradeung@gmail.com",
-    },
-    {
-      park_id: 4,
-      name: "อุทยานแห่งชาติหมู่เกาะสิมิลัน",
-      count: 8,
-      imgPath: "view.jpg",
-      address: "อุทยานแห่งชาติหมู่เกาะสิมิลัน, Thailand",
-      tel: "022-532-005",
-      email: "simiran@gmail.com",
-    },
-  ]);
+  const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
+  console.log(userData);
+  console.log("user_level:", userData.user_level);
+  console.log("user_age:", userData.user_age);
 
-  function handleCardClick(item) {
-    // console.log("Card Clicked! Navigating with data:", item);
-    navigate("/park-detail", { state: { parkData: item } });
+  const [parkData, setParkData] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8800/api/getData/recommendByLLM",{ params: { user_level: userData.user_level ,user_age:userData.user_age} }
+      );
+      setParkData(response.data);
+    } catch (error) {
+      console.error("Error fetching park data:", error);
+    }
+  };
+
+  useEffect(() => {
+      fetchData();
+    }, []);
+
+  console.log(parkData);
+
+
+  function handleCardClick(park_id) {
+    // console.log("Card Clicked! Navigating with data:", park);
+    navigate("/park-detail", { state: { park_id: park_id } });
   }
 
   return (
     <>
       <Container>
-        <div className="head">Recommend for you...</div>
+        <div className="head">Recommend for you by AI...</div>
         <Row>
-          {recommend.map((item) => (
+          {parkData.map((park) => (
             // อยากให้คลิกที่การ์ดแล้วไปหน้า ParkDetail
-            <Col md={3} sm={6} key={item.park_id}>
+            <Col md={3} sm={6} key={park.park_id}>
               <div
                 className="recommendCard"
                 style={{
-                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url(/${item.imgPath})`,
+                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url(${park.parkImg_src})`,
                   cursor: "pointer",
                 }}
-                onClick={() => handleCardClick(item)}
+                onClick={() => handleCardClick(park.park_id)}
               >
                 <div className="cardDetails">
-                  <div style={{ marginRight: "10px" }}>{item.name}</div>
+                  <div style={{ marginRight: "10px" }}>{park.park_name}</div>
                   <div style={{ whiteSpace: "nowrap" }}>
-                    {item.count} {item.count > 1 ? "Plans" : "Plan"}
+                    {park.plan_count} {park.plan_count > 1 ? "Plans" : "Plan"}
                   </div>
                 </div>
               </div>
