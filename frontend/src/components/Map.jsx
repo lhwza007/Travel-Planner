@@ -79,113 +79,157 @@ import {
   AdvancedMarker,
   InfoWindow,
 } from "@vis.gl/react-google-maps";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoMdPin } from "react-icons/io";
+import axios from "axios";
 
-const MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY; // 👈 ใช้แบบ Vite
+//🔹 ข้อมูลหลายจุดบนแผนที่
+// const locations = [
+//   {
+//     id: 1,
+//     name: "จุดชมวิวทิวทัศน์",
+//     position: { lat: 18.87288221982771, lng: 98.78169479949723 }, // 18.87288221982771, 98.78169479949723
+//     description: "จุดชมวิวทิวทัศน์ ป่าเสมิง",
+//   },
+//   {
+//     id: 2,
+//     name: "บ่อน้ำอุ่นธรรมชาติ",
+//     position: { lat: 18.85501520124959, lng: 98.62178713069818 }, // 18.85501520124959, 98.62178713069818
+//     description: "บ่อน้ำอุ่นธรรมชาติ",
+//   },
+//   {
+//     id: 3,
+//     name: "ถ้ำหลวงแม่สาบ",
+//     position: { lat: 18.864570150228364, lng: 98.71326624914754 }, // 18.864570150228364, 98.71326624914754
+//     description: "ถ้ำหลวงแม่สาบ",
+//   },
+// ];
 
-// 🔹 ข้อมูลหลายจุดบนแผนที่
-const locations = [
-  {
-    id: 1,
-    name: "จุดชมวิวทิวทัศน์",
-    position: { lat: 18.87288221982771, lng: 98.78169479949723 }, // 18.87288221982771, 98.78169479949723
-    description: "จุดชมวิวทิวทัศน์ ป่าเสมิง",
-  },
-  {
-    id: 2,
-    name: "บ่อน้ำอุ่นธรรมชาติ",
-    position: { lat: 18.85501520124959, lng: 98.62178713069818 }, // 18.85501520124959, 98.62178713069818
-    description: "บ่อน้ำอุ่นธรรมชาติ",
-  },
-  {
-    id: 3,
-    name: "ถ้ำหลวงแม่สาบ",
-    position: { lat: 18.864570150228364, lng: 98.71326624914754 }, // 18.864570150228364, 98.71326624914754
-    description: "ถ้ำหลวงแม่สาบ",
-  },
-];
-
-export default function ShowMap() {
+export default function ShowMap({ park_id }) {
   const [openMarkerId, setOpenMarkerId] = useState(null);
+  const [parkPlaces, setParkPlaces] = useState(null);
+  const [parkPlacesCenter, setParkPlacesCenter] = useState(null);
 
-  return (
-    <>
-      <div
-        style={{
-          marginBottom: "20px",
-          borderRadius: "10px",
-          overflow: "hidden",
-        }}
-      >
-        <APIProvider apiKey={MAP_API_KEY}>
-          <div style={{ height: "600px", width: "100%" }}>
-            <Map
-              mapId={import.meta.env.VITE_MAP_ID}
-              defaultCenter={{
-                lat: 18.864570150228364,
-                lng: 98.71326624914754,
-              }}
-              defaultZoom={12}
-              mapTypeId="satellite"
-              gestureHandling="greedy"
-            >
-              {locations.map((loc) => (
-                <div key={loc.id}>
-                  {/* หมุด */}
-                  <AdvancedMarker
-                    position={loc.position}
-                    onClick={() =>
-                      setOpenMarkerId(openMarkerId === loc.id ? null : loc.id)
-                    }
-                  >
-                    {/* รูปหมุด */}
-                    <div style={{ textAlign: "center" }}>
-                      <IoMdPin
-                        style={{
-                          color: "#da0000ff",
-                          width: "40px",
-                          height: "40px",
-                          marginBottom: "5px",
-                        }}
-                      />
-                      <br />
-                      <div
-                        style={{
-                          fontSize: "12px",
-                          color: "#ffffffff",
-                          backgroundColor: "#00000080",
-                          borderRadius: "4px",
-                          padding: "2px 4px",
-                          display: "inline-block",
-                          marginTop: "-8px",
-                        }}
-                      >
-                        {loc.name}
-                      </div>
-                    </div>
-                  </AdvancedMarker>
+  useEffect(() => {
+    if (park_id) {
+      fetchData();
+    }
+  }, []);
 
-                  {/* Info Window */}
-                  {openMarkerId === loc.id && (
-                    <InfoWindow
-                      position={loc.position}
-                      onCloseClick={() => setOpenMarkerId(null)}
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8800/api/getData/parkPlaces",
+        { params: { park_id } }
+      );
+
+      setParkPlaces(response.data);
+
+      if (response.data.length > 0) {
+        let center = response.data[0].parkplaces_center;
+        if (typeof center === "string") {
+          center = JSON.parse(center);
+        }
+        setParkPlacesCenter(center);
+      }
+    } catch (error) {
+      console.error("Error fetching park places data:", error);
+    }
+  };
+
+  // console.log("park places:", parkPlaces);
+  // console.log("park places center:", parkPlacesCenter.lat);
+
+  if (!parkPlaces || !parkPlacesCenter) {
+    return <div>Loading map...</div>;
+  } else {
+    return (
+      <>
+        <div
+          style={{
+            marginBottom: "20px",
+            borderRadius: "10px",
+            overflow: "hidden",
+          }}
+        >
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+            <div style={{ height: "600px", width: "100%" }}>
+              <Map
+                mapId={import.meta.env.VITE_MAP_ID}
+                defaultCenter={parkPlacesCenter}
+                defaultZoom={12}
+                mapTypeId="satellite"
+                gestureHandling="greedy"
+              >
+                {parkPlaces.map((parkPlace) => (
+                  <div key={parkPlace.parkplace_id}>
+                    {/* หมุด */}
+                    <AdvancedMarker
+                      position={{
+                        lat: parseFloat(parkPlace.parkplace_lat),
+                        lng: parseFloat(parkPlace.parkplace_lng),
+                      }}
+                      onClick={() =>
+                        setOpenMarkerId(
+                          openMarkerId === parkPlace.parkplace_id
+                            ? null
+                            : parkPlace.parkplace_id
+                        )
+                      }
                     >
-                      <div style={{ minWidth: "150px" }}>
-                        <h3 style={{ margin: "0 0 4px" }}>{loc.name}</h3>
-                        <p style={{ margin: 0, fontSize: "13px" }}>
-                          {loc.description}
-                        </p>
+                      {/* รูปหมุด */}
+                      <div style={{ textAlign: "center" }}>
+                        <IoMdPin
+                          style={{
+                            color: "#da0000ff",
+                            width: "40px",
+                            height: "40px",
+                            marginBottom: "5px",
+                          }}
+                        />
+                        <br />
+                        <div
+                          style={{
+                            fontSize: "12px",
+                            color: "#ffffffff",
+                            backgroundColor: "#00000080",
+                            borderRadius: "4px",
+                            padding: "2px 4px",
+                            display: "inline-block",
+                            marginTop: "-8px",
+                          }}
+                        >
+                          {parkPlace.parkplace_name}
+                        </div>
                       </div>
-                    </InfoWindow>
-                  )}
-                </div>
-              ))}
-            </Map>
-          </div>
-        </APIProvider>
-      </div>
-    </>
-  );
+                    </AdvancedMarker>
+
+                    {/* Info Window */}
+                    {openMarkerId === parkPlace.parkplace_id && (
+                      <InfoWindow
+                        position={{
+                          lat: parseFloat(parkPlace.parkplace_lat),
+                          lng: parseFloat(parkPlace.parkplace_lng),
+                        }}
+                        onCloseClick={() => setOpenMarkerId(null)}
+                      >
+                        <div style={{ minWidth: "150px" }}>
+                          <h3 style={{ margin: "0 0 4px" }}>
+                            {parkPlace.parkplace_name}
+                          </h3>
+                          <p style={{ margin: 0, fontSize: "13px" }}>
+                            {parkPlace.parkplace_description}
+                          </p>
+                        </div>
+                      </InfoWindow>
+                    )}
+                  </div>
+                ))}
+              </Map>
+            </div>
+          </APIProvider>
+        </div>
+      </>
+    );
+  }
 }

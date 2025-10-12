@@ -1,4 +1,4 @@
-# pip install pdfplumber mysql-connector-python 
+# pip install pdfplumber mysql-connector-python google-genai python-dotenv pydantic
 import pdfplumber
 import mysql.connector
 from dotenv import load_dotenv
