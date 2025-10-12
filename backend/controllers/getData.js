@@ -302,3 +302,17 @@ export const test = (req, res) => {
     return res.status(200).json(data);
   });
 }
+
+export const ParkPlaces = (req, res) => {
+  const park_id = req.query.park_id; // รับ user_id จาก query parameters
+  const sql = `
+    SELECT 
+      * 
+    FROM parkplaces 
+    WHERE park_id = ?;
+  `; 
+  db.query(sql, [park_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(result);
+  });
+};

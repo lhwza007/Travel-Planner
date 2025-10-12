@@ -25,7 +25,7 @@ export default function ParkDetail() {
       .catch((err) => console.error(err));
   }, []);
 
-  console.log("Plans", plans);
+  // console.log("Plans", plans);
   return (
     <div>
       <ParkDetailCard park_id={park_id} />

@@ -17,7 +17,7 @@ function BasicExample() {
   async function verify() {
     const result = await checkAuth();
     setIsAuthenticated(result);
-    console.log("Authentication status:", result);
+    // console.log("Authentication status:", result);
   }
   verify();
 

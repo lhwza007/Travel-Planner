@@ -101,7 +101,7 @@ export default function ParkDetailCard({ park_id }) {
             {parkData.park_fee ? parkData.park_fee : "ไม่มีข้อมูล"}
           </p>
 
-          <ShowMap />
+          <ShowMap park_id={park_id}/>
 
           <div className="d-flex justify-content-end">
             <button
