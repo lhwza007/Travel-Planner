@@ -2,6 +2,7 @@ import { spawn } from "child_process";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { db } from "../connect.js";
+import e from "express";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -113,6 +114,64 @@ export const RecommendByLLM = async (req, res) => {
   } catch (error) {
     // Error ทั่วไป
     console.error("Uncaught Error in RecommendByLLM:", error);
+    res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
+  }
+};
+
+
+export const RecommendBylocalstorage = (req, res) => {
+  try {
+    let list_park_id = req.query.list_park_id; // อาจเป็น undefined, string, หรือ array
+    console.log("raw list_park_id:", list_park_id);
+
+    if (!list_park_id) {
+      return res.status(400).json({ error: "MISSING_LIST_PARK_ID" });
+    }
+
+    // Normalize เป็น array ของตัวเลข
+    if (typeof list_park_id === "string") {
+      // ถ้าเป็น JSON array string -> parse
+      if (list_park_id.startsWith("[") && list_park_id.endsWith("]")) {
+        try {
+          list_park_id = JSON.parse(list_park_id);
+        } catch {
+          // fallthrough to comma split
+          list_park_id = list_park_id.slice(1, -1).split(",").map(s => s.trim());
+        }
+      
+      } else if (list_park_id.includes(",")) {
+        list_park_id = list_park_id.split(",").map(s => s.trim());
+      } else {
+        list_park_id = [list_park_id];
+      }
+    }
+
+    const placeholders = list_park_id.map(() => "?").join(",");
+    const sql = `SELECT 
+                parks.park_id,
+                parks.park_name,
+                COUNT(plans.plan_id) AS plan_count,
+                (
+                  SELECT parkimg.parkImg_src 
+                  FROM parkimg 
+                  WHERE parkimg.park_id = parks.park_id 
+                  LIMIT 1
+                ) AS parkImg_src
+                FROM parks 
+                LEFT JOIN plans ON parks.park_id = plans.park_id
+                WHERE parks.park_id IN (${placeholders})
+                GROUP BY parks.park_id, parks.park_name, parkImg_src 
+                ORDER BY FIELD(parks.park_id, ${list_park_id.join(",")})`;
+
+    db.query(sql, list_park_id, (err, dbResult) => {
+      if (err) {
+        console.error("Database Query Error:", err);
+        return res.status(500).json({ error: "DATABASE_QUERY_FAILED" });
+      }
+      res.json(dbResult);
+    });
+  } catch (err) {
+    console.error("Uncaught Error in RecommendBylocalstorage:", err);
     res.status(500).json({ error: "INTERNAL_SERVER_ERROR" });
   }
 };
