@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 
 import personpfp from "../assets/personTest.svg";
@@ -11,19 +12,42 @@ import filter from "../assets/filter.svg";
 import "./PlanPost.css";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
+import { checkAuth } from "../../context/checkAuth.jsx";
 
 export default function PlanPost({ planData }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+  const isAuthenticated = async () => await checkAuth();
+  const navigate = useNavigate();
 
+  // console.log(isAuthenticated);
   // console.log(user.user_id); // "123"
 
   useEffect(() => {
     getFavoriteStatus();
   }, []);
 
+  // ดึงสถานะ isFavorite ของแผนการเดินทางนั้นๆ
+  const getFavoriteStatus = () => {
+    if (!user || isAuthenticated === false ) return;
+    axios
+      .get("http://localhost:8800/api/favorite/getFavoriteStatus", {
+        params: {
+          user_id: user.user_id,
+          plan_id: planData.plan_id
+        }
+      })
+      .then((res) => setIsFavorite(res.data))
+      .catch((err) => console.error(err));
+  }
+
   const toggleFavorite = (e) => {
     e.preventDefault();
+
+    if (!user || isAuthenticated === false ) {
+      navigate("/login");
+      return;
+    }
 
     // ถ้าข้อมูลที่ fetch มา isFavorite status = false ให้เพิ่ม favorite
     if (!isFavorite) {
@@ -45,19 +69,6 @@ export default function PlanPost({ planData }) {
         )
         .catch((err) => console.error(err));
     }
-  }
-
-  // ดึงสถานะ isFavorite ของแผนการเดินทางนั้นๆ
-  const getFavoriteStatus = () => {
-    axios
-      .get("http://localhost:8800/api/favorite/getFavoriteStatus", {
-        params: {
-          user_id: user.user_id,
-          plan_id: planData.plan_id
-        }
-      })
-      .then((res) => setIsFavorite(res.data))
-      .catch((err) => console.error(err));
   }
 
   return (
