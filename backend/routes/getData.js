@@ -1,6 +1,6 @@
 import express from "express";
 import { Plans, PlansEachPark,PlansAndCounts, ParkData, ParkImg, PlansByUserId, UserInfo, AllUserInfo, PlansByParkId, ParkPlaces, test } from "../controllers/getData.js";
-import { RecommendByLLM,RecommendBylocalstorage } from "../controllers/recommend.js";
+
 const router = express.Router();
 
 router.get("/plans", Plans);
@@ -12,8 +12,6 @@ router.get("/plansByUserId", PlansByUserId);
 router.get("/userInfo", UserInfo);
 router.get("/allUserInfo", AllUserInfo);
 router.get("/plansByParkId", PlansByParkId);
-router.get("/recommendByLLM", RecommendByLLM);
-router.get("/recommendBylocalstorage", RecommendBylocalstorage);
 router.get("/parkPlaces", ParkPlaces);
 router.get("/test", test);
 

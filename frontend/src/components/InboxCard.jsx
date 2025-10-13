@@ -5,33 +5,34 @@ import { FaUserFriends } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import TestProfile from "../assets/testPfp.jpg";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function InboxCard() {
-  // ตัวอย่างข้อมูลว่าเคยคุยกับใครบ้าง
-  const messages = [
-    {
-      contactId: 111,
-      senderID: 555,
-      receiverId: 1,
-      receiverName: "Fah",
-    },
-    {
-      contactId: 222,
-      senderID: 555,
-      receiverId: 2,
-      receiverName: "Mark",
-    },
-    {
-      contactId: 333,
-      senderID: 555,
-      receiverId: 3,
-      receiverName: "Note",
-    },
-  ];
+export default function mInboxCard() {
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const user_id = userData.user_id;
+  const [listName,setListName]=useState([]);
+  
+
+  const fetchData = async()=>{
+    try{
+      const response = await axios.get("http://localhost:8800/api/getDataMessages/listName",{ params: { user_id: user_id} });
+      setListName(response.data);
+    }catch(error){
+      console.error("Error fetching List name in inbox:", error);
+    }
+
+  }
+
+  useEffect(()=>{
+    fetchData();
+  },[]);
+  
+  
   const navigate = useNavigate();
   function handleCardClick(item) {
     console.log("คลิกๆ", item);
-    navigate("/messages", { state: { messages: item } });
+    navigate("/messages", { state: { receiverData: item } });
   }
 
   return (
@@ -82,9 +83,9 @@ export default function InboxCard() {
             className="p-3"
             style={{ maxHeight: "400px", overflowY: "auto" }}
           >
-            {messages.map((message) => (
+            {listName.map((item) => (
               <Card
-                key={message.contactId}
+                key={item.user_id}
                 className="m-3 shadow-sm mb-3"
                 style={{
                   backgroundColor: "#F7F9F6",
@@ -94,7 +95,7 @@ export default function InboxCard() {
               >
                 <div
                   className="d-flex align-items-center p-2 "
-                  onClick={() => handleCardClick(message)}
+                  onClick={() => handleCardClick(item)}
                 >
                   {/* ค่อยเปลีั่ยนเป็นรูปเจ้าของแอคเคาท์ */}
                   <img
@@ -108,7 +109,7 @@ export default function InboxCard() {
                     }}
                   />
 
-                  <span className="fw-bold">{message.receiverName}</span>
+                  <span className="fw-bold">{item.user_firstName}  {item.user_lastName}</span>
                 </div>
               </Card>
             ))}

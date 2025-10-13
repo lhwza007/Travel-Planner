@@ -3,46 +3,39 @@ import { Container, Card, Form, Button } from "react-bootstrap";
 import { IoArrowBack } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import TestProfile from "../assets/testPfp.jpg";
+import { useState , useEffect } from "react";
+import axios from "axios";
 
 export default function Messages() {
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const sender_id = userData.user_id; //id เจ้าของแอค
+
+
   const location = useLocation();
   const navigate = useNavigate();
-  const { messages } = location.state;
+  const { receiverData } = location.state;
+  console.log("ข้อมูลที่ส่งมา:", receiverData);
+  const receiver_id = receiverData.user_id;
+  const receiver_name = receiverData.user_firstName + " " + receiverData.user_lastName;
 
-  // สมมติว่าผู้ใช้คนปัจจุบันมี senderID คือ messages.senderID
-  const currentUserId = messages.senderID;
+  const [detailMessage,setDetailMessage]=useState([]);
 
-  // ตัวอย่างข้อมูลในแชทว่าคุยไรกันบ้าง
-  const detailMessage = [
-    {
-      detailMessageId: 1,
-      senderId: currentUserId, // ผู้ส่งคือผู้ใช้ปัจจุบัน
-      receiverId: messages.receiverId,
-      message: "สวัสดีครับ",
-      timestamp: "2025-08-01T10:00:00",
-    },
-    {
-      detailMessageId: 2,
-      senderId: messages.receiverId, // ผู้ส่งคืออีกฝ่าย
-      receiverId: currentUserId,
-      message: "ว่าไงครับ",
-      timestamp: "2025-08-01T10:00:10",
-    },
-    {
-      detailMessageId: 3,
-      senderId: currentUserId,
-      receiverId: messages.receiverId,
-      message: "ทานข้าวยังครับ",
-      timestamp: "2025-08-01T10:01:00",
-    },
-    {
-      detailMessageId: 4,
-      senderId: messages.receiverId,
-      receiverId: currentUserId,
-      message: "เรียบร้อยแล้วครับ",
-      timestamp: "2025-08-01T10:01:30",
-    },
-  ];
+  const fetchData = async()=>{
+    try{
+      const response = await axios.get("http://localhost:8800/api/getDataMessages/getDetailMessage",{ params: { sender_id: sender_id, receiver_id: receiver_id} });
+      console.log("ข้อมูลข้อความ : " ,response.data)
+      setDetailMessage(response.data);
+      
+
+    }catch(error){
+      console.error("Error fetching Messages Data:", error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchData();
+  }, []);
+
 
   // ฟังชันปุ่มกลับ
   const handleGoBack = () => {
@@ -74,9 +67,9 @@ export default function Messages() {
               border: "2px solid #688350",
             }}
           />
-          {messages.receiverName}
+          {receiver_name}
         </Card.Header>
-
+        
         {/* ส่วนแสดงข้อความ */}
         <div
           className="p-5"
@@ -84,25 +77,25 @@ export default function Messages() {
         >
           {detailMessage.map((msg) => (
             <div
-              key={msg.detailMessageId}
+              key={msg.message_id}
               className={`d-flex mb-3 ${
-                msg.senderId === currentUserId
+                msg.sender_id === sender_id
                   ? "justify-content-end"
                   : "justify-content-start"
               }`}
             >
               <div
                 className={`p-2 rounded-3 ${
-                  msg.senderId === currentUserId ? "text-white" : "text-dark"
+                  msg.sender_id === sender_id ? "text-white" : "text-dark"
                 }`}
                 style={{
                   maxWidth: "75%",
                   wordWrap: "break-word",
                   backgroundColor:
-                    msg.senderId === currentUserId ? "#A0B98E" : "#fff",
+                    msg.sender_id === sender_id ? "#A0B98E" : "#fff",
                 }}
               >
-                {msg.message}
+                {msg.message_text}
               </div>
             </div>
           ))}
