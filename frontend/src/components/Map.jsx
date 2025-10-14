@@ -141,7 +141,7 @@ export default function ShowMap({ park_id }) {
   // console.log("park places center:", parkPlacesCenter.lat);
 
   if (!parkPlaces || !parkPlacesCenter) {
-    return <div>Loading map...</div>;
+    return <div>Map is unavailable now...</div>;
   } else {
     return (
       <>
