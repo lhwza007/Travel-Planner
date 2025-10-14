@@ -43,7 +43,7 @@ export default function Recommend() {
         setParkData(response.data);
         
 
-        setFetchedpark(response.data);
+        
         console.log("เกียมข้อมูล:", response.data);
         const parkIds = Array.isArray(response.data) ? response.data.map(p => p.park_id) : [];
         localStorage.setItem("dataLLM", JSON.stringify(parkIds)); 
