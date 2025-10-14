@@ -22,14 +22,10 @@ export default function MessagesCard() {
 
   const [detailMessage, setDetailMessage] = useState([]); //เอาไว้เก็บข้อมูลข้อความจากapi
 
-
- 
   // อันพวกนี้ไม่รู้เรื่องว่ะมันเชื่อมโยงกับ useEffect ทั้ง2อัน ด้านล่าง เอาไว้เลื่อนหน้าแชท
   const messagesEndRef = useRef(null);
   const messageContainerRef = useRef(null);
   const isInitialLoadRef = useRef(true);
-
-
 
   const fetchData = async () => {
     try {
@@ -37,15 +33,12 @@ export default function MessagesCard() {
         "http://localhost:8800/api/getDataMessages/getDetailMessage",
         { params: { sender_id: sender_id, receiver_id: receiver_id } }
       );
-      //   console.log("ข้อมูลข้อความ : ", response.data);
+      // console.log("ข้อมูลข้อความ : ", response.data);
       setDetailMessage(response.data);
     } catch (error) {
       console.error("Error fetching Messages Data:", error);
     }
   };
-
-
-
 
   // ********************************************************************************************
   useEffect(() => {
@@ -70,8 +63,6 @@ export default function MessagesCard() {
   }, [sender_id, receiver_id]);
   // ********************************************************************************************
 
-
-
   // ฟังชันปุ่มกลับ
   const handleGoBack = () => {
     navigate(-1);
@@ -82,7 +73,10 @@ export default function MessagesCard() {
     sender_id: sender_id,
     receiver_id: receiver_id,
     message_text: "",
-    message_type: 1, // 1 คือ type ข้อความ
+    message_type: 1, // 1 คือ ข้อความ  , 2 คือ share
+    share_plan_id: null,
+    share_plane_name: null,
+    created_at: null
   });
 
   const handleChange = (e) => {
@@ -90,12 +84,11 @@ export default function MessagesCard() {
   };
   //   console.log("ข้อมูลข้อความที่พิม:", dataMessage);
 
-
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (dataMessage.message_text.trim() === "") {
-        console.log("Message is empty, preventing send.");
-        return; 
+      console.log("Message is empty, preventing send.");
+      return;
     }
     try {
       const response = await axios.post(
@@ -111,9 +104,6 @@ export default function MessagesCard() {
     }
     // console.log("ส่งข้อความ:", dataMessage);
   };
-
-
-
 
   // ********************************************************************************************
   useEffect(() => {
@@ -144,7 +134,6 @@ export default function MessagesCard() {
     }
   }, [detailMessage]);
   // ********************************************************************************************
-
 
   return (
     <Container style={{ height: "80vh" }}>
@@ -192,19 +181,66 @@ export default function MessagesCard() {
                   : "justify-content-start"
               }`}
             >
-              <div
-                className={`p-2 rounded-3 ${
-                  msg.sender_id === sender_id ? "text-white" : "text-dark"
-                }`}
-                style={{
-                  maxWidth: "75%",
-                  wordWrap: "break-word",
-                  backgroundColor:
-                    msg.sender_id === sender_id ? "#A0B98E" : "#fff",
-                }}
-              >
-                {msg.message_text}
-              </div>
+              {msg.message_type === 1 ? (
+                <div
+                  className={`p-2 rounded-3 ${
+                    msg.sender_id === sender_id ? "text-white" : "text-dark"
+                  }`}
+                  style={{
+                    maxWidth: "75%",
+                    wordWrap: "break-word",
+                    backgroundColor:
+                      msg.sender_id === sender_id ? "#A0B98E" : "#fff",
+                  }}
+                >
+                  {msg.message_text}
+                </div>
+              ) : (
+                <div
+                  className={`rounded-3 shadow-sm overflow-hidden`} // เพิ่ม shadow-sm และ overflow-hidden
+                  style={{
+                    maxWidth: "75%",
+                    backgroundColor: "#efededff", // พื้นหลังเป็นสีขาว
+                    border: `1px solid ${
+                      msg.sender_id === sender_id ? "#A0B98E" : "#D7E7D1" // ขอบสีอ่อนตามผู้ส่ง
+                    }`,
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {/* 1. ส่วนหัว: "แชร์แผนการเดินทาง" */}
+                  <div
+                    className="px-3 py-2 fw-bold text-white"
+                    style={{ backgroundColor: "#A0B98E" }} // สีธีม
+                  >
+                    แชร์แผนการเดินทาง
+                  </div>
+
+                  {/* 2. ส่วนกลาง: ชื่อแผนการเดินทาง */}
+                  <div className="p-3">
+                    <p className="mb-0 fw-semibold text-dark">
+                      {msg.share_plan_name}
+                    </p>
+                    <small className="text-muted">
+                      ID แผน: {msg.share_plan_id}
+                    </small>
+                  </div>
+
+                  {/* 3. ส่วนล่าง: ปุ่มกดดู */}
+                  <div className="p-3 pt-0">
+                    <Button
+                      variant="success"
+                      size="sm"
+                      className="w-100"
+                      style={{
+                        backgroundColor: "#688350", // สีเขียวเข้มขึ้น
+                        border: "none",
+                      }}
+                    >
+                      ดูแผนการเดินทาง
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
           <div ref={messagesEndRef} />

@@ -21,9 +21,7 @@ export default function Recommend() {
 
 
   const stored = localStorage.getItem("dataLLM");
-  const [fetchedpark,setFetchedpark]=useState([]); //เก็บข้อมูลที่ดึงมาจากai
-  
-  
+
   const fetchData = async () => {
     console.log("ข้อมูลของตัวแปร stored:",stored);
     if(stored ){
@@ -84,7 +82,7 @@ export default function Recommend() {
               <div
                 className="recommendCard"
                 style={{
-                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url(${park.parkImg_src})`,
+                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url('/park_image/${park.parkImg_src}')`,
                   cursor: "pointer",
                 }}
                 onClick={() => handleCardClick(park.park_id)}

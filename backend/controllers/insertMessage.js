@@ -11,3 +11,8 @@ export const InsertMessage = (req,res)=>{
 
     })
 }
+
+export const InsertMessageShare = (req,res)=>{
+    const {sender_id, receiver_id, message_type,share_plan_id,share_plane_name} = req.body;
+    const sql = "INSERT INTO messages (sender_id, receiver_id, message_type,share_plan_id,share_plane_name) VALUES (?,?,?,?,?,?)";
+}

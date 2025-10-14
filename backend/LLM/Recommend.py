@@ -66,7 +66,7 @@ def Recommend(user_level,user_age):
         list_park_id: str
 
     response = client.models.generate_content(
-        model="gemini-2.0-flash-lite",
+        model="gemini-2.5-flash",
         contents=f"""
                     คุณเป็นผู้แนะนำอุทยานที่เหมาะสมที่สุดให้กับนักท่องเที่ยวและไม่แนะนำแบบมั่ว ๆ แต่คุณใช้หลักการ Case-Base Reasoning ในการแนะนำ และคุณจะแนะนำเป็น id ของอุทยานเท่านั้น
                     โดยพิจารณาข้อมูลจาก Case Base ด้านล่างนี้

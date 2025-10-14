@@ -42,7 +42,7 @@ export default function ParkList() {
               <div
                 className="parkListCard"
                 style={{
-                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url(${park.parkImg_src})`,
+                  backgroundImage: `linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 60%, rgba(0, 0, 0, 1)), url('/park_image/${park.parkImg_src}')`,
                   cursor: "pointer",
                 }}
                 onClick={() => handleCardClick(park.park_id)}
