@@ -1,0 +1,12 @@
+/* ในไฟล์ CSS ภายนอก */
+.message-container {
+    /* ใช้สำหรับ Firefox */
+    scrollbar-width: none;
+    /* ใช้สำหรับ IE และ Edge */
+    -ms-overflow-style: none; 
+}
+
+/* ใช้สำหรับ Chrome, Safari และ Opera */
+.message-container::-webkit-scrollbar {
+    display: none; 
+}

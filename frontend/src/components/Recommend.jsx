@@ -18,21 +18,19 @@ export default function Recommend() {
 
   const [parkData, setParkData] = useState([]);
   const[wait,setWait]=useState("Please wait a moment...");
-  // const [listStrge_id,setListStrge_id]=useState([]);
+
+
   const stored = localStorage.getItem("dataLLM");
   const [fetchedpark,setFetchedpark]=useState([]); //เก็บข้อมูลที่ดึงมาจากai
   
   
-  // if(localStorage.getItem("fetched")){
-
-  // }else{}
   const fetchData = async () => {
     console.log("ข้อมูลของตัวแปร stored:",stored);
     if(stored ){
       setWait("Recommend for you by AI");
       try{
         const response = await axios.get(
-          "http://localhost:8800/api/getData/recommendBylocalstorage",{ params: { list_park_id:stored} }
+          "http://localhost:8800/api/recommend/recommendBylocalstorage",{ params: { list_park_id:stored} }
         );
         setParkData(response.data);
       }catch(error){
@@ -42,7 +40,7 @@ export default function Recommend() {
     }else{
       try {
         const response = await axios.get(
-          "http://localhost:8800/api/getData/recommendByLLM",{ params: { user_level: userData.user_level ,user_age:userData.user_age} }
+          "http://localhost:8800/api/recommend/recommendByLLM",{ params: { user_level: userData.user_level ,user_age:userData.user_age} }
         );
         setParkData(response.data);
         
@@ -52,7 +50,7 @@ export default function Recommend() {
         const parkIds = Array.isArray(response.data) ? response.data.map(p => p.park_id) : [];
         localStorage.setItem("dataLLM", JSON.stringify(parkIds)); 
         console.log("park_id from LLM:",parkIds);
-        // setListStrge_id(parkIds);
+
 
         setWait("Recommend for you by AI");
       } catch (error) {
@@ -60,19 +58,7 @@ export default function Recommend() {
       }
     }
 
-  //   try {
-  //     const response = await axios.get(
-  //       "http://localhost:8800/api/getData/recommendByLLM",{ params: { user_level: userData.user_level ,user_age:userData.user_age} }
-  //     );
-  //     setParkData(response.data);
-  //     localStorage.setItem("aiFetch",true)
-  //     setFetchedpark(response.data);
-  //     console.log("เกียมข้อมูล:", response.data);
 
-  //     setWait("Recommend for you by AI");
-  //   } catch (error) {
-  //     console.error("Error fetching park data:", error);
-  //   }
   };
 
   useEffect(() => {
@@ -80,9 +66,7 @@ export default function Recommend() {
     }, []);
 
   console.log(parkData);
-  // useEffect(() => {
-  //   console.log("listStrge_id (updated):", listStrge_id);
-  // }, [listStrge_id]);
+
 
   function handleCardClick(park_id) {
     // console.log("Card Clicked! Navigating with data:", park);
@@ -95,7 +79,7 @@ export default function Recommend() {
         <div className="head">{wait}</div>
         <Row>
           {parkData.map((park) => (
-            // อยากให้คลิกที่การ์ดแล้วไปหน้า ParkDetail
+            
             <Col md={3} sm={6} key={park.park_id}>
               <div
                 className="recommendCard"
