@@ -137,7 +137,7 @@ export default function PlanPost({ planData }) {
             </div>
             <div className="group">
               <img src={comment} alt="comment" />
-              <img src={share} alt="share" onClick={handleOpenModal} /> {/* ปุ่มเปิด Modal */}
+              <img src={share} alt="share" onClick={handleOpenModal} style={{cursor:"pointer"}}/> {/* ปุ่มเปิด Modal */}
             </div>
           </div>
         </div>
@@ -146,9 +146,9 @@ export default function PlanPost({ planData }) {
 
       {/* เรียกใช้ ShareModal */}
       <ShareModal
-        show={modalShow}          // Prop: กำหนดสถานะการแสดงผล
-        onHide={() => setModalShow(false)} // Prop: ฟังก์ชันที่จะทำงานเมื่อต้องการปิด Modal
-        shareData={shareData} // Prop: เนื้อหาภายใน Modal
+        show={modalShow}          //กำหนดสถานะการแสดงผล
+        onHide={() => setModalShow(false)} //ฟังก์ชันที่จะทำงานเมื่อต้องการปิด Modal
+        shareData={shareData} // ข้อมูลที่ส่งให้ Modal
       />
 
     </>

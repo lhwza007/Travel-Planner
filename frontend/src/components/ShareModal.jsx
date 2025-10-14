@@ -4,10 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import {SweetalertSucc} from "./Sweetalert.jsx";
 
-// Prop ที่เราจะรับเข้ามา
-// - show: สถานะ boolean บอกว่า Modal เปิดอยู่หรือไม่ (ใช้แทน isOpen ตามชื่อ prop ของ React-Bootstrap)
-// - onHide: ฟังก์ชันสำหรับปิด Modal (ใช้แทน onClose ตามชื่อ prop ของ React-Bootstrap)
-// - children: เนื้อหาที่จะแสดงภายใน Modal
+
 
 export default function ShareModal({ show, onHide, shareData }) {
   const [data, setData] = useState({
@@ -56,7 +53,7 @@ export default function ShareModal({ show, onHide, shareData }) {
 
   useEffect(() => {
     if (show) {
-      // เมื่อ Modal เปิดขึ้น
+      
       fecthListName(); // ดึงข้อมูลรายชื่อผู้รับ
     }
   }, [show]);
@@ -76,10 +73,10 @@ export default function ShareModal({ show, onHide, shareData }) {
         {listName.length > 0 ? (
             listName.map((listName) => (
                 <ListGroup.Item 
-                    key={listName.user_id} // อย่าลืม key
+                    key={listName.user_id} 
                     className="d-flex justify-content-between align-items-center"
                 >
-                    {/* *** การแสดงผลที่ถูกต้อง: ใช้ listName.user_name ภายใน map *** */}
+                    
                     <span className="fw-bold" style={{color:"black"}}>
                         {listName.user_firstName} {listName.user_lastName}
                     </span>
@@ -95,7 +92,7 @@ export default function ShareModal({ show, onHide, shareData }) {
                 </ListGroup.Item>
             ))
         ) : (
-            // แสดงข้อความเมื่อไม่มีรายชื่อ หรือกำลังโหลด
+            // แสดงข้อความเมื่อไม่มีรายชื่อ
             <ListGroup.Item className="text-center text-muted">
                 ไม่มีผู้ติดต่อ
             </ListGroup.Item>
