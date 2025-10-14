@@ -1,7 +1,9 @@
 import express from "express";
-import { InsertMessage } from "../controllers/insertMessage.js";
+import { InsertMessage ,InsertMessageShare} from "../controllers/insertMessage.js";
 const router = express.Router();
 
 router.post("/insertmessage",InsertMessage);
+router.post("/insertmessageshare",InsertMessageShare);
+
 
 export default router;

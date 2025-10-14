@@ -64,7 +64,7 @@ export default function ParkDetailCard({ park_id }) {
                     width: "auto",
                     height: "200px",
                     marginBottom: "10px",
-                    backgroundImage: `url(${img.parkImg_src})`,
+                    backgroundImage: `url('/park_image/${img.parkImg_src}')`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
