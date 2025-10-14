@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-
+import { Button } from 'react-bootstrap';
 import personpfp from "../assets/personTest.svg";
 import money from "../assets/money.svg";
 import comment from "../assets/comment.svg";
@@ -13,6 +13,7 @@ import "./PlanPost.css";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { checkAuth } from "../../context/checkAuth.jsx";
+import ShareModal from "./ShareModal.jsx";
 
 export default function PlanPost({ planData }) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -22,6 +23,14 @@ export default function PlanPost({ planData }) {
 
   // console.log(isAuthenticated);
   // console.log(user.user_id); // "123"
+
+  
+  const [modalShow, setModalShow] = useState(false);
+
+  const handleOpenModal = () => setModalShow(true);
+  const handleCloseModal = () => setModalShow(false);
+
+
 
   useEffect(() => {
     getFavoriteStatus();
@@ -69,7 +78,17 @@ export default function PlanPost({ planData }) {
         )
         .catch((err) => console.error(err));
     }
+
+    
+
   }
+  const [shareData, setShareData] = useState({
+        sender_id: user.user_id,
+        share_plan_id: planData.plan_id,
+        share_plan_name: planData.plan_name,
+        share_park_name: planData.park_name
+    });
+    
 
   return (
     <>
@@ -118,10 +137,21 @@ export default function PlanPost({ planData }) {
             </div>
             <div className="group">
               <img src={comment} alt="comment" />
-              <img src={share} alt="share" />
+              <img src={share} alt="share" onClick={handleOpenModal} /> {/* ปุ่มเปิด Modal */}
             </div>
           </div>
         </div>
+
+
+
+      {/* เรียกใช้ ShareModal */}
+      <ShareModal
+        show={modalShow}          // Prop: กำหนดสถานะการแสดงผล
+        onHide={() => setModalShow(false)} // Prop: ฟังก์ชันที่จะทำงานเมื่อต้องการปิด Modal
+        shareData={shareData} // Prop: เนื้อหาภายใน Modal
+      />
+
     </>
   );
 }
+

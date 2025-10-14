@@ -212,7 +212,7 @@ export default function MessagesCard() {
                     className="px-3 py-2 fw-bold text-white"
                     style={{ backgroundColor: "#A0B98E" }} // สีธีม
                   >
-                    แชร์แผนการเดินทาง
+                    {msg.share_park_name}
                   </div>
 
                   {/* 2. ส่วนกลาง: ชื่อแผนการเดินทาง */}
@@ -220,9 +220,7 @@ export default function MessagesCard() {
                     <p className="mb-0 fw-semibold text-dark">
                       {msg.share_plan_name}
                     </p>
-                    <small className="text-muted">
-                      ID แผน: {msg.share_plan_id}
-                    </small>
+                    
                   </div>
 
                   {/* 3. ส่วนล่าง: ปุ่มกดดู */}
