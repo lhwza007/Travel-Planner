@@ -1,7 +1,7 @@
 import { db } from "../connect.js";
 
 export const updateUserProfile = (req, res) => {
-  const user_id = req.query.user_id;
+  const user_id = parseInt(req.query.user_id);
   const fields = req.body;
 
   const user_name = req.body.user_name;
@@ -9,6 +9,8 @@ export const updateUserProfile = (req, res) => {
   
   db.query(sql1, [user_name], (err, result) => {
     if (err) return res.status(500).json({ error: err });
+    
+    // ตรวจสอบว่ามี username ซ้ำหรือไม่ (ยกเว้นตัวเอง)
     if (result.length > 0 && result[0].user_id !== user_id) {
       return res.json({ message: "Username is already taken.", success: false });
     }
