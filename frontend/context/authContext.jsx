@@ -5,7 +5,7 @@ export const AuthContext = createContext(); // สร้าง Context สำห
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null // เริ่มต้นสถานะผู้ใช้จาก localStorage หรือ null ถ้าไม่มี
+    JSON.parse(localStorage.getItem("user")) || null// เริ่มต้นสถานะผู้ใช้จาก localStorage หรือ null ถ้าไม่มี
   );
 
   const login = async (inputs) => {
@@ -18,7 +18,10 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(currentUser)); // บันทึกผู้ใช้ลง localStorage เมื่อเปลี่ยนแปลง
+    if(currentUser){
+      localStorage.setItem("user", JSON.stringify(currentUser)); // บันทึกผู้ใช้ลง localStorage เมื่อเปลี่ยนแปลง
+    }
+    
   }, [currentUser]); // ทำงานเมื่อ currentUser เปลี่ยน
 
   return (
