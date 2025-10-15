@@ -7,9 +7,14 @@ import InfoChangingModal from "./InfoChangingModal.jsx";
 
 export default function ProfileCard(props) {
   const [modalShow, setModalShow] = useState(false);
-
   const userData = props.propsData; // propsตัวหน้าคือparamiter, .propsตัวหลังคือค่าที่ส่งมา
   const count = props.propsCount;
+  const [isUser, setIsUser] = useState(false); //เช็คว่าเป็นเจ้าของโปรไฟล์ไหม
+  const currentUser = JSON.parse(localStorage.getItem("user")).user_id;
+
+  // console.log("user id: ", userData.user_id);
+  // console.log("current user id: ", currentUser);
+
   return (
     <>
       <div className="profileCardContainer">
@@ -22,7 +27,9 @@ export default function ProfileCard(props) {
         </div>
         <div className="bottom">
           <div className="info">
-            <h3>{userData.user_firstName} {userData.user_lastName}</h3>
+            <h3>
+              {userData.user_firstName} {userData.user_lastName}
+            </h3>
             <div
               className="joined"
               style={{
@@ -39,7 +46,7 @@ export default function ProfileCard(props) {
                   marginRight: "5px",
                 }}
               />
-              เข้าร่วมเมื่อ {userData.user_timeStamp.split("T")[0]}
+              เข้าร่วมเมื่อ {userData.user_timeStamp?.split("T")[0]}
             </div>
             <div
               className="planCount"
@@ -61,14 +68,15 @@ export default function ProfileCard(props) {
             </div>
           </div>
           <div>
-            <Button variant="success" onClick={()=> setModalShow(true)}>แก้ไขโปรไฟล์</Button>
+            {userData?.user_id === currentUser && (
+              <Button variant="success" onClick={() => setModalShow(true)}>
+                แก้ไขโปรไฟล์
+              </Button>
+            )}
           </div>
         </div>
       </div>
-      <InfoChangingModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+      <InfoChangingModal show={modalShow} onHide={() => setModalShow(false)} />
     </>
   );
 }

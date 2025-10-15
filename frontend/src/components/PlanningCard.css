@@ -31,6 +31,7 @@
 .delButton {
   width: 25px;
   height: 25px;
+  /* height: 100%; */
   cursor: pointer;
   color: #f55b5b;
 }
@@ -70,4 +71,20 @@ input {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.mapButton {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: #000000;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.mapButton:hover {
+    cursor: pointer;
+    color: #000000;
+    transform: scale(1.1);
+    transition: all 0.1s ease-in-out;
 }

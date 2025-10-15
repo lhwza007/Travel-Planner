@@ -34,6 +34,8 @@ function BasicExample() {
     setIsAuthenticated(false);
     navigate("/login");
   };
+
+
   return (
     <Navbar
       expand="lg"
@@ -80,7 +82,7 @@ function BasicExample() {
             }
             {
               isAuthenticated && (
-                <Nav.Link as={Link} to="/profile">
+                <Nav.Link as={Link} to={`/profile?user_id=${JSON.parse(localStorage.getItem("user"))?.user_id}`}> 
               <IoPerson style={{ color: "white", fontSize: "2rem" }} />
             </Nav.Link>
               )

@@ -3,19 +3,36 @@ import ProfileCard from "../components/ProfileCard"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import PlanPost from "../components/PlanPost";
+import { useSearchParams } from "react-router-dom";
 
 export default function Profile() {
     const [plans, setPlans] = useState([]);
-    const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
+    const [userInfo, setUserInfo] = useState([]);
+    const [searchParams] = useSearchParams();
+    const user_id = searchParams.get("user_id");
     const count = plans.length;
 
-    useEffect(() => {
-        axios
+    const getPlansByUserId = async () => {
+      await axios
           .get("http://localhost:8800/api/getData/plansByUserId", {
-            params: { user_id: userData.user_id },
+            params: { user_id: user_id },
           })
           .then((res) => setPlans(res.data))
           .catch((err) => console.error(err));
+    }
+
+    const getUserInfoById = async () => {
+      await axios
+          .get("http://localhost:8800/api/getData/allUserInfo", {
+            params: { user_id: user_id },
+          })
+          .then((res) => setUserInfo(res.data))
+          .catch((err) => console.error(err));
+    }
+
+    useEffect(() => {
+        getPlansByUserId();
+        getUserInfoById();
       }, []);
     
     return (
@@ -23,7 +40,7 @@ export default function Profile() {
         <Container>
 
             {/* ส่ง props เป็น id ของเจ้าของโปรไฟล์ */}
-            <ProfileCard propsData={userData} propsCount={count} />
+            <ProfileCard propsData={userInfo} propsCount={count} />
 
             {/* map plans ด้วยการ query ตาม user id */}
             {

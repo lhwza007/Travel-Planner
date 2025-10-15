@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import axios from "axios";
 import { SweetalertSucc, SweetalertErr } from "./Sweetalert.jsx";
 
-export default function InfoChangingModal(props) {
+export default function InfoChangingModal (props) {
   const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
   const user_id = userData.user_id;
   const [userInfo, setUserInfo] = useState();
@@ -82,6 +82,8 @@ export default function InfoChangingModal(props) {
 
     const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
     const user_id = userData.user_id;
+
+    console.log("user id for update: ", user_id);
 
     axios
       .patch(`http://localhost:8800/api/updateData/updateUserProfile?user_id=${user_id}`, inputs)
