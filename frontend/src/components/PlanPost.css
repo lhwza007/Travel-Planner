@@ -21,6 +21,11 @@
     margin: 0px 20px;
     font-size: larger;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.user_name:hover {
+    text-decoration: underline;
 }
 
 .plan_name {
