@@ -18,22 +18,39 @@ import ShareModal from "./ShareModal.jsx";
 export default function PlanPost({ planData }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
-  const isAuthenticated = async () => await checkAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  async function verify() {
+    const result = await checkAuth();
+    setIsAuthenticated(result);
+  }
+  verify();
   const navigate = useNavigate();
 
-  // console.log(isAuthenticated);
+  
   // console.log(user.user_id); // "123"
 
   
   const [modalShow, setModalShow] = useState(false);
 
-  const handleOpenModal = () => setModalShow(true);
+  // const handleOpenModal = () => setModalShow(true);
+
+  const handleOpenModal = () => {
+  
+    if(isAuthenticated){
+      return setModalShow(true);
+    }else{
+      return navigate("/login");
+    }
+  }
+     
   const handleCloseModal = () => setModalShow(false);
+  
 
 
 
   useEffect(() => {
     getFavoriteStatus();
+     
   }, []);
 
   // ดึงสถานะ isFavorite ของแผนการเดินทางนั้นๆ
@@ -82,14 +99,17 @@ export default function PlanPost({ planData }) {
     
 
   }
-  const [shareData, setShareData] = useState({
-        sender_id: user.user_id,
-        share_plan_id: planData.plan_id,
-        share_plan_name: planData.plan_name,
-        share_park_name: planData.park_name
-    });
-    
 
+  const [shareData, setShareData] = useState({
+          sender_id: user?.user_id || null,
+          share_plan_id: planData.plan_id,
+          share_plan_name: planData.plan_name,
+          share_park_name: planData.park_name
+      });
+ 
+  
+  
+  
   return (
     <>
         <div className="container mb-4 planCard">
@@ -137,7 +157,13 @@ export default function PlanPost({ planData }) {
             </div>
             <div className="group">
               <img src={comment} alt="comment" />
-              <img src={share} alt="share" onClick={handleOpenModal} style={{cursor:"pointer"}}/> {/* ปุ่มเปิด Modal */}
+
+              {/* ปุ่มเปิด Modal */}
+              
+                 <img src={share} alt="share" onClick={handleOpenModal} style={{cursor:"pointer"}}/> 
+                 
+               
+              
             </div>
           </div>
         </div>
@@ -145,11 +171,14 @@ export default function PlanPost({ planData }) {
 
 
       {/* เรียกใช้ ShareModal */}
-      <ShareModal
+      {
+        isAuthenticated? <ShareModal
         show={modalShow}          //กำหนดสถานะการแสดงผล
         onHide={() => setModalShow(false)} //ฟังก์ชันที่จะทำงานเมื่อต้องการปิด Modal
         shareData={shareData} // ข้อมูลที่ส่งให้ Modal
-      />
+      /> : <div></div>
+      }
+      
 
     </>
   );

@@ -10,10 +10,11 @@ export default function Plan() {
     setIsAuthenticated(result);
   }
   verify();
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <>
       {
-      isAuthenticated &&
+      user &&
         <Recommend /> 
       }
       <hr style={{ marginBottom: "30px" }} />
