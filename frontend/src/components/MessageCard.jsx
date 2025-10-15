@@ -135,6 +135,11 @@ export default function MessagesCard() {
   }, [detailMessage]);
   // ********************************************************************************************
 
+
+  const handlePlanDetail=(plan_id)=>{
+    return navigate("/share-plan",{state:{plan_id:plan_id}})
+  }
+
   return (
     <Container style={{ height: "80vh" }}>
       <Card
@@ -233,8 +238,10 @@ export default function MessagesCard() {
                         backgroundColor: "#688350", // สีเขียวเข้มขึ้น
                         border: "none",
                       }}
+                      onClick={()=>handlePlanDetail(msg.share_plan_id)} // ส่ง plan_id ไปด้วย
                     >
                       ดูแผนการเดินทาง
+                      
                     </Button>
                   </div>
                 </div>
