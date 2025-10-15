@@ -14,6 +14,7 @@ import Quotes from "./Quotes.jsx";
 import { AuthContextProvider } from "../context/authContext.jsx";
 import Register from "./pages/Register.jsx";
 import PrivateRoute from "./components/PrivateRoute";
+import SharePlan from "./pages/SharePlan.jsx";
 
 function App() {
   return (
@@ -63,7 +64,11 @@ function App() {
                 <Messages />
                 </PrivateRoute>
                 } />
-
+              <Route path="share-plan" element={
+                <PrivateRoute>
+                <SharePlan />
+                </PrivateRoute>
+              }/>
               
               {/* <Route path="/test" element={<Quotes />} /> */}
 
