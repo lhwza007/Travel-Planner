@@ -1,5 +1,5 @@
 import express from "express";
-import { Plans, PlansEachPark,PlansAndCounts, ParkData, ParkImg, PlansByUserId, UserInfo, AllUserInfo, PlansByParkId, ParkPlaces, test } from "../controllers/getData.js";
+import { Plans, PlansEachPark,PlansAndCounts, ParkData, ParkImg, PlansByUserId, UserInfo, AllUserInfo, PlansByParkId, ParkPlaces, PlansByAnotherUserId, test } from "../controllers/getData.js";
 
 const router = express.Router();
 
@@ -13,6 +13,7 @@ router.get("/userInfo", UserInfo);
 router.get("/allUserInfo", AllUserInfo);
 router.get("/plansByParkId", PlansByParkId);
 router.get("/parkPlaces", ParkPlaces);
+router.get("/plansByAnotherUserId", PlansByAnotherUserId);
 router.get("/test", test);
 
 
