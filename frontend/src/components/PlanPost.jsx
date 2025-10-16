@@ -103,7 +103,7 @@ export default function PlanPost({ planData, isCurrentUser }) {
     share_park_name: planData.park_name,
   });
 
-  // console.log(planData.user_firstName);
+  console.log(planData);
 
   const handleProfileClick = (user_id) => {
     navigate(`/profile?user_id=${user_id}`);
