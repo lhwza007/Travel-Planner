@@ -76,7 +76,7 @@ export default function MessagesCard() {
     message_type: 1, // 1 คือ ข้อความ  , 2 คือ share
     share_plan_id: null,
     share_plane_name: null,
-    created_at: null
+    created_at: null,
   });
 
   const handleChange = (e) => {
@@ -135,149 +135,172 @@ export default function MessagesCard() {
   }, [detailMessage]);
   // ********************************************************************************************
 
-
-  const handlePlanDetail=(plan_id)=>{
-    return navigate("/share-plan",{state:{plan_id:plan_id}})
-  }
+  const handlePlanDetail = (plan_id) => {
+    return navigate("/share-plan", { state: { plan_id: plan_id } });
+  };
 
   return (
-    <Container style={{ height: "80vh" }}>
-      <Card
-        style={{ width: "100%", backgroundColor: "#D7E7D1", height: "100%" }}
+    <>
+      <div
+        style={{
+          width: "100%",
+          backgroundColor: "#D7E7D1",
+          height: "100%",
+          borderRadius: "none",
+        }}
       >
         {/* Header ส่วนหัวของแชท พร้อมปุ่มย้อนกลับ */}
-        <Card.Header
-          className="text-white fw-bold py-3 px-4 d-flex align-items-center"
-          style={{ backgroundColor: "#A0B98E" }}
-        >
-          <IoArrowBack
-            size={24}
-            className="me-3"
-            style={{ cursor: "pointer" }}
-            onClick={handleGoBack}
-          />
-          {/* ค่อยเปลีั่ยนเป็นรูปเจ้าของแอคเคาท์ */}
-          <img
-            src={TestProfile}
-            className="me-2"
-            style={{
-              width: "50px",
-              height: "50px",
-              borderRadius: "50%",
-              border: "2px solid #688350",
-            }}
-          />
-          {receiver_name}
-        </Card.Header>
-
-        {/* ส่วนแสดงข้อความ */}
-
-        <div
-          className="p-5 message-container"
-          style={{ height: "100%", overflowY: "auto" }}
-          ref={messageContainerRef}
-        >
-          {detailMessage.map((msg) => (
-            <div
-              key={msg.message_id}
-              className={`d-flex mb-3 ${
-                msg.sender_id === sender_id
-                  ? "justify-content-end"
-                  : "justify-content-start"
-              }`}
-            >
-              {msg.message_type === 1 ? (
-                <div
-                  className={`p-2 rounded-3 ${
-                    msg.sender_id === sender_id ? "text-white" : "text-dark"
-                  }`}
-                  style={{
-                    maxWidth: "75%",
-                    wordWrap: "break-word",
-                    backgroundColor:
-                      msg.sender_id === sender_id ? "#A0B98E" : "#fff",
-                  }}
-                >
-                  {msg.message_text}
-                </div>
-              ) : (
-                <div
-                  className={`rounded-3 shadow-sm overflow-hidden`} // เพิ่ม shadow-sm และ overflow-hidden
-                  style={{
-                    maxWidth: "75%",
-                    backgroundColor: "#efededff", // พื้นหลังเป็นสีขาว
-                    border: `1px solid ${
-                      msg.sender_id === sender_id ? "#A0B98E" : "#D7E7D1" // ขอบสีอ่อนตามผู้ส่ง
-                    }`,
-                    wordWrap: "break-word",
-                  }}
-                >
-                  {/* 1. ส่วนหัว: "แชร์แผนการเดินทาง" */}
-                  <div
-                    className="px-3 py-2 fw-bold text-white"
-                    style={{ backgroundColor: "#A0B98E" }} // สีธีม
-                  >
-                    {msg.share_park_name}
-                  </div>
-
-                  {/* 2. ส่วนกลาง: ชื่อแผนการเดินทาง */}
-                  <div className="p-3">
-                    <p className="mb-0 fw-semibold text-dark">
-                      {msg.share_plan_name}
-                    </p>
-                    
-                  </div>
-
-                  {/* 3. ส่วนล่าง: ปุ่มกดดู */}
-                  <div className="p-3 pt-0">
-                    <Button
-                      variant="success"
-                      size="sm"
-                      className="w-100"
-                      style={{
-                        backgroundColor: "#688350", // สีเขียวเข้มขึ้น
-                        border: "none",
-                      }}
-                      onClick={()=>handlePlanDetail(msg.share_plan_id)} // ส่ง plan_id ไปด้วย
-                    >
-                      ดูแผนการเดินทาง
-                      
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {/* ส่วนสำหรับพิมพ์และส่งข้อความ */}
-        <div className="p-3 px-5  border-top">
-          <Form className="d-flex" onSubmit={handleSendMessage}>
-            <Form.Control
-              type="text"
-              placeholder="พิมพ์ข้อความ..."
-              className="rounded-pill me-2"
-              style={{ backgroundColor: "#fff" }}
-              name="message_text"
-              value={dataMessage.message_text}
-              onChange={handleChange}
+          <Card.Header
+            className="text-white fw-bold py-3 px-4 d-flex align-items-center "
+            style={{ backgroundColor: "#A0B98E" }}
+          >
+            <Container className="px-5">
+            <IoArrowBack
+              size={24}
+              className="me-3"
+              style={{ cursor: "pointer" }}
+              onClick={handleGoBack}
             />
-            <Button
-              className="rounded-circle d-flex align-items-center justify-content-center"
+            {/* ค่อยเปลีั่ยนเป็นรูปเจ้าของแอคเคาท์ */}
+            <img
+              src={TestProfile}
+              className="me-2"
               style={{
-                width: "40px",
-                height: "40px",
-                backgroundColor: "#A0B98E",
-                border: "none",
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                border: "2px solid #688350",
               }}
-              type="submit"
-            >
-              <IoIosSend />
-            </Button>
-          </Form>
-        </div>
-      </Card>
-    </Container>
+            />
+            {receiver_name}
+            </Container>
+          </Card.Header>
+
+        <Container style={{height:"80vh"}}>
+          
+          {/* ส่วนแสดงข้อความ */}
+
+          <div
+            className="p-5 message-container"
+            style={{ height: "100%", overflowY: "auto" }}
+            ref={messageContainerRef}
+          >
+            {detailMessage.map((msg) => (
+              <div
+                key={msg.message_id}
+                className={`d-flex mb-3 ${
+                  msg.sender_id === sender_id
+                    ? "justify-content-end"
+                    : "justify-content-start"
+                }`}
+              >
+                {msg.message_type === 1 ? (
+                  <div
+                    className={`p-2 rounded-3 ${
+                      msg.sender_id === sender_id ? "text-white" : "text-dark"
+                    }`}
+                    style={{
+                      maxWidth: "75%",
+                      wordWrap: "break-word",
+                      backgroundColor:
+                        msg.sender_id === sender_id ? "#A0B98E" : "#fff",
+                    }}
+                  >
+                    {msg.message_text}
+                  </div>
+                ) : (
+                  <div
+                    className={`rounded-3 shadow-sm overflow-hidden`} // เพิ่ม shadow-sm และ overflow-hidden
+                    style={{
+                      maxWidth: "75%",
+                      backgroundColor: "#efededff", // พื้นหลังเป็นสีขาว
+                      border: `1px solid ${
+                        msg.sender_id === sender_id ? "#A0B98E" : "#D7E7D1" // ขอบสีอ่อนตามผู้ส่ง
+                      }`,
+                      wordWrap: "break-word",
+                    }}
+                  >
+                    {msg.plan_isPrivate === 0 ? (
+                      <>
+                        {/* 1. ส่วนหัว: "แชร์แผนการเดินทาง" */}
+                        <div
+                          className="px-3 py-2 fw-bold text-white"
+                          style={{ backgroundColor: "#A0B98E" }} // สีธีม
+                        >
+                          {msg.share_park_name}
+                        </div>
+
+                        {/* 2. ส่วนกลาง: ชื่อแผนการเดินทาง */}
+                        <div className="p-3">
+                          <p className="mb-0 fw-semibold text-dark">
+                            {msg.share_plan_name}
+                          </p>
+                        </div>
+
+                        {/* 3. ส่วนล่าง: ปุ่มกดดู */}
+                        <div className="p-3 pt-0">
+                          <Button
+                            variant="success"
+                            size="sm"
+                            className="w-100"
+                            style={{
+                              backgroundColor: "#688350", // สีเขียวเข้มขึ้น
+                              border: "none",
+                            }}
+                            onClick={() => handlePlanDetail(msg.share_plan_id)} // ส่ง plan_id ไปด้วย
+                          >
+                            ดูแผนการเดินทาง
+                          </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          className="px-3 py-2 fw-bold text-white"
+                          style={{ backgroundColor: "#A0B98E" }} // สีธีม
+                        >
+                          แชร์แผนการเดินทาง
+                        </div>
+                        <div className="p-3">
+                          ไม่สามารถดูได้ โพสถูกตั้งค่าความเป็นส่วนตัว
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* ส่วนสำหรับพิมพ์และส่งข้อความ */}
+          <div className="p-3 px-5  border-top">
+            <Form className="d-flex" onSubmit={handleSendMessage}>
+              <Form.Control
+                type="text"
+                placeholder="พิมพ์ข้อความ..."
+                className="rounded-pill me-2"
+                style={{ backgroundColor: "#fff" }}
+                name="message_text"
+                value={dataMessage.message_text}
+                onChange={handleChange}
+              />
+              <Button
+                className="rounded-circle d-flex align-items-center justify-content-center"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  backgroundColor: "#A0B98E",
+                  border: "none",
+                }}
+                type="submit"
+              >
+                <IoIosSend />
+              </Button>
+            </Form>
+          </div>
+        </Container>
+      </div>
+    </>
   );
 }
