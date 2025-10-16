@@ -199,6 +199,7 @@ export const PlansByUserId = (req, res) => {
           plan_name: row.plan_name,
           plan_start: row.plan_start,
           plan_end: row.plan_end,
+          plan_isPrivate: row.plan_isPrivate,
           plan_timeStamp: row.plan_timeStamp,
           activities: [],
         };

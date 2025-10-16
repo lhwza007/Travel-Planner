@@ -28,3 +28,16 @@ export const updateUserProfile = (req, res) => {
     });
   });
 };
+
+export const updatePlanPrivacy = (req, res) => {
+  const plan_id = parseInt(req.body.plan_id);
+  const plan_isPrivate = parseInt(req.body.plan_isPrivate);
+  const changeTo = plan_isPrivate === 1 ? 0 : 1;
+
+  const sql = "UPDATE plans SET plan_isPrivate = ? WHERE plan_id = ?";
+
+  db.query(sql, [changeTo, plan_id], (err, result) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json({ message: "Plan privacy has been updated!", success: true });
+  });
+}
