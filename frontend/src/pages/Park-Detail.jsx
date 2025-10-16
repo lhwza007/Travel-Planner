@@ -4,6 +4,7 @@ import PlanList from "../components/Plan-list";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PlanPost from "../components/PlanPost";
+import MyNav from "../components/Nav.jsx";
 
 export default function ParkDetail() {
   // ใช้ useLocation เพื่อเข้าถึงข้อมูลที่ถูกส่งมาใน state
@@ -27,13 +28,14 @@ export default function ParkDetail() {
 
   // console.log("Plans", plans);
   return (
-    <div>
+    <>
+      <MyNav />
       <ParkDetailCard park_id={park_id} />
       <hr style={{ border: "1px solid #495A3A", margin: "40px 0px" }} />
 
       {plans &&
         plans.map((plan) => <PlanPost key={plan.plan_id} planData={plan} />)}
 
-    </div>
+    </>
   );
 }

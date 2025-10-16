@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { useLocation } from 'react-router-dom';
 import PlanningCard from '../components/PlanningCard'
+import MyNav from "../components/Nav.jsx";
 
 export default function Planning() {
 
@@ -16,6 +17,7 @@ export default function Planning() {
 
   return (
     <>
+      <MyNav />
       <Container>
         <PlanningCard parkData = {parkData}/>
       </Container>

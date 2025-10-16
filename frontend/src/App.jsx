@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import BasicExample from "./components/Nav";
+import MyNav from "./components/Nav";
 import Home from "./pages/Home";
 import Plan from "./pages/Plan";
 import Favorite from "./pages/Favorite";
@@ -21,8 +21,8 @@ function App() {
     <AuthContextProvider>
       <BrowserRouter>
         <div className="App">
-          <BasicExample />
-          <div className="container mt-4">
+          
+          {/* <div className="container mt-4"> */}
             <Routes>
               {/* Plubic */}
               <Route path="/" element={<Home />} />
@@ -82,7 +82,7 @@ function App() {
                 }
               />
             </Routes>
-          </div>
+          {/* </div> */}
         </div>
       </BrowserRouter>
     </AuthContextProvider>

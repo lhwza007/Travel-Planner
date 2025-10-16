@@ -10,7 +10,7 @@ import { IoPerson } from "react-icons/io5"; //เดี๋ยวค่อยเ�
 import { checkAuth } from "../../context/checkAuth"; // Assuming you have an API function to check authentication
 import { MdOutlineLogout } from "react-icons/md";
 
-function BasicExample() {
+function MyNav() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const navigate = useNavigate();
 
@@ -37,12 +37,14 @@ function BasicExample() {
 
 
   return (
+    <>
+    
     <Navbar
       expand="lg"
       className="custom-navbar p-3"
-      style={{ backgroundColor: "#495A3A" }}
+      style={{ backgroundColor: "#495A3A",marginBottom:"20px" }}
     >
-      <Container>
+      <div className="container ">
         <Navbar.Brand href="/">
           <img
             src={logo}
@@ -100,9 +102,11 @@ function BasicExample() {
             )}
           </Nav>
         </Navbar.Collapse>
-      </Container>
+      </div>
     </Navbar>
+    </>
   );
+  
 }
 
-export default BasicExample;
+export default MyNav;
