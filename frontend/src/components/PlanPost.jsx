@@ -1,35 +1,34 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import { Button } from "react-bootstrap";
 import personpfp from "../assets/personTest.svg";
-import money from "../assets/money.svg";
 import comment from "../assets/comment.svg";
-import star from "../assets/star.svg";
 import share from "../assets/share.svg";
-import search from "../assets/search.svg";
-import filter from "../assets/filter.svg";
 import "./PlanPost.css";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { checkAuth } from "../../context/checkAuth.jsx";
 import ShareModal from "./ShareModal.jsx";
+import { Dropdown } from "react-bootstrap";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { SweetalertSuccNoReload, SweetalertErrNoReload } from "./Sweetalert.jsx";
 
-export default function PlanPost({ planData }) {
+export default function PlanPost({ planData, isCurrentUser }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const navigate = useNavigate();
+  const [modalShow, setModalShow] = useState(false);
+  const [showPlanPrivacy, setShowPlanPrivacy] = useState(
+    planData.plan_isPrivate === 1 ? 1 : 0
+  );
+
   async function verify() {
     const result = await checkAuth();
     setIsAuthenticated(result);
   }
   verify();
-  const navigate = useNavigate();
 
   // console.log(user.user_id); // "123"
-
-  const [modalShow, setModalShow] = useState(false);
-
   // const handleOpenModal = () => setModalShow(true);
 
   const handleOpenModal = () => {
@@ -103,24 +102,110 @@ export default function PlanPost({ planData }) {
     share_plan_name: planData.plan_name,
     share_park_name: planData.park_name,
   });
-  console.log(planData.user_firstName)
+
+  // console.log(planData.user_firstName);
+
   const handleProfileClick = (user_id) => {
     navigate(`/profile?user_id=${user_id}`);
   };
+
+  const handleChangePrivacy = (plan_id, plan_isPrivate) => {
+    console.log("change privacy for plan id: ", plan_id);
+    console.log("plan privacy: ", plan_isPrivate);
+
+    axios
+      .patch(`http://localhost:8800/api/updateData/updatePlanPrivacy`, {
+        plan_id: plan_id,
+        plan_isPrivate: plan_isPrivate,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          if (showPlanPrivacy === 1) {
+            setShowPlanPrivacy(0);
+          } else {
+            setShowPlanPrivacy(1);
+          }
+          SweetalertSuccNoReload(res.data.message);
+        } else {
+          SweetalertErrNoReload(res.data.message);
+          return;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        SweetalertErr(err);
+      });
+  };
+
+  console.log("plandata ", planData);
 
   return (
     <>
       <div className="container mb-4 planCard">
         <div className="planCardHeader">
           <div className="profile">
-            <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
-            <p 
-              className="user_name"
-              onClick={() => handleProfileClick(planData.user_id)}
-            >
-              {planData.user_firstName} {planData.user_lastName}
-            </p>
+            <div className="profileimg">
+              <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
+            </div>
+            <div className="nameAndPvStatus">
+              <h4
+                className="user_name"
+                onClick={() => handleProfileClick(planData.user_id)}
+                style={{ margin: "0", padding: "0", marginLeft: "20px" }}
+              >
+                {planData.user_firstName} {planData.user_lastName}
+              </h4>
+              {isCurrentUser && (
+                <p
+                  className="privateTag"
+                  style={{ margin: "0", padding: "0", marginLeft: "20px" }}
+                >
+                  {showPlanPrivacy === 1 ? "ส่วนตัว" : "สาธารณะ"}
+                </p>
+              )}
+            </div>
           </div>
+          {isCurrentUser && (
+            <div className="dropdown">
+              <Dropdown align="end">
+                <Dropdown.Toggle
+                  bsPrefix="no-caret btn"
+                  variant="light"
+                  className="border-0 bg-transparent p-1"
+                  id="dropdown-custom"
+                >
+                  <BsThreeDotsVertical size={20} />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu className="shadow rounded-3">
+                  {showPlanPrivacy === 1 ? (
+                    <Dropdown.Item
+                      onClick={() =>
+                        handleChangePrivacy(
+                          planData.plan_id,
+                          showPlanPrivacy
+                        )
+                      }
+                    >
+                      แสดงโพสต์นี้
+                    </Dropdown.Item>
+                  ) : (
+                    <Dropdown.Item
+                      onClick={() =>
+                        handleChangePrivacy(
+                          planData.plan_id,
+                          showPlanPrivacy
+                        )
+                      }
+                    >
+                      ซ่อนโพสต์นี้
+                    </Dropdown.Item>
+                  )}
+                  <Dropdown.Item>ลบโพสต์นี้</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
         </div>
 
         <div style={{ fontWeight: "bold", marginBottom: "10px" }}>
