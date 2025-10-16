@@ -103,7 +103,7 @@ export default function PlanPost({ planData }) {
     share_plan_name: planData.plan_name,
     share_park_name: planData.park_name,
   });
-
+  console.log(planData.user_firstName)
   const handleProfileClick = (user_id) => {
     navigate(`/profile?user_id=${user_id}`);
   };
@@ -128,14 +128,14 @@ export default function PlanPost({ planData }) {
         </div>
         <div className="plan_name">{planData.plan_name}</div>
 
-        <div className="planBudget">
+        {/* <div className="planBudget">
           <img
             src={money}
             alt="budget"
             style={{ width: "20px", marginRight: "10px" }}
           />
           test
-        </div>
+        </div> */}
 
         <div className="activities">
           <ul>
