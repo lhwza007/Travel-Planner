@@ -2,14 +2,27 @@ import { db } from "../connect.js";
 
 export const ListName = (req,res) => {
     const user_id = req.query.user_id
-    
-    const sql = `SELECT users.user_id, user_firstName, user_lastName
-    FROM users 
-    WHERE user_id IN (SELECT    DISTINCT CASE WHEN sender_id = ? THEN receiver_id 
-                                ELSE sender_id END 
-                        
-                                FROM messages 
-                                WHERE sender_id = ? OR receiver_id = ?)`;
+    //เรียงตามเวลาข้อความล่าสุด MAX() 1 อัน
+    const sql = `
+        SELECT 
+            users.user_id, 
+            users.user_firstName, 
+            users.user_lastName,
+            MAX(messages.created_at) AS last_message_time
+        FROM 
+            users 
+        JOIN 
+            messages
+        ON 
+            (messages.sender_id = users.user_id AND messages.receiver_id = ?) OR 
+            (messages.receiver_id = users.user_id AND messages.sender_id = ?)
+        WHERE 
+            users.user_id != ?
+        GROUP BY
+            users.user_id, users.user_firstName, users.user_lastName
+        ORDER BY 
+            last_message_time DESC;
+    `;
     
     db.query(sql,[user_id,user_id,user_id],(err,result)=>{
         if(err) return res.json(err);

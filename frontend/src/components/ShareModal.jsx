@@ -3,6 +3,7 @@ import { Modal, Button ,ListGroup, Spinner, Alert} from "react-bootstrap"; // �
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {SweetalertSucc} from "./Sweetalert.jsx";
+import { FaShare } from "react-icons/fa";
 
 
 
@@ -61,10 +62,10 @@ export default function ShareModal({ show, onHide, shareData }) {
  
 
   return (
-    <Modal show={show} onHide={onHide} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          <h5 className="mb-0">แชร์ : {data.share_plan_name}</h5>
+    <Modal show={show} onHide={onHide} centered >
+      <Modal.Header closeButton >
+        <Modal.Title >
+          <h5 className="mb-0" ><FaShare />&nbsp;&nbsp;&nbsp;&nbsp;{data.share_plan_name}</h5>
         </Modal.Title>
       </Modal.Header>
 
@@ -83,9 +84,14 @@ export default function ShareModal({ show, onHide, shareData }) {
                     
                     {/* ปุ่มแชร์ */}
                     <Button 
-                        variant="outline-success" 
+                        variant="success" 
                         size="sm" 
                         onClick={() => handleShare(listName.user_id)}
+                        style={{
+                        backgroundColor: "#78945eff", // สีพื้นหลัง
+                        borderColor: "#78945eff",     // สีขอบ
+                        color: "#fff",  // สีตัวอักษร
+                        }}
                     >
                         แชร์
                     </Button>

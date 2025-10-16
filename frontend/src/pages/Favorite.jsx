@@ -13,7 +13,7 @@ export default function Favorite() {
       .then((res) => setPlans(res.data))
       .catch((err) => console.error(err));
   }, []);
-
+  console.log("plandata",plans);
 
   return (
     <>

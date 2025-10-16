@@ -3,7 +3,9 @@ import pfp from "../assets/testPfp.jpg";
 import { Button } from "react-bootstrap";
 import { FaRegCalendarAlt, FaClipboardList } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import InfoChangingModal from "./InfoChangingModal.jsx";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 export default function ProfileCard(props) {
   const [modalShow, setModalShow] = useState(false);
@@ -14,7 +16,11 @@ export default function ProfileCard(props) {
 
   // console.log("user id: ", userData.user_id);
   // console.log("current user id: ", currentUser);
-
+  const navigate = useNavigate();
+  // const sendMessages = ()={
+  //   return navigate("/messages", { state: { receiverData: userData } });
+    
+  // }
   return (
     <>
       <div className="profileCardContainer">
@@ -69,8 +75,13 @@ export default function ProfileCard(props) {
           </div>
           <div>
             {userData?.user_id === currentUser && (
-              <Button variant="success" onClick={() => setModalShow(true)}>
+              <Button style={{ backgroundColor: "#495A3A", border:"none" }} onClick={() => setModalShow(true)}>
                 แก้ไขโปรไฟล์
+              </Button>
+            )}
+            {userData?.user_id !== currentUser && (
+              <Button style={{ backgroundColor: "#495A3A", border:"none"}} onClick={()=>navigate("/messages", { state: { receiverData: userData } })}>
+                <FaFacebookMessenger/> ข้อความ
               </Button>
             )}
           </div>
