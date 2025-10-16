@@ -2,7 +2,7 @@ import PlanPost from "../components/PlanPost";
 import Search from "../components/Search"
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import MyNav from "../components/Nav.jsx";
 
 export default function Home() {
 
@@ -17,6 +17,7 @@ export default function Home() {
 
   return (
     <>
+      <MyNav />
       <Search/>
       {
         plans.map((plan) => (

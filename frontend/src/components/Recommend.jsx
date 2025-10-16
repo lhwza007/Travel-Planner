@@ -97,6 +97,7 @@ export default function Recommend() {
             </Col>
           ))}
         </Row>
+        <hr style={{ marginBottom: "30px" }} />
       </Container>
     </>
   );
