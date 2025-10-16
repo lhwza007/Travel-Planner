@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import PlanPost from "../components/PlanPost";
 import { useSearchParams } from "react-router-dom";
+import MyNav from "../components/Nav.jsx";
 
 export default function Profile() {
     const [plans, setPlans] = useState([]);
@@ -52,6 +53,7 @@ export default function Profile() {
     
     return (
         <>
+        <MyNav />
         <Container>
 
             {/* ส่ง props เป็น id ของเจ้าของโปรไฟล์ */}

@@ -2,7 +2,7 @@ import Search from '../components/Search';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import PlanPost from '../components/PlanPost';
-
+import MyNav from "../components/Nav.jsx";
 export default function Favorite() {
   const [plans, setPlans] = useState([]);
   useEffect(() => {
@@ -17,6 +17,7 @@ export default function Favorite() {
 
   return (
     <>
+      <MyNav />
       <Search />
       {
         plans.map((plan) => (

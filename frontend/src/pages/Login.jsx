@@ -1,11 +1,13 @@
 import React from 'react'
 import LoginCard from '../components/LoginCard'
+import MyNav from "../components/Nav.jsx";
 
 function Login() {
 
   return (
     <>
-          <LoginCard />
+      <MyNav />
+      <LoginCard />
     </>
   )
 }
