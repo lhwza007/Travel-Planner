@@ -10,7 +10,10 @@ import { checkAuth } from "../../context/checkAuth.jsx";
 import ShareModal from "./ShareModal.jsx";
 import { Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { SweetalertSuccNoReload, SweetalertErrNoReload } from "./Sweetalert.jsx";
+import {
+  SweetalertSuccNoReload,
+  SweetalertErrNoReload,
+} from "./Sweetalert.jsx";
 
 export default function PlanPost({ planData, isCurrentUser }) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -21,6 +24,7 @@ export default function PlanPost({ planData, isCurrentUser }) {
   const [showPlanPrivacy, setShowPlanPrivacy] = useState(
     planData.plan_isPrivate === 1 ? 1 : 0
   );
+  const [isDeleted, setIsDeleted] = useState(false);
 
   async function verify() {
     const result = await checkAuth();
@@ -110,8 +114,8 @@ export default function PlanPost({ planData, isCurrentUser }) {
   };
 
   const handleChangePrivacy = (plan_id, plan_isPrivate) => {
-    console.log("change privacy for plan id: ", plan_id);
-    console.log("plan privacy: ", plan_isPrivate);
+    // console.log("change privacy for plan id: ", plan_id);
+    // console.log("plan privacy: ", plan_isPrivate);
 
     axios
       .patch(`http://localhost:8800/api/updateData/updatePlanPrivacy`, {
@@ -137,83 +141,106 @@ export default function PlanPost({ planData, isCurrentUser }) {
       });
   };
 
+  const handleDeletePost = (plan_id) => {
+    console.log("delete plan id: ", plan_id);
+    axios
+      .delete(`http://localhost:8800/api/deleteData/deletePost`, {
+        params: {
+          plan_id: plan_id,
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          SweetalertSuccNoReload(res.data.message);
+          setIsDeleted(true);
+        } else {
+          SweetalertErrNoReload(res.data.message);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        SweetalertErrNoReload("ผิดที่ axios");
+      });
+  };
+
   console.log("plandata ", planData);
 
   return (
     <>
-      <div className="container mb-4 planCard">
-        <div className="planCardHeader">
-          <div className="profile">
-            <div className="profileimg">
-              <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
-            </div>
-            <div className="nameAndPvStatus">
-              <h4
-                className="user_name"
-                onClick={() => handleProfileClick(planData.user_id)}
-                style={{ margin: "0", padding: "0", marginLeft: "20px" }}
-              >
-                {planData.user_firstName} {planData.user_lastName}
-              </h4>
-              {isCurrentUser && (
-                <p
-                  className="privateTag"
+      {isDeleted ? (
+        <div className="container mb-4 planCard d-flex align-items-center">Post was deleted</div>
+      ) : (
+        <div className="container mb-4 planCard">
+          <div className="planCardHeader">
+            <div className="profile">
+              <div className="profileimg">
+                <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
+              </div>
+              <div className="nameAndPvStatus">
+                <h4
+                  className="user_name"
+                  onClick={() => handleProfileClick(planData.user_id)}
                   style={{ margin: "0", padding: "0", marginLeft: "20px" }}
                 >
-                  {showPlanPrivacy === 1 ? "ส่วนตัว" : "สาธารณะ"}
-                </p>
-              )}
+                  {planData.user_firstName} {planData.user_lastName}
+                </h4>
+                {isCurrentUser && (
+                  <p
+                    className="privateTag"
+                    style={{ margin: "0", padding: "0", marginLeft: "20px" }}
+                  >
+                    {showPlanPrivacy === 1 ? "ส่วนตัว" : "สาธารณะ"}
+                  </p>
+                )}
+              </div>
             </div>
+            {isCurrentUser && (
+              <div className="dropdown">
+                <Dropdown align="end">
+                  <Dropdown.Toggle
+                    bsPrefix="no-caret btn"
+                    variant="light"
+                    className="border-0 bg-transparent p-1"
+                    id="dropdown-custom"
+                  >
+                    <BsThreeDotsVertical size={20} />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className="shadow rounded-3">
+                    {showPlanPrivacy === 1 ? (
+                      <Dropdown.Item
+                        onClick={() =>
+                          handleChangePrivacy(planData.plan_id, showPlanPrivacy)
+                        }
+                      >
+                        แสดงโพสต์นี้
+                      </Dropdown.Item>
+                    ) : (
+                      <Dropdown.Item
+                        onClick={() =>
+                          handleChangePrivacy(planData.plan_id, showPlanPrivacy)
+                        }
+                      >
+                        ซ่อนโพสต์นี้
+                      </Dropdown.Item>
+                    )}
+                    <Dropdown.Item
+                      onClick={() => handleDeletePost(planData.plan_id)}
+                    >
+                      ลบโพสต์นี้
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            )}
           </div>
-          {isCurrentUser && (
-            <div className="dropdown">
-              <Dropdown align="end">
-                <Dropdown.Toggle
-                  bsPrefix="no-caret btn"
-                  variant="light"
-                  className="border-0 bg-transparent p-1"
-                  id="dropdown-custom"
-                >
-                  <BsThreeDotsVertical size={20} />
-                </Dropdown.Toggle>
 
-                <Dropdown.Menu className="shadow rounded-3">
-                  {showPlanPrivacy === 1 ? (
-                    <Dropdown.Item
-                      onClick={() =>
-                        handleChangePrivacy(
-                          planData.plan_id,
-                          showPlanPrivacy
-                        )
-                      }
-                    >
-                      แสดงโพสต์นี้
-                    </Dropdown.Item>
-                  ) : (
-                    <Dropdown.Item
-                      onClick={() =>
-                        handleChangePrivacy(
-                          planData.plan_id,
-                          showPlanPrivacy
-                        )
-                      }
-                    >
-                      ซ่อนโพสต์นี้
-                    </Dropdown.Item>
-                  )}
-                  <Dropdown.Item>ลบโพสต์นี้</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          )}
-        </div>
+          <div style={{ fontWeight: "bold", marginBottom: "10px" }}>
+            {planData.park_name}
+          </div>
+          <div className="plan_name">{planData.plan_name}</div>
 
-        <div style={{ fontWeight: "bold", marginBottom: "10px" }}>
-          {planData.park_name}
-        </div>
-        <div className="plan_name">{planData.plan_name}</div>
-
-        {/* <div className="planBudget">
+          {/* <div className="planBudget">
           <img
             src={money}
             alt="budget"
@@ -222,49 +249,50 @@ export default function PlanPost({ planData, isCurrentUser }) {
           test
         </div> */}
 
-        <div className="activities">
-          <ul>
-            {planData.activities.map((activity) => (
-              <li key={activity.activity_id}>
-                <div className="activityDetails">
-                  <div>
-                    {activity.activity_name} ({activity.parkplace_name})
+          <div className="activities">
+            <ul>
+              {planData.activities.map((activity) => (
+                <li key={activity.activity_id}>
+                  <div className="activityDetails">
+                    <div>
+                      {activity.activity_name} ({activity.parkplace_name})
+                    </div>
+                    <div>
+                      {activity.activity_start} - {activity.activity_end}
+                    </div>
                   </div>
-                  <div>
-                    {activity.activity_start} - {activity.activity_end}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <hr />
-
-        <div className="actionBar">
-          <div className="favoriteGroup" onClick={toggleFavorite}>
-            <FaStar
-              style={{
-                color: isFavorite ? "orange" : "grey",
-                width: "25px",
-                marginBottom: "1px",
-              }}
-            />
-            Favorite
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="group">
-            <img src={comment} alt="comment" />
+          <hr />
 
-            {/* ปุ่มเปิด Modal */}
+          <div className="actionBar">
+            <div className="favoriteGroup" onClick={toggleFavorite}>
+              <FaStar
+                style={{
+                  color: isFavorite ? "orange" : "grey",
+                  width: "25px",
+                  marginBottom: "1px",
+                }}
+              />
+              Favorite
+            </div>
+            <div className="group">
+              <img src={comment} alt="comment" />
 
-            <img
-              src={share}
-              alt="share"
-              onClick={handleOpenModal}
-              style={{ cursor: "pointer" }}
-            />
+              {/* ปุ่มเปิด Modal */}
+
+              <img
+                src={share}
+                alt="share"
+                onClick={handleOpenModal}
+                style={{ cursor: "pointer" }}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* เรียกใช้ ShareModal */}
       {isAuthenticated ? (

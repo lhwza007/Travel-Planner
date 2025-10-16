@@ -27,7 +27,7 @@ export const getFavoriteStatus = (req, res) => {
 
 export const getFavoritePlans = (req, res) => {
   const sql = `
-    SELECT favorites.favorite_id , plans.*, activities.*, users.user_id, users.user_name,users.user_firstName,users.user_lastName, parks.park_name 
+    SELECT favorites.favorite_id , plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, parks.park_name 
     FROM favorites 
     LEFT JOIN plans ON favorites.plan_id = plans.plan_id
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
@@ -73,6 +73,8 @@ export const getFavoritePlans = (req, res) => {
         planMap[row.plan_id].activities.push({
           activity_id: row.activity_id,
           activity_name: row.activity_name,
+          parkplace_id: row.parkplace_id,
+          parkplace_name: row.parkplace_name,
           activity_start: row.activity_start,
           activity_end: row.activity_end,
         });
