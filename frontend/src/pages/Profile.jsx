@@ -9,12 +9,13 @@ export default function Profile() {
     const [plans, setPlans] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
     const [searchParams] = useSearchParams();
-    const user_id = searchParams.get("user_id");
+    const user_id = parseInt(searchParams.get("user_id"));
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const count = plans.length;
+    const isCurrentUser = user_id === currentUser.user_id;
 
     const getPlansByUserId = async () => {
-      if (user_id === currentUser.user_id) {
+      if (isCurrentUser) {
         await axios
             .get("http://localhost:8800/api/getData/plansByUserId", {
               params: { user_id: user_id },
@@ -41,8 +42,8 @@ export default function Profile() {
           .catch((err) => console.error(err));
     }
 
-    console.log("profile id: ",user_id);
-    console.log("current user id: ", currentUser.user_id);
+    // console.log("profile id: ",user_id);
+    // console.log("current user id: ", currentUser.user_id);
     
     useEffect(() => {
         getPlansByUserId();
@@ -59,7 +60,7 @@ export default function Profile() {
             {/* map plans ด้วยการ query ตาม user id */}
             {
               plans.map((plan) => (
-                <PlanPost key={plan.plan_id} planData={plan} />
+                <PlanPost key={plan.plan_id} planData={plan} isCurrentUser={isCurrentUser}/>
               ))
             }
             

@@ -24,3 +24,20 @@ export function SweetalertErr(msg) {
   });
   return swal;
 }
+
+export function SweetalertSuccNoReload(msg) {
+  const swal = Swal.fire({
+    title: msg,
+    icon: "success",
+    confirmButtonText: "OK",
+  });
+  return swal;
+}
+
+export function SweetalertErrNoReload(msg) {
+  const swal = Swal.fire({
+    title: msg,
+    icon: "error",confirmButtonText: "OK",
+  });
+  return swal;
+}
