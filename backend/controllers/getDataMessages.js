@@ -8,6 +8,7 @@ export const ListName = (req,res) => {
             users.user_id, 
             users.user_firstName, 
             users.user_lastName,
+            users.user_pfp,
             MAX(messages.created_at) AS last_message_time
         FROM 
             users 
