@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import personpfp from "../assets/personTest.svg";
 import comment from "../assets/comment.svg";
 import share from "../assets/share.svg";
-import "./PlanPost.css";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { checkAuth } from "../../context/checkAuth.jsx";
@@ -168,13 +167,18 @@ export default function PlanPost({ planData, isCurrentUser }) {
   return (
     <>
       {isDeleted ? (
-        <div className="container mb-4 planCard d-flex align-items-center">Post was deleted</div>
+        <div className="container mb-4 planCard d-flex align-items-center">
+          Post was deleted
+        </div>
       ) : (
         <div className="container mb-4 planCard">
           <div className="planCardHeader">
             <div className="profile">
               <div className="profileimg">
-                <img src={personpfp} alt="pfp" style={{ width: "50px" }} />
+                <img
+                  src={`http://localhost:8800/uploads/${planData.user_pfp}`}
+                  alt={`${planData.user_name} profile picture`} 
+                />
               </div>
               <div className="nameAndPvStatus">
                 <h4

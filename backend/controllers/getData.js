@@ -2,7 +2,7 @@ import { db } from "../connect.js";
 
 export const Plans = (req, res) => {
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, parks.park_name, users.user_firstName, users.user_lastName 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, parks.park_name, users.user_firstName, users.user_lastName, users.user_pfp 
     FROM plans 
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
@@ -28,6 +28,7 @@ export const Plans = (req, res) => {
           user_name: row.user_name,
           user_firstName: row.user_firstName,
           user_lastName: row.user_lastName,
+          user_pfp: row.user_pfp,
           park_name: row.park_name,
           plan_name: row.plan_name,
           plan_start: row.plan_start,
@@ -61,7 +62,7 @@ export const Plans = (req, res) => {
 export const PlansEachPark = (req, res) => {
     
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, users.user_pfp 
     FROM plans 
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
@@ -87,6 +88,7 @@ export const PlansEachPark = (req, res) => {
           user_name: row.user_name,
           user_firstName: row.user_firstName,
           user_lastName: row.user_lastName,
+          user_pfp: row.user_pfp,
           park_name: row.park_name,
           plan_name: row.plan_name,
           plan_start: row.plan_start,
@@ -172,7 +174,7 @@ export const ParkImg = (req, res) => {
 export const PlansByUserId = (req, res) => {
   const user_id = req.query.user_id; // รับ user_id จาก query parameters
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, users.user_pfp 
     FROM plans
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
@@ -195,6 +197,7 @@ export const PlansByUserId = (req, res) => {
           user_name: row.user_name,
           user_firstName: row.user_firstName,
           user_lastName: row.user_lastName,
+          user_pfp: row.user_pfp,
           park_name: row.park_name,
           plan_name: row.plan_name,
           plan_start: row.plan_start,
@@ -227,7 +230,7 @@ export const PlansByUserId = (req, res) => {
 export const PlansByAnotherUserId = (req, res) => {
   const user_id = req.query.user_id; // รับ user_id จาก query parameters
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, users.user_pfp 
     FROM plans
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
@@ -250,6 +253,7 @@ export const PlansByAnotherUserId = (req, res) => {
           user_name: row.user_name,
           user_firstName: row.user_firstName,
           user_lastName: row.user_lastName,
+          user_pfp: row.user_pfp,
           park_name: row.park_name,
           plan_name: row.plan_name,
           plan_start: row.plan_start,
@@ -281,7 +285,7 @@ export const PlansByAnotherUserId = (req, res) => {
 export const PlansByParkId = (req, res) => {
   const park_id = req.query.park_id; // รับ park_id จาก query parameters
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, users.user_pfp 
     FROM plans
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
@@ -304,6 +308,7 @@ export const PlansByParkId = (req, res) => {
           user_name: row.user_name,
           user_firstName: row.user_firstName,
           user_lastName: row.user_lastName,
+          user_pfp: row.user_pfp,
           park_name: row.park_name,
           plan_name: row.plan_name,
           plan_start: row.plan_start,

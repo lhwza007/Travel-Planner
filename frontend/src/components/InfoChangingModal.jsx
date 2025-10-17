@@ -10,7 +10,6 @@ export default function InfoChangingModal (props) {
   const user_id = userData.user_id;
   const [userInfo, setUserInfo] = useState();
   const [inputs, setInputs] = useState();
-  const [selectedImg, setSelectedImg] = useState();
   const [isInputChanged, setIsInputChanged] = useState(false);
 
   useEffect(() => {
@@ -121,41 +120,6 @@ export default function InfoChangingModal (props) {
         </Modal.Header>
 
         <Modal.Body>
-          <div className="d-flex flex-column align-items-center">
-            <div
-              className="profile-img"
-              style={{
-                borderRadius: "50%",
-                overflow: "hidden",
-                width: "200px",
-                height: "200px",
-                marginBottom: "10px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {selectedImg && (
-                <img
-                  src={selectedImg}
-                  alt="Preview image"
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    objectFit: "cover",
-                    objectPosition: "center",
-                  }}
-                />
-              )}
-            </div>
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleChangeImg}
-              />
-            </Form.Group>
-          </div>
 
           <Form.Group className="mb-3" controlId="formBasicUser">
             <Form.Label>Username</Form.Label>
