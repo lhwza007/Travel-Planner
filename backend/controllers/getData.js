@@ -174,7 +174,7 @@ export const ParkImg = (req, res) => {
 export const PlansByUserId = (req, res) => {
   const user_id = req.query.user_id; // รับ user_id จาก query parameters
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, parks.park_name 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, parks.park_name, users.user_pfp 
     FROM plans
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
@@ -231,7 +231,7 @@ export const PlansByUserId = (req, res) => {
 export const PlansByAnotherUserId = (req, res) => {
   const user_id = req.query.user_id; // รับ user_id จาก query parameters
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, parks.park_name 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, parks.park_name, users.user_pfp 
     FROM plans
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
