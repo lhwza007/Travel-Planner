@@ -24,6 +24,7 @@ export default function PlanPost({ planData, isCurrentUser }) {
     planData.plan_isPrivate === 1 ? 1 : 0
   );
   const [isDeleted, setIsDeleted] = useState(false);
+  const user_pfp = planData.user_pfp;
 
   async function verify() {
     const result = await checkAuth();
@@ -175,10 +176,17 @@ export default function PlanPost({ planData, isCurrentUser }) {
           <div className="planCardHeader">
             <div className="profile">
               <div className="profileimg">
-                <img
-                  src={`http://localhost:8800/uploads/${planData.user_pfp}`}
-                  alt={`${planData.user_name} profile picture`} 
-                />
+                {user_pfp ? (
+                  <img
+                    src={`http://localhost:8800/uploads/${planData.user_pfp}`}
+                    alt={`${planData.user_name} profile picture`}
+                  />
+                ) : (
+                  <img
+                    src={`/placeholderPfp.jpg`}
+                    alt={`${planData.user_name} profile picture`}
+                  />
+                )}
               </div>
               <div className="nameAndPvStatus">
                 <h4
