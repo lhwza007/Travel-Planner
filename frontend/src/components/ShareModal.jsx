@@ -19,7 +19,7 @@ export default function ShareModal({ show, onHide, shareData }) {
 
   const [listName, setListName] = useState([]);
 
-  console.log("ข้อมูลที่จะส่งไป insert:", shareData);
+  // console.log("ข้อมูลที่จะส่งไป insert:", shareData);
 
   const fecthListName = async () => {
     try {
