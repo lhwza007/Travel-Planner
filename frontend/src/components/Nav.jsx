@@ -52,10 +52,10 @@ function MyNav() {
             alt="Logo"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"  />
 
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto ">
+        <Navbar.Collapse id="basic-navbar-nav" style={{display:"flex",textAlign:"center"}} >
+          <Nav className="me-auto " style={{display:"flex",textAlign:"left"}} >
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
@@ -93,7 +93,7 @@ function MyNav() {
             
             {isAuthenticated ? (
               <Nav.Link as="button" onClick={handleLogout} >
-                <MdOutlineLogout style={{ color: "white", fontSize: "2rem" }} />
+                <MdOutlineLogout style={{ color: "white", fontSize: "2rem"  }} />
               </Nav.Link>
             ) : (
               <Nav.Link as={Link} to="/login">
