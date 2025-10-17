@@ -11,6 +11,7 @@ import recommendRoutes from "./routes/recommend.js";
 import getDataMessagesRoutes from "./routes/getDataMessages.js";
 import insertMessageRoutes from "./routes/insertMessage.js";
 import deleteDataRoutes from "./routes/deleteData.js";
+import uploadImgRoutes from "./routes/upload.js";
 
 const app = express();
 
@@ -31,6 +32,9 @@ app.use("/api/insertParkplaces", insertParkplacesRoutes);
 app.use("/api/recommend", recommendRoutes);
 app.use("/api/insertmessage",insertMessageRoutes);
 app.use("/api/deleteData", deleteDataRoutes);
+app.use("/api/upload", uploadImgRoutes);
+
+app.use("/uploads", express.static("uploads"));
 
 app.listen(8800, () => {
   console.log("API is working on port 8800...");
