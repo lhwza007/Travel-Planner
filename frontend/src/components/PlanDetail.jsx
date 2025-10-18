@@ -13,6 +13,7 @@ import { checkAuth } from "../../context/checkAuth.jsx";
 import ShareModal from "./ShareModal.jsx";
 import Comment from "./Comment.jsx"; 
 import "./PlanPost.css";
+import { LuMapPin } from "react-icons/lu";
 
 export default function PlanDetail({ plan_id }) {
   const [planData, setPlanData] = useState(null);
@@ -159,13 +160,21 @@ export default function PlanDetail({ plan_id }) {
             {planData.activities.map((activity) => (
               <li key={activity.activity_id}>
                 <div className="activityDetails">
-                  <div>
-                    {activity.activity_name} ({activity.parkplace_name})
-                  </div>
-                  <div>
-                    {activity.activity_start} - {activity.activity_end}
-                  </div>
-                </div>
+                                    <div>
+                
+                                      {activity.activity_name}&nbsp;&nbsp;
+                                      {activity.parkplace_name?(
+                                        <>
+                                          <LuMapPin/>{activity.parkplace_name}
+                                        </>
+                
+                                      ):(
+                                        null
+                                      )
+                                      }
+                                      
+                                    </div>
+                                    </div>
               </li>
             ))}
           </ul>

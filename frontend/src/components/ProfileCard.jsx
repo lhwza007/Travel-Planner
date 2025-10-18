@@ -19,7 +19,7 @@ export default function ProfileCard(props) {
   const currentUser = JSON.parse(localStorage.getItem("user")).user_id;
   const navigate = useNavigate();
 
-  console.log("userData in ProfileCard: ", userData);
+  // console.log("userData in ProfileCard: ", userData);
 
   return (
     <>

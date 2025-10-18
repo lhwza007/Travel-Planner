@@ -26,7 +26,7 @@ export default function Home() {
   };
   // แสดงข้อความเมื่อไม่มีผลลัพธ์
   const noResults = plans.length === 0 && searchTerm.trim();
-  console.log(noResults)
+  // console.log(noResults)
 //--------------------------------------------------------------
 
 
@@ -43,7 +43,7 @@ export default function Home() {
   }, [searchTerm]);
 
   
-console.log(plans)
+// console.log(plans)
   return (
     <>
       <MyNav />

@@ -394,7 +394,7 @@ export const PlanDetail = (req, res) => {
   const plan_id = req.query.plan_id; // รับ plan_id จาก query parameters
 
   const sql = `
-    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, user_pfp, parks.park_name 
+    SELECT plans.*, activities.*, users.user_id, users.user_name, users.user_firstName, users.user_lastName, user_pfp, parks.park_name  
     FROM plans 
     LEFT JOIN activities ON plans.plan_id = activities.plan_id 
     LEFT JOIN users ON plans.user_id = users.user_id 
@@ -439,6 +439,7 @@ export const PlanDetail = (req, res) => {
         planMap[row.plan_id].activities.push({
           activity_id: row.activity_id,
           activity_name: row.activity_name,
+          parkplace_name: row.parkplace_name,
           activity_start: row.activity_start,
           activity_end: row.activity_end,
         });
