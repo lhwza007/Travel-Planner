@@ -46,7 +46,7 @@ export default function ShowMapForSelect ({ park_id, onSelectPlace }) {
         <Map
           mapId={import.meta.env.VITE_MAP_ID}
           defaultCenter={parkPlacesCenter}
-          defaultZoom={12}
+          defaultZoom={10}
           mapTypeId="satellite"
           gestureHandling="greedy"
         >

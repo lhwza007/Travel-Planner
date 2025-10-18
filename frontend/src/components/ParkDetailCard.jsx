@@ -1,9 +1,15 @@
 import { Col } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
+
 import { LuMapPin } from "react-icons/lu";
 import { BsTelephone } from "react-icons/bs";
 import { MdOutlineMailOutline } from "react-icons/md";
+import { RxActivityLog } from "react-icons/rx";
+import { PiTree, PiBird  } from "react-icons/pi";
+import { CiBitcoin } from "react-icons/ci";
+import { RiPinDistanceLine } from "react-icons/ri";
+
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,6 +19,7 @@ export default function ParkDetailCard({ park_id }) {
   const navigate = useNavigate();
   const [parkData, setParkData] = useState([]);
   const [parkImg, setParkImg] = useState([]);
+  const [parkplacesCount, setParkplacesCount] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -38,9 +45,22 @@ export default function ParkDetailCard({ park_id }) {
     }
   };
 
+  const fetchParkplacesCount = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8800/api/getData/parkplacesCount",
+        { params: { park_id: park_id } }
+      );
+      setParkplacesCount(response.data.parkPlacesCount);
+    } catch (error) {
+      console.error("Error fetching park data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
     fetchImg();
+    fetchParkplacesCount();
   }, []);
 
   function handleClick(parkData) {
@@ -85,23 +105,41 @@ export default function ParkDetailCard({ park_id }) {
             {parkData.park_email ? parkData.park_email : "ไม่มีข้อมูล"}
           </p>
           <p>
-            <MdOutlineMailOutline /> กิจกรรม:{" "}
+            <RxActivityLog /> กิจกรรม:{" "}
             {parkData.park_activity ? parkData.park_activity : "ไม่มีข้อมูล"}
           </p>
           <p>
-            <MdOutlineMailOutline /> ลักษณะชีวนิเวศน์:{" "}
+            <PiTree /> ลักษณะชีวนิเวศน์:{" "}
             {parkData.park_biome ? parkData.park_biome : "ไม่มีข้อมูล"}
           </p>
           <p>
-            <MdOutlineMailOutline /> สัตว์ป่า:{" "}
+            <PiBird /> สัตว์ป่า:{" "}
             {parkData.park_animal ? parkData.park_animal : "ไม่มีข้อมูล"}
           </p>
           <p>
-            <MdOutlineMailOutline /> ค่าธรรมเนียม:{" "}
+            <CiBitcoin /> ค่าธรรมเนียม:{" "}
             {parkData.park_fee ? parkData.park_fee : "ไม่มีข้อมูล"}
           </p>
+          <p>
+            <RiPinDistanceLine /> จำนวนสถานที่ท่องเที่ยว:{" "}
+            {parkplacesCount ? parkplacesCount : "ไม่มีข้อมูล"}
+          </p>
 
-          <ShowMap park_id={park_id}/>
+          <ShowMap park_id={park_id} />
+
+          <div
+            style={{
+              color: "#FF0000",
+              fontSize: "14px",
+              marginLeft: "5px",
+            }}
+          >
+            *หมายเหตุ* หากต้องการข้อมูลเพิ่มเติม สามารถตรวจสอบได้ที่เว็บไซต์{" "}
+            <a href="https://portal.dnp.go.th/" target="_blank">
+              กรมอุทยานแห่งชาติ ฯ
+            </a>{" "}
+            หรือติดต่อทางอีเมล และเบอร์โทรข้างต้น
+          </div>
 
           <div className="d-flex justify-content-end">
             <button
