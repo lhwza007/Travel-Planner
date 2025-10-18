@@ -45,7 +45,8 @@ export default function Recommend() {
               user_level: userData.user_level ,
               user_age:userData.user_age,
               user_weight:userData.user_weight,
-              user_height:userData.user_height
+              user_height:userData.user_height,
+              user_gender:userData.user_gender
             } }
         );
         setParkData(response.data);
