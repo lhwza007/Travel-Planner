@@ -31,7 +31,7 @@ export default function mInboxCard() {
   
   const navigate = useNavigate();
   function handleCardClick(item) {
-    console.log("คลิกๆ", item);
+    // console.log("คลิกๆ", item);
     navigate("/messages", { state: { receiverData: item } });
   }
 

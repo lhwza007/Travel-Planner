@@ -24,7 +24,7 @@ export default function Favorite() {
   };
   // แสดงข้อความเมื่อไม่มีผลลัพธ์
   const noResults = plans.length === 0 && searchTerm.trim();
-  console.log(noResults)
+  // console.log(noResults)
 //--------------------------------------------------------------
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Favorite() {
         })
       .catch((err) => console.error(err));
   }, [searchTerm]);
-  console.log("plandata",plans);
+  // console.log("plandata",plans);
 
   return (
     <>

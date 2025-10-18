@@ -5,7 +5,7 @@ import MyNav from "../components/Nav.jsx";
 export default function SharePlan(){
     const location = useLocation();
     const plan_id = location.state?.plan_id || null;
-    console.log("plan_id in SharePlan:", plan_id);
+    // console.log("plan_id in SharePlan:", plan_id);
     return(
         <>
         <MyNav />

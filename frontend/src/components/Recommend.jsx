@@ -14,9 +14,9 @@ import { DotLoader} from "react-spinners";
 export default function Recommend() {
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
-  console.log(userData);
-  console.log("user_level:", userData.user_level);
-  console.log("user_age:", userData.user_age);
+  // console.log(userData);
+  // console.log("user_level:", userData.user_level);
+  // console.log("user_age:", userData.user_age);
 
   const [parkData, setParkData] = useState([]);
   const[wait,setWait]=useState(true);
@@ -25,7 +25,7 @@ export default function Recommend() {
   const stored = localStorage.getItem("dataLLM");
 
   const fetchData = async () => {
-    console.log("ข้อมูลของตัวแปร stored:",stored);
+    // console.log("ข้อมูลของตัวแปร stored:",stored);
     if(stored ){
       setWait(false);
       try{
@@ -65,7 +65,7 @@ export default function Recommend() {
       fetchData();
     }, [wait]);
 
-  console.log(parkData);
+  // console.log(parkData);
 
 
   function handleCardClick(park_id) {
