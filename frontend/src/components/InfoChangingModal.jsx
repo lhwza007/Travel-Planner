@@ -5,12 +5,14 @@ import { Form } from "react-bootstrap";
 import axios from "axios";
 import { SweetalertSucc, SweetalertErr } from "./Sweetalert.jsx";
 
-export default function InfoChangingModal (props) {
+export default function InfoChangingModal(props) {
   const userData = JSON.parse(localStorage.getItem("user")); //ดึงข้อมูลจาก local storage เป็น object
   const user_id = userData.user_id;
   const [userInfo, setUserInfo] = useState();
   const [inputs, setInputs] = useState();
   const [isInputChanged, setIsInputChanged] = useState(false);
+
+  console.log("user: ", userInfo);
 
   useEffect(() => {
     // Fetch data from the backend API
@@ -25,16 +27,15 @@ export default function InfoChangingModal (props) {
       .catch((err) => console.error(err));
   }, []);
 
-  const handleChangeImg = (e) => {
-    setSelectedImg(URL.createObjectURL(e.target.files[0]));
-  };
-
   // ฟังก์ชั่นอัพเดตข้อมูล และก็เช็คว่าข้อมูลเปลี่ยนรึเปล่า
   const handleChange = (e) => {
     setInputs((prev) => {
       let value = e.target.value;
 
-      if (e.target.name === "user_age" || e.target.name === "user_income") {
+      if (e.target.name === "user_age" || 
+          e.target.name === "user_income" ||
+          e.target.name === "user_weight" ||
+          e.target.name === "user_height") {
         value = parseInt(value);
       }
 
@@ -47,7 +48,8 @@ export default function InfoChangingModal (props) {
       return updatedInputs;
     });
   };
-
+  console.log("inputs: ", inputs);
+  
   // ฟังก์ชั่นเช็คว่าข้อมูลเปลี่ยนไปไหม
   const inputCheck = (updatedInputs) => {
     if (updatedInputs && userInfo) {
@@ -72,7 +74,7 @@ export default function InfoChangingModal (props) {
         localStorage.setItem("user", JSON.stringify(res.data));
       })
       .catch((err) => console.error(err));
-  }
+  };
 
   //ฟังก์ชั่นอัพเดตข้อมูล
   const handleSubmit = (e) => {
@@ -85,7 +87,10 @@ export default function InfoChangingModal (props) {
     console.log("user id for update: ", user_id);
 
     axios
-      .patch(`http://localhost:8800/api/updateData/updateUserProfile?user_id=${user_id}`, inputs)
+      .patch(
+        `http://localhost:8800/api/updateData/updateUserProfile?user_id=${user_id}`,
+        inputs
+      )
       .then((res) => {
         if (res.data.success) {
           changeUserData();
@@ -96,7 +101,7 @@ export default function InfoChangingModal (props) {
         }
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err);
         SweetalertErr(err);
       });
   };
@@ -120,7 +125,6 @@ export default function InfoChangingModal (props) {
         </Modal.Header>
 
         <Modal.Body>
-
           <Form.Group className="mb-3" controlId="formBasicUser">
             <Form.Label>ชื่อผู้ใช้</Form.Label>
             <Form.Control
@@ -200,6 +204,28 @@ export default function InfoChangingModal (props) {
             />
           </Form.Group>
 
+          <Form.Group className="mb-3" controlId="formBasicWeight">
+            <Form.Label>น้ำหนัก</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter Weight"
+              name="user_weight"
+              onChange={handleChange}
+              defaultValue={userInfo && userInfo.user_weight}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicHeight">
+            <Form.Label>ส่วนสูง</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter Height"
+              name="user_height"
+              onChange={handleChange}
+              defaultValue={userInfo && userInfo.user_height}
+            />
+          </Form.Group>
+
           <Form.Group className="mb-3" controlId="formBasicIncome">
             <Form.Label>รายได้ต่อเดือน</Form.Label>
             <Form.Control
@@ -246,7 +272,11 @@ export default function InfoChangingModal (props) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="success" disabled={!isInputChanged} onClick={handleSubmit}>
+          <Button
+            variant="success"
+            disabled={!isInputChanged}
+            onClick={handleSubmit}
+          >
             บันทึก
           </Button>
           <Button variant="danger" onClick={props.onHide}>
