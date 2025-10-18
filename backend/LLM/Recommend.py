@@ -10,7 +10,7 @@ import json
 import sys
 
 
-def Recommend(user_level,user_age,user_weight,user_height):
+def Recommend(user_level,user_age,user_weight,user_height,user_gender):
     parks = [] #เก็บ id และ name ของอุทยาน กำหนดไว้ก่อนให้มันเป็นโกลบ้อล
 
     # ดึงค่าบริการจาก PDF ------------------------------------------------
@@ -79,7 +79,8 @@ def Recommend(user_level,user_age,user_weight,user_height):
                     user_level: {user_level},
                     user_age: {user_age},
                     user_weight:{user_weight},
-                    user_height:{user_height}
+                    user_height:{user_height},
+                    user_gender:{user_gender}
                     ----[สิ้นสุด]----
 
                     และนี่คือ id ของแต่ละอุทยานที่คุณสามารถเลือกแนะนำได้ 
@@ -122,9 +123,10 @@ if __name__ == "__main__":
     user_age = sys.argv[2]
     user_weight =  sys.argv[3]
     user_height =  sys.argv[4]
+    user_gender =  sys.argv[5]
     
     try:
-        result_data = Recommend(user_level, user_age, user_weight, user_height)
+        result_data = Recommend(user_level, user_age, user_weight, user_height, user_gender)
         #result_data = Recommend("beginer", 19)
     
         final_output = result_data
