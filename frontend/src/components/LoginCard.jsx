@@ -66,10 +66,10 @@ function LoginCard() {
               className="d-flex justify-content-center align-items-center px-5"
             >
               <Form>
-                <h1>Login</h1>
+                <h1>ลงชื่อเข้าใช้</h1>
 
                 <Form.Group className="mb-3 mt-3 " controlId="formBasicUser">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label>ชื่อผู้ใช้</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Username"
@@ -79,7 +79,7 @@ function LoginCard() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>รหัสผ่าน</Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Password"
@@ -99,10 +99,10 @@ function LoginCard() {
                       marginBottom: "5px",
                     }}
                   >
-                    Sign up
+                    ลงชื่อเข้าใช้
                   </Button>
                   <p>
-                    Have an account?
+                    ยังไม่มีบัญชี?
                     <span
                       onClick={()=>navigate("/register")}
                       style={{
@@ -111,7 +111,7 @@ function LoginCard() {
                         marginLeft: "5px",
                       }}
                     >
-                      register
+                      ลงทะเบียนที่นี่
                     </span>
                   </p>
                 </Col>

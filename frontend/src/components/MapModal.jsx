@@ -29,7 +29,7 @@ export default function MapModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Select location...
+            เลือกสถานที่ท่องเที่ยว...
           </Modal.Title>
         </Modal.Header>
 
@@ -48,9 +48,6 @@ export default function MapModal(props) {
             )}
           </div>
 
-          <Button variant="danger" onClick={props.onHide}>
-            Cancel
-          </Button>
           <Button
             variant="success"
             onClick={() => {
@@ -60,7 +57,10 @@ export default function MapModal(props) {
               }
             }}
           >
-            Confirm
+            ยืนยัน
+          </Button>
+          <Button variant="danger" onClick={props.onHide}>
+            ยกเลิก
           </Button>
         </Modal.Footer>
       </Modal>

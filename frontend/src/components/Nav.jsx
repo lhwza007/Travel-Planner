@@ -57,15 +57,15 @@ function MyNav() {
         <Navbar.Collapse id="basic-navbar-nav" style={{display:"flex",textAlign:"center"}} >
           <Nav className="me-auto " style={{display:"flex",textAlign:"left"}} >
             <Nav.Link as={Link} to="/">
-              Home
+              หน้าหลัก
             </Nav.Link>
             <Nav.Link as={Link} to="/plan">
-              Plan
+              วางแผน
             </Nav.Link>
             {
               isAuthenticated && (
                 <Nav.Link as={Link} to="/favorite">
-                  Favorite
+                  ถูกใจ
                 </Nav.Link>
               )
             }
@@ -97,7 +97,7 @@ function MyNav() {
               </Nav.Link>
             ) : (
               <Nav.Link as={Link} to="/login">
-                Login
+                ลงชื่อเข้าใช้
               </Nav.Link>
             )}
           </Nav>

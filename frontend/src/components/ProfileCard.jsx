@@ -92,7 +92,7 @@ export default function ProfileCard(props) {
                   marginRight: "5px",
                 }}
               />
-              {count} Plans
+              {count} แผนการเดินทาง
             </div>
           </div>
           <div style={{ height: "fit-content" }}>

@@ -59,7 +59,7 @@ export default function UploadPfpModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Change your profile picture...
+            เปลี่ยนรูปโปรไฟล์ของคุณ...
           </Modal.Title>
         </Modal.Header>
 
@@ -103,10 +103,10 @@ export default function UploadPfpModal(props) {
 
         <Modal.Footer>
           <Button variant="success" onClick={handleSubmit}>
-            Save
+            บันทึก
           </Button>
           <Button variant="danger" onClick={props.onHide}>
-            Cancel
+            ยกเลิก
           </Button>
         </Modal.Footer>
       </Modal>

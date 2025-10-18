@@ -34,6 +34,13 @@ p.privateTag {
     border-radius: 12px;
 }
 
+p.timeTag {
+    color: #707070;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 12px;
+}
+
 .user_name:hover {
     text-decoration: underline;
 }
@@ -69,11 +76,46 @@ p.privateTag {
     display: flex;
     align-items: center;
     cursor: pointer;
+    padding: 8px;
+    border-radius: 20px;
 }
 
 .actionBar .favoriteGroup:hover{
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
     transition: all 0.1s ease-in-out;
+    background-color: #f0f0f0;
+}
+
+.actionBar .group .commentButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.actionBar .group .commentButton:hover{
+    /* transform: scale(1.05); */
+    transition: all 0.1s ease-in-out;
+    background-color: #f0f0f0;
+}
+
+.actionBar .group .shareButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.actionBar .group .shareButton:hover{
+    /* transform: scale(1.05); */
+    transition: all 0.1s ease-in-out;
+    background-color: #f0f0f0;
 }
 
 .activityDetails {

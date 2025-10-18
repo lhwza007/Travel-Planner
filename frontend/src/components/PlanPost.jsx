@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import personpfp from "../assets/personTest.svg";
 import comment from "../assets/comment.svg";
 import share from "../assets/share.svg";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaComment, FaShare } from "react-icons/fa";
 import axios from "axios";
 import { checkAuth } from "../../context/checkAuth.jsx";
 import ShareModal from "./ShareModal.jsx";
 import { Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Comment from "./Comment.jsx";
-import {SweetalertSuccNoReload,SweetalertErrNoReload,} from "./Sweetalert.jsx";
+import {
+  SweetalertSuccNoReload,
+  SweetalertErrNoReload,
+} from "./Sweetalert.jsx";
 import { LuMapPin } from "react-icons/lu";
 
 export default function PlanPost({ planData, isCurrentUser }) {
@@ -196,6 +199,12 @@ export default function PlanPost({ planData, isCurrentUser }) {
                 >
                   {planData.user_firstName} {planData.user_lastName}
                 </h4>
+                <p
+                  className="timeTag"
+                  style={{ margin: "0", padding: "0", marginLeft: "20px" }}
+                >
+                  {new Date(planData.plan_timeStamp).toLocaleString("th-TH")}
+                </p>
                 {isCurrentUser && (
                   <p
                     className="privateTag"
@@ -267,18 +276,13 @@ export default function PlanPost({ planData, isCurrentUser }) {
                 <li key={activity.activity_id}>
                   <div className="activityDetails">
                     <div>
-
                       {activity.activity_name}&nbsp;&nbsp;
-                      {activity.parkplace_name?(
+                      {activity.parkplace_name ? (
                         <>
-                          <LuMapPin/>{activity.parkplace_name}
+                          <LuMapPin />
+                          {activity.parkplace_name}
                         </>
-
-                      ):(
-                        null
-                      )
-                      }
-                      
+                      ) : null}
                     </div>
                     <div>
                       {activity.activity_start} - {activity.activity_end}
@@ -299,29 +303,35 @@ export default function PlanPost({ planData, isCurrentUser }) {
                   marginBottom: "1px",
                 }}
               />
-              Favorite
+              ถูกใจ
             </div>
             <div className="group">
-              <img 
-                src={comment} 
-                alt="comment" 
-                style={{ cursor: "pointer" }}
-                onClick={() => setShowComments(!showComments)} // ← เพิ่ม
-              />
+              <div className="commentButton">
+                <FaComment
+                  alt="comment"
+                  style={{
+                    cursor: "pointer",
+                    color: "grey",
+                  }}
+                  onClick={() => setShowComments(!showComments)}
+                />
+              </div>
 
               {/* ปุ่มเปิด Modal */}
 
-              <img
-                src={share}
-                alt="share"
-                onClick={handleOpenModal}
-                style={{ cursor: "pointer" }}
-              />
+              <div className="shareButton">
+                <FaShare
+                  alt="share"
+                  onClick={handleOpenModal}
+                  style={{
+                    cursor: "pointer",
+                    color: "grey",
+                  }}
+                />
+              </div>
             </div>
           </div>
-          {showComments && (
-            <Comment  planId={planData.plan_id}  user={user} />
-          )}
+          {showComments && <Comment planId={planData.plan_id} user={user} />}
         </div>
       )}
 

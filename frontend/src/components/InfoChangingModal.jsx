@@ -115,14 +115,14 @@ export default function InfoChangingModal (props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Change your info...
+            เปลี่ยนข้อมูลของคุณ...
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
 
           <Form.Group className="mb-3" controlId="formBasicUser">
-            <Form.Label>Username</Form.Label>
+            <Form.Label>ชื่อผู้ใช้</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter Username"
@@ -133,7 +133,7 @@ export default function InfoChangingModal (props) {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicFirstName">
-            <Form.Label>First name</Form.Label>
+            <Form.Label>ชื่อจริง</Form.Label>
             <Form.Control
               type="text"
               placeholder="First Name"
@@ -144,7 +144,7 @@ export default function InfoChangingModal (props) {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicLastName">
-            <Form.Label>Last name</Form.Label>
+            <Form.Label>นามสกุล</Form.Label>
             <Form.Control
               type="text"
               placeholder="Last Name"
@@ -155,7 +155,7 @@ export default function InfoChangingModal (props) {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>ที่อยู่อีเมล</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -166,11 +166,11 @@ export default function InfoChangingModal (props) {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Gender</Form.Label>
+            <Form.Label>เพศ</Form.Label>
             <div className="d-flex gap-3">
               <Form.Check
                 type="radio"
-                label="Male"
+                label="ชาย"
                 name="user_gender"
                 value="Male"
                 id="male"
@@ -179,7 +179,7 @@ export default function InfoChangingModal (props) {
               />
               <Form.Check
                 type="radio"
-                label="Female"
+                label="หญิง"
                 name="user_gender"
                 value="Female"
                 id="female"
@@ -190,7 +190,7 @@ export default function InfoChangingModal (props) {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicAge">
-            <Form.Label>Age</Form.Label>
+            <Form.Label>อายุ</Form.Label>
             <Form.Control
               type="number"
               placeholder="Enter Age"
@@ -201,7 +201,7 @@ export default function InfoChangingModal (props) {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicIncome">
-            <Form.Label>Income</Form.Label>
+            <Form.Label>รายได้ต่อเดือน</Form.Label>
             <Form.Control
               type="number"
               placeholder="Enter Income"
@@ -212,10 +212,10 @@ export default function InfoChangingModal (props) {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Your skill level</Form.Label>
+            <Form.Label>ระดับความสามารถ</Form.Label>
             <Form.Check
               type="radio"
-              label="Beginner"
+              label="มือใหม่ (Beginner)"
               name="user_level"
               id="beginner"
               onChange={handleChange}
@@ -224,7 +224,7 @@ export default function InfoChangingModal (props) {
             />
             <Form.Check
               type="radio"
-              label="Intermediate"
+              label="ปานกลาง (Intermediate)"
               name="user_level"
               id="intermediate"
               onChange={handleChange}
@@ -235,7 +235,7 @@ export default function InfoChangingModal (props) {
             />
             <Form.Check
               type="radio"
-              label="Experienced"
+              label="ชำนาญ (Experienced)"
               name="user_level"
               id="experienced"
               onChange={handleChange}
@@ -247,10 +247,10 @@ export default function InfoChangingModal (props) {
 
         <Modal.Footer>
           <Button variant="success" disabled={!isInputChanged} onClick={handleSubmit}>
-            Save
+            บันทึก
           </Button>
           <Button variant="danger" onClick={props.onHide}>
-            Cancel
+            ยกเลิก
           </Button>
         </Modal.Footer>
       </Modal>
