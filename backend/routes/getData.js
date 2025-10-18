@@ -1,10 +1,25 @@
 import express from "express";
-import { Plans, PlansEachPark,PlansAndCounts, ParkData, ParkImg, PlansByUserId, UserInfo, AllUserInfo, PlansByParkId, ParkPlaces, PlansByAnotherUserId, PlanDetail, test } from "../controllers/getData.js";
+import {
+  Plans,
+  PlansEachPark,
+  PlansAndCounts,
+  ParkData,
+  ParkImg,
+  PlansByUserId,
+  UserInfo,
+  AllUserInfo,
+  PlansByParkId,
+  ParkPlaces,
+  PlansByAnotherUserId,
+  PlanDetail,
+  ParkPlacesCount,
+  test,
+} from "../controllers/getData.js";
 
 const router = express.Router();
 
 router.get("/plans", Plans);
-router.get("/plansEachPark", PlansEachPark); 
+router.get("/plansEachPark", PlansEachPark);
 router.get("/plansAndCounts", PlansAndCounts);
 router.get("/parkData", ParkData);
 router.get("/parkImg", ParkImg);
@@ -15,7 +30,7 @@ router.get("/plansByParkId", PlansByParkId);
 router.get("/parkPlaces", ParkPlaces);
 router.get("/plansByAnotherUserId", PlansByAnotherUserId);
 router.get("/planDetail", PlanDetail);
+router.get("/parkPlacesCount", ParkPlacesCount);
 router.get("/test", test);
-
 
 export default router;
