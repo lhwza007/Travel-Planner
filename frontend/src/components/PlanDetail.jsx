@@ -11,13 +11,15 @@ import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { checkAuth } from "../../context/checkAuth.jsx";
 import ShareModal from "./ShareModal.jsx";
-import "./PlanPost.css"; // นำเข้า CSS เดียวกัน
+import Comment from "./Comment.jsx"; 
+import "./PlanPost.css";
 
 export default function PlanDetail({ plan_id }) {
-  const [planData, setPlanData] = useState(null); // เปลี่ยนจาก array เป็น null เพราะรับ object เดียว
+  const [planData, setPlanData] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [showComments, setShowComments] = useState(false); 
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
@@ -38,12 +40,11 @@ export default function PlanDetail({ plan_id }) {
       const response = await axios.get("http://localhost:8800/api/getData/planDetail", {
         params: { plan_id: plan_id },
       });
-      setPlanData(response.data[0]); // สมมติว่า API ส่งกลับ array และเราต้องการ object แรก
+      setPlanData(response.data[0]);
     } catch (error) {
       console.log("Error fetching plan details:", error);
     }
   };
-  console.log("plandata",planData)
 
   // ดึงสถานะ Favorite
   const getFavoriteStatus = () => {
@@ -108,158 +109,113 @@ export default function PlanDetail({ plan_id }) {
     }
   };
 
+  const handleProfileClick = (user_id) => {
+    navigate(`/profile?user_id=${user_id}`);
+  };
+
   if (!planData) {
     return <div>Loading...</div>;
   }
-  const isCurrentUser = false
-   const handleProfileClick = (user_id) => {
-    navigate(`/profile?user_id=${user_id}`);
-  };
+
+  const isCurrentUser = false;
+
   return (
     <>
-      
-        
-      
-        <div className="container mb-4 planCard">
-          <div className="planCardHeader">
-            <div className="profile">
-              <div className="profileimg">
-                {planData.user_pfp ? (
-                  <img
-                    src={`http://localhost:8800/uploads/${planData.user_pfp}`}
-                    alt={`${planData.user_name} profile picture`}
-                  />
-                ) : (
-                  <img
-                    src={`/placeholderPfp.jpg`}
-                    alt={`${planData.user_name} profile picture`}
-                  />
-                )}
-              </div>
-              <div className="nameAndPvStatus">
-                <h4
-                  className="user_name"
-                  onClick={() => handleProfileClick(planData.user_id)}
-                  style={{ margin: "0", padding: "0", marginLeft: "20px" }}
-                >
-                  {planData.user_firstName} {planData.user_lastName}
-                </h4>
-                {isCurrentUser && (
-                  <p
-                    className="privateTag"
-                    style={{ margin: "0", padding: "0", marginLeft: "20px" }}
-                  >
-                    {showPlanPrivacy === 1 ? "ส่วนตัว" : "สาธารณะ"}
-                  </p>
-                )}
-              </div>
+      <div className="container mb-4 planCard">
+        <div className="planCardHeader">
+          <div className="profile">
+            <div className="profileimg">
+              {planData.user_pfp ? (
+                <img
+                  src={`http://localhost:8800/uploads/${planData.user_pfp}`}
+                  alt={`${planData.user_name} profile picture`}
+                />
+              ) : (
+                <img
+                  src={`/placeholderPfp.jpg`}
+                  alt={`${planData.user_name} profile picture`}
+                />
+              )}
             </div>
-            {isCurrentUser && (
-              <div className="dropdown">
-                <Dropdown align="end">
-                  <Dropdown.Toggle
-                    bsPrefix="no-caret btn"
-                    variant="light"
-                    className="border-0 bg-transparent p-1"
-                    id="dropdown-custom"
-                  >
-                    <BsThreeDotsVertical size={20} />
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu className="shadow rounded-3">
-                    {showPlanPrivacy === 1 ? (
-                      <Dropdown.Item
-                        onClick={() =>
-                          handleChangePrivacy(planData.plan_id, showPlanPrivacy)
-                        }
-                      >
-                        แสดงโพสต์นี้
-                      </Dropdown.Item>
-                    ) : (
-                      <Dropdown.Item
-                        onClick={() =>
-                          handleChangePrivacy(planData.plan_id, showPlanPrivacy)
-                        }
-                      >
-                        ซ่อนโพสต์นี้
-                      </Dropdown.Item>
-                    )}
-                    <Dropdown.Item
-                      onClick={() => handleDeletePost(planData.plan_id)}
-                    >
-                      ลบโพสต์นี้
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            )}
-          </div>
-
-          <div style={{ fontWeight: "bold", marginBottom: "10px" }}>
-            {planData.park_name}
-          </div>
-          <div className="plan_name">{planData.plan_name}</div>
-
-          {/* <div className="planBudget">
-          <img
-            src={money}
-            alt="budget"
-            style={{ width: "20px", marginRight: "10px" }}
-          />
-          test
-        </div> */}
-
-          <div className="activities">
-            <ul>
-              {planData.activities.map((activity) => (
-                <li key={activity.activity_id}>
-                  <div className="activityDetails">
-                    <div>
-                      {activity.activity_name} ({activity.parkplace_name})
-                    </div>
-                    <div>
-                      {activity.activity_start} - {activity.activity_end}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <hr />
-
-          <div className="actionBar">
-            <div className="favoriteGroup" onClick={toggleFavorite}>
-              <FaStar
-                style={{
-                  color: isFavorite ? "orange" : "grey",
-                  width: "25px",
-                  marginBottom: "1px",
-                }}
-              />
-              Favorite
-            </div>
-            <div className="group">
-              <img src={comment} alt="comment" />
-
-              {/* ปุ่มเปิด Modal */}
-
-              <img
-                src={share}
-                alt="share"
-                onClick={handleOpenModal}
-                style={{ cursor: "pointer" }}
-              />
+            <div className="nameAndPvStatus">
+              <h4
+                className="user_name"
+                onClick={() => handleProfileClick(planData.user_id)}
+                style={{ margin: "0", padding: "0", marginLeft: "20px" }}
+              >
+                {planData.user_firstName} {planData.user_lastName}
+              </h4>
             </div>
           </div>
         </div>
-      
 
-      {/* เรียกใช้ ShareModal */}
+        <div style={{ fontWeight: "bold", marginBottom: "10px" }}>
+          {planData.park_name}
+        </div>
+        <div className="plan_name">{planData.plan_name}</div>
+
+        <div className="activities">
+          <ul>
+            {planData.activities.map((activity) => (
+              <li key={activity.activity_id}>
+                <div className="activityDetails">
+                  <div>
+                    {activity.activity_name} ({activity.parkplace_name})
+                  </div>
+                  <div>
+                    {activity.activity_start} - {activity.activity_end}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <hr />
+
+      
+        <div className="actionBar">
+          <div className="favoriteGroup" onClick={toggleFavorite}>
+            <FaStar
+              style={{
+                color: isFavorite ? "orange" : "grey",
+                width: "25px",
+                marginBottom: "1px",
+              }}
+            />
+            Favorite
+          </div>
+          <div className="group">
+            <button 
+              className="commentBTN"
+              onClick={() => setShowComments(!showComments)}
+            >
+              <img src={comment} alt="comment" />
+            </button>
+
+            <img
+              src={share}
+              alt="share"
+              onClick={handleOpenModal}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+        </div>
+
+        {/*Comment */}
+        {showComments && (
+          <Comment 
+            planId={plan_id} 
+            user={user} 
+          />
+        )}
+      </div>
+
+      {/* ShareModal */}
       {isAuthenticated ? (
         <ShareModal
-          show={modalShow} //กำหนดสถานะการแสดงผล
-          onHide={() => setModalShow(false)} //ฟังก์ชันที่จะทำงานเมื่อต้องการปิด Modal
-          shareData={shareData} // ข้อมูลที่ส่งให้ Modal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          shareData={shareData}
         />
       ) : (
         <div></div>

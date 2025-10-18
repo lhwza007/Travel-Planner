@@ -9,12 +9,14 @@ import { checkAuth } from "../../context/checkAuth.jsx";
 import ShareModal from "./ShareModal.jsx";
 import { Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Comment from "./Comment.jsx";
 import {
   SweetalertSuccNoReload,
   SweetalertErrNoReload,
 } from "./Sweetalert.jsx";
 
 export default function PlanPost({ planData, isCurrentUser }) {
+  const [showComments, setShowComments] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -291,7 +293,12 @@ export default function PlanPost({ planData, isCurrentUser }) {
               Favorite
             </div>
             <div className="group">
-              <img src={comment} alt="comment" />
+              <img 
+                src={comment} 
+                alt="comment" 
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowComments(!showComments)} // ← เพิ่ม
+              />
 
               {/* ปุ่มเปิด Modal */}
 
@@ -303,6 +310,9 @@ export default function PlanPost({ planData, isCurrentUser }) {
               />
             </div>
           </div>
+          {showComments && (
+            <Comment  planId={planData.plan_id}  user={user} />
+          )}
         </div>
       )}
 

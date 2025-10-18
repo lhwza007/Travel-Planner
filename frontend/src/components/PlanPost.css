@@ -98,3 +98,28 @@ p.privateTag {
     object-position: center;
 
 }
+
+.commentSection {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.commentItem {
+  background: white;
+  border-radius: 5px;
+}
+
+.commentItem:hover {
+  background: #e9ecef;
+}
+
+.commentBTN {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+
