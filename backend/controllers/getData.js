@@ -338,7 +338,7 @@ export const UserInfo = (req, res) => {
   const user_id = req.query.user_id; // รับ user_id จาก query parameters
   const sql = `
     SELECT 
-      user_name, user_firstName, user_lastName, user_level, user_gender, user_income, user_age, user_email, user_phone, user_pfp 
+      user_name, user_firstName, user_lastName, user_level, user_gender, user_income, user_age, user_email, user_phone, user_pfp, user_weight, user_height 
     FROM users 
     WHERE user_id = ?;
   `;
