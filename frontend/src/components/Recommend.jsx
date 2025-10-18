@@ -7,6 +7,8 @@ import ParkDetail from "../pages/Park-Detail";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import { DotLoader} from "react-spinners";
+// import { Box } from '@mui/material';
 
 
 export default function Recommend() {
@@ -17,7 +19,7 @@ export default function Recommend() {
   console.log("user_age:", userData.user_age);
 
   const [parkData, setParkData] = useState([]);
-  const[wait,setWait]=useState("Please wait a moment...");
+  const[wait,setWait]=useState(true);
 
 
   const stored = localStorage.getItem("dataLLM");
@@ -25,7 +27,7 @@ export default function Recommend() {
   const fetchData = async () => {
     console.log("ข้อมูลของตัวแปร stored:",stored);
     if(stored ){
-      setWait("Recommend for you by AI");
+      setWait(false);
       try{
         const response = await axios.get(
           "http://localhost:8800/api/recommend/recommendBylocalstorage",{ params: { list_park_id:stored} }
@@ -50,7 +52,7 @@ export default function Recommend() {
         console.log("park_id from LLM:",parkIds);
 
 
-        setWait("Recommend for you by AI");
+        setWait(false);
       } catch (error) {
         console.error("Error fetching park data:", error);
       }
@@ -61,7 +63,7 @@ export default function Recommend() {
 
   useEffect(() => {
       fetchData();
-    }, []);
+    }, [wait]);
 
   console.log(parkData);
 
@@ -74,6 +76,17 @@ export default function Recommend() {
   return (
     <>
       <Container>
+        {wait?(
+          <div className="d-flex mb-3" >
+          <h5>Wait for recommendation </h5> &nbsp;&nbsp;&nbsp;&nbsp;<DotLoader color="#495A3A" size={30} />
+          </div>
+        ):(
+          <div className="mb-3">
+          <h5>Recommend for you by AI</h5>
+          </div>
+        )
+
+        }
         <div className="head">{wait}</div>
         <Row>
           {parkData.map((park) => (
