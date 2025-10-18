@@ -40,16 +40,22 @@ export default function Recommend() {
     }else{
       try {
         const response = await axios.get(
-          "http://localhost:8800/api/recommend/recommendByLLM",{ params: { user_level: userData.user_level ,user_age:userData.user_age} }
+          "http://localhost:8800/api/recommend/recommendByLLM",{ 
+            params: { 
+              user_level: userData.user_level ,
+              user_age:userData.user_age,
+              user_weight:userData.user_weight,
+              user_height:userData.user_height
+            } }
         );
         setParkData(response.data);
         
 
         
-        console.log("เกียมข้อมูล:", response.data);
+        // console.log("เกียมข้อมูล:", response.data);
         const parkIds = Array.isArray(response.data) ? response.data.map(p => p.park_id) : [];
         localStorage.setItem("dataLLM", JSON.stringify(parkIds)); 
-        console.log("park_id from LLM:",parkIds);
+        // console.log("park_id from LLM:",parkIds);
 
 
         setWait(false);

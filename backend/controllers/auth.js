@@ -18,7 +18,7 @@ export const register = (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
     const q =
-      "INSERT INTO users(user_name, user_password,user_firstName,user_lastName,user_level,user_gender,user_income,user_age,user_email) VALUES(?, ?,?, ?,?, ?,?, ?,?)";
+      "INSERT INTO users(user_name, user_password,user_firstName,user_lastName,user_level,user_gender,user_income,user_age,user_email,user_weight,user_height) VALUES(?, ?,?, ?,?, ?,?, ?,?,?,?)";
 
     db.query(
       q,
@@ -32,6 +32,9 @@ export const register = (req, res) => {
         req.body.income,
         req.body.age,
         req.body.email,
+        req.body.weight,
+        req.body.height
+        
       ],
       (err, data) => {
         if (err) return res.status(500).json(err);
