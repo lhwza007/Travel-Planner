@@ -7,7 +7,7 @@ import e from "express";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-function toLLM(user_level, user_age) {
+function toLLM(user_level, user_age ,user_weight, user_height) {
   return new Promise((resolve) => {
     const pythonCmd = process.platform.startsWith("win") ? "python" : "python3";
 
@@ -16,6 +16,8 @@ function toLLM(user_level, user_age) {
       join(__dirname, "../LLM/Recommend.py"),
       String(user_level),
       String(user_age),
+      String(user_weight),
+      String(user_height)
     ]);
 
     let dataString = "";
@@ -62,9 +64,11 @@ function toLLM(user_level, user_age) {
 export const RecommendByLLM = async (req, res) => {
   const user_level = req.query.user_level;
   const user_age = req.query.user_age;
+  const user_weight = req.query.user_weight;
+  const user_height = req.query.user_height;
 
   try {
-    const result = await toLLM(user_level, user_age);
+    const result = await toLLM(user_level, user_age,user_weight,user_height);
 
     const list_park_id_string = result.list_park_id || result.list_park_id_err; // รับได้ทั้งกรณีปกติและกรณี Error จาก LLM
 
