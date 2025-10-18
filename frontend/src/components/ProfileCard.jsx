@@ -26,10 +26,10 @@ export default function ProfileCard(props) {
       <div className="profileCardContainer">
         <div
           className="cover"
-          style={{ backgroundImage: "url(/view.jpg)" }}
+          style={{ backgroundImage: "url(/view2.jpg)" }}
         ></div>
         <div className="pfpOverlay">
-          <div className="profileImg">
+          <div className="profileImg" style={{backgroundColor:"white"}}>
             {
               userPfp ? (
                 <img

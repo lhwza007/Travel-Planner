@@ -10,10 +10,8 @@ import ShareModal from "./ShareModal.jsx";
 import { Dropdown } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Comment from "./Comment.jsx";
-import {
-  SweetalertSuccNoReload,
-  SweetalertErrNoReload,
-} from "./Sweetalert.jsx";
+import {SweetalertSuccNoReload,SweetalertErrNoReload,} from "./Sweetalert.jsx";
+import { LuMapPin } from "react-icons/lu";
 
 export default function PlanPost({ planData, isCurrentUser }) {
   const [showComments, setShowComments] = useState(false);
@@ -269,7 +267,18 @@ export default function PlanPost({ planData, isCurrentUser }) {
                 <li key={activity.activity_id}>
                   <div className="activityDetails">
                     <div>
-                      {activity.activity_name} ({activity.parkplace_name})
+
+                      {activity.activity_name}&nbsp;&nbsp;
+                      {activity.parkplace_name?(
+                        <>
+                          <LuMapPin/>{activity.parkplace_name}
+                        </>
+
+                      ):(
+                        null
+                      )
+                      }
+                      
                     </div>
                     <div>
                       {activity.activity_start} - {activity.activity_end}
