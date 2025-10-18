@@ -49,7 +49,7 @@ export default function Profile() {
     useEffect(() => {
         getPlansByUserId();
         getUserInfoById();
-      }, []);
+      }, [user_id]);
     
     return (
         <>
