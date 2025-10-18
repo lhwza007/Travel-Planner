@@ -18,12 +18,12 @@ export default function Search({ onSearchChange }) {
     return(
         <div className="container my-4 searchBarContainer">
         <div className="searchGroup">
-          SEARCH
+          ค้นหา
           <Form style={{ width: "100%", display: "flex" }}>
           <Form.Group className="w-100" style={{ margin: "0px 10px" }}>
             <Form.Control 
               type="text" 
-              placeholder="Search Here..." 
+              placeholder="ค้นหาที่นี่..." 
               value={inputValue} // ← ควบคุมค่า
               onChange={handleInputChange} // ← เรียกเมื่อพิมพ์
               style={{borderRadius: "10px" }} 

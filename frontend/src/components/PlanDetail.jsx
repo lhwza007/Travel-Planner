@@ -1,17 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import { Button } from 'react-bootstrap';
-import personpfp from "../assets/personTest.svg";
-import money from "../assets/money.svg";
-import comment from "../assets/comment.svg";
-import star from "../assets/star.svg";
-import share from "../assets/share.svg";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaComment, FaShare } from "react-icons/fa";
 import axios from "axios";
 import { checkAuth } from "../../context/checkAuth.jsx";
 import ShareModal from "./ShareModal.jsx";
-import Comment from "./Comment.jsx"; 
+import Comment from "./Comment.jsx";
 import "./PlanPost.css";
 import { LuMapPin } from "react-icons/lu";
 
@@ -20,7 +13,7 @@ export default function PlanDetail({ plan_id }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [modalShow, setModalShow] = useState(false);
-  const [showComments, setShowComments] = useState(false); 
+  const [showComments, setShowComments] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
@@ -38,9 +31,12 @@ export default function PlanDetail({ plan_id }) {
   // ดึงข้อมูลแผนการเดินทาง
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8800/api/getData/planDetail", {
-        params: { plan_id: plan_id },
-      });
+      const response = await axios.get(
+        "http://localhost:8800/api/getData/planDetail",
+        {
+          params: { plan_id: plan_id },
+        }
+      );
       setPlanData(response.data[0]);
     } catch (error) {
       console.log("Error fetching plan details:", error);
@@ -146,6 +142,12 @@ export default function PlanDetail({ plan_id }) {
               >
                 {planData.user_firstName} {planData.user_lastName}
               </h4>
+              <p
+                className="timeTag"
+                style={{ margin: "0", padding: "0", marginLeft: "20px" }}
+              >
+                {new Date(planData.plan_timeStamp).toLocaleString("th-TH")}
+              </p>
             </div>
           </div>
         </div>
@@ -160,28 +162,22 @@ export default function PlanDetail({ plan_id }) {
             {planData.activities.map((activity) => (
               <li key={activity.activity_id}>
                 <div className="activityDetails">
-                                    <div>
-                
-                                      {activity.activity_name}&nbsp;&nbsp;
-                                      {activity.parkplace_name?(
-                                        <>
-                                          <LuMapPin/>{activity.parkplace_name}
-                                        </>
-                
-                                      ):(
-                                        null
-                                      )
-                                      }
-                                      
-                                    </div>
-                                    </div>
+                  <div>
+                    {activity.activity_name}&nbsp;&nbsp;
+                    {activity.parkplace_name ? (
+                      <>
+                        <LuMapPin />
+                        {activity.parkplace_name}
+                      </>
+                    ) : null}
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
         </div>
         <hr />
 
-      
         <div className="actionBar">
           <div className="favoriteGroup" onClick={toggleFavorite}>
             <FaStar
@@ -191,32 +187,37 @@ export default function PlanDetail({ plan_id }) {
                 marginBottom: "1px",
               }}
             />
-            Favorite
+            ถูกใจ
           </div>
           <div className="group">
-            <button 
-              className="commentBTN"
-              onClick={() => setShowComments(!showComments)}
-            >
-              <img src={comment} alt="comment" />
-            </button>
+            <div className="commentButton">
+              <FaComment
+                alt="comment"
+                style={{
+                  cursor: "pointer",
+                  color: "grey",
+                }}
+                onClick={() => setShowComments(!showComments)}
+              />
+            </div>
 
-            <img
-              src={share}
-              alt="share"
-              onClick={handleOpenModal}
-              style={{ cursor: "pointer" }}
-            />
+            {/* ปุ่มเปิด Modal */}
+
+            <div className="shareButton">
+              <FaShare
+                alt="share"
+                onClick={handleOpenModal}
+                style={{
+                  cursor: "pointer",
+                  color: "grey",
+                }}
+              />
+            </div>
           </div>
         </div>
 
         {/*Comment */}
-        {showComments && (
-          <Comment 
-            planId={plan_id} 
-            user={user} 
-          />
-        )}
+        {showComments && <Comment planId={plan_id} user={user} />}
       </div>
 
       {/* ShareModal */}

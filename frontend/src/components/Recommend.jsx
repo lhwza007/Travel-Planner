@@ -78,11 +78,11 @@ export default function Recommend() {
       <Container>
         {wait?(
           <div className="d-flex mb-3" >
-          <h5>Wait for recommendation </h5> &nbsp;&nbsp;&nbsp;&nbsp;<DotLoader color="#495A3A" size={30} />
+          <h5>โปรดรอ ระบบกำลังสร้างคำแนะนำให้คุณ </h5> &nbsp;&nbsp;&nbsp;&nbsp;<DotLoader color="#495A3A" size={30} />
           </div>
         ):(
           <div className="mb-3">
-          <h5>Recommend for you by AI</h5>
+          <h5>คำแนะนำสำหรับคุณด้วย AI...</h5>
           </div>
         )
 
