@@ -99,7 +99,7 @@ export default function mInboxCard() {
                 >
                   {/* ค่อยเปลีั่ยนเป็นรูปเจ้าของแอคเคาท์ */}
                   <img
-                    src={TestProfile}
+                    src={`http://localhost:8800/uploads/${item.user_pfp}`}
                     className="me-2"
                     style={{
                       width: "50px",
