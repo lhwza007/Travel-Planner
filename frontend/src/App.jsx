@@ -26,7 +26,7 @@ function App() {
             <Routes>
               {/* Plubic */}
               <Route path="/" element={<Home />} />
-              <Route path="/plan" element={<Plan />} />
+              <Route path="/park" element={<Plan />} />
               <Route path="/park-detail" element={<ParkDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
