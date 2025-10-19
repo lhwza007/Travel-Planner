@@ -59,8 +59,8 @@ function MyNav() {
             <Nav.Link as={Link} to="/">
               หน้าหลัก
             </Nav.Link>
-            <Nav.Link as={Link} to="/plan">
-              วางแผน
+            <Nav.Link as={Link} to="/park">
+              อุทยาน
             </Nav.Link>
             {
               isAuthenticated && (

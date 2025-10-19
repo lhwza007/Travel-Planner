@@ -279,13 +279,16 @@ export default function PlanPost({ planData, isCurrentUser }) {
                       {activity.activity_name}&nbsp;&nbsp;
                       {activity.parkplace_name ? (
                         <>
-                          <LuMapPin />
+                          <LuMapPin 
+                            style={{ color: "#700000ff" }}
+                          />
                           {activity.parkplace_name}
                         </>
                       ) : null}
                     </div>
                     <div>
-                      {activity.activity_start} - {activity.activity_end}
+                      {activity.activity_date ? new Date(activity.activity_date).toLocaleString("th-TH").split(' ')[0] : ""}
+                      {" ("}{activity.activity_start} - {activity.activity_end}{")"}
                     </div>
                   </div>
                 </li>

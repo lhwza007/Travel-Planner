@@ -40,10 +40,10 @@ export const addPlan = async (req, res) => {
     // Insert into activities table for each activity
     for (const activity of mainActivities) {
       const q =
-        "INSERT INTO activities(plan_id, activity_name, activity_start, activity_end, parkplace_id, parkplace_name) VALUES(?, ?, ?, ?, ?, ?)";
+        "INSERT INTO activities(plan_id, activity_name, activity_start, activity_end, parkplace_id, parkplace_name, activity_date) VALUES(?, ?, ?, ?, ?, ?, ?)";
       await db
         .promise()
-        .query(q, [planId, activity.name, activity.startTime, activity.endTime, activity.parkplace_id, activity.parkplace_name]);
+        .query(q, [planId, activity.name, activity.startTime, activity.endTime, activity.parkplace_id, activity.parkplace_name, activity.activity_date]);
     }
 
     return res.status(200).json("Plan has been created.");

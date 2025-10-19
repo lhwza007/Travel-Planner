@@ -164,7 +164,7 @@ export const RecommendBylocalstorage = (req, res) => {
                   LIMIT 1
                 ) AS parkImg_src
                 FROM parks 
-                LEFT JOIN plans ON parks.park_id = plans.park_id
+                LEFT JOIN plans ON parks.park_id = plans.park_id AND plans.plan_isPrivate = 0
                 WHERE parks.park_id IN (${placeholders})
                 GROUP BY parks.park_id, parks.park_name, parkImg_src 
                 ORDER BY FIELD(parks.park_id, ${list_park_id.join(",")})`;

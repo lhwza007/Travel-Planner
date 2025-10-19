@@ -45,6 +45,7 @@ export default function PlanningCard({ parkData }) {
         parkplace_name: "",
         startTime: null,
         endTime: null,
+        activity_date: null,
       },
     ]);
   };
@@ -77,10 +78,11 @@ export default function PlanningCard({ parkData }) {
   const updateActivityDate = (id, value) => {
     setMainActivities(
       mainActivities.map((activity) =>
-        activity.id === id ? { ...activity, date: value } : activity
+        activity.id === id ? { ...activity, activity_date: value } : activity
       )
     );
   };
+  console.log(mainActivities);
 
   // ฟังก์ชันเปลี่ยนแปลงสถานะ isPrivate
   const handleIsPrivateChange = (e) => {
@@ -208,12 +210,12 @@ export default function PlanningCard({ parkData }) {
                       />
                       <Form.Control
                         type="text"
-                        onChange={(e) =>
-                          updateMainActivityPlace(
-                            mainActivity.id,
-                            e.target.value
-                          )
-                        }
+                        // onChange={(e) =>
+                        //   updateMainActivityPlace(
+                        //     mainActivity.id,
+                        //     e.target.value
+                        //   )
+                        // }
                         placeholder="สถานที่..."
                         className="me-2"
                         disabled

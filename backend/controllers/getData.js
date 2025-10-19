@@ -51,6 +51,7 @@ export const Plans = (req, res) => {
           activity_end: row.activity_end,
           parkplace_id: row.parkplace_id,
           parkplace_name: row.parkplace_name,
+          activity_date: row.activity_date,
         });
       }
     });
@@ -109,6 +110,7 @@ export const PlansEachPark = (req, res) => {
           activity_end: row.activity_end,
           parkplace_id: row.parkplace_id,
           parkplace_name: row.parkplace_name,
+          activity_date: row.activity_date,
         });
       }
     });
@@ -122,17 +124,18 @@ export const PlansAndCounts = (req, res) => {
     SELECT 
       p.park_id,
       p.park_name,
-      COUNT(pl.plan_id) AS plan_count,
+      COUNT(pl.plan_id) AS plan_count 
+      ,
       (
         SELECT pi.parkImg_src 
         FROM parkimg pi 
         WHERE pi.park_id = p.park_id 
         LIMIT 1
-      ) AS parkImg_src
-    FROM parks p
-    LEFT JOIN plans pl ON p.park_id = pl.park_id
-    GROUP BY p.park_id, p.park_name
-    ORDER BY plan_count DESC
+      ) AS parkImg_src 
+    FROM parks p 
+    LEFT JOIN plans pl ON p.park_id = pl.park_id AND pl.plan_isPrivate = 0 
+    GROUP BY p.park_id, p.park_name 
+    ORDER BY plan_count DESC 
     ;`;
 
   db.query(sql, (err, result) => {
@@ -217,6 +220,7 @@ export const PlansByUserId = (req, res) => {
           activity_end: row.activity_end,
           parkplace_id: row.parkplace_id,
           parkplace_name: row.parkplace_name,
+          activity_date: row.activity_date,
         });
       }
     });
@@ -272,6 +276,7 @@ export const PlansByAnotherUserId = (req, res) => {
           activity_end: row.activity_end,
           parkplace_id: row.parkplace_id,
           parkplace_name: row.parkplace_name,
+          activity_date: row.activity_date,
         });
       }
     });
@@ -326,6 +331,7 @@ export const PlansByParkId = (req, res) => {
           activity_end: row.activity_end,
           parkplace_id: row.parkplace_id,
           parkplace_name: row.parkplace_name,
+          activity_date: row.activity_date,
         });
       }
     });
@@ -442,6 +448,7 @@ export const PlanDetail = (req, res) => {
           parkplace_name: row.parkplace_name,
           activity_start: row.activity_start,
           activity_end: row.activity_end,
+          activity_date: row.activity_date,
         });
       }
     });
