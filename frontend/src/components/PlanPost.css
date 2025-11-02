@@ -82,7 +82,7 @@ p.timeTag {
 
 .actionBar .favoriteGroup:hover{
     /* transform: scale(1.05); */
-    transition: all 0.1s ease-in-out;
+    transition: all 0.5s ease-in-out;
     background-color: #f0f0f0;
 }
 
@@ -98,7 +98,7 @@ p.timeTag {
 
 .actionBar .group .commentButton:hover{
     /* transform: scale(1.05); */
-    transition: all 0.1s ease-in-out;
+    transition: all 0.5s ease-in-out;
     background-color: #f0f0f0;
 }
 
@@ -114,7 +114,7 @@ p.timeTag {
 
 .actionBar .group .shareButton:hover{
     /* transform: scale(1.05); */
-    transition: all 0.1s ease-in-out;
+    transition: all 0.5s ease-in-out;
     background-color: #f0f0f0;
 }
 
